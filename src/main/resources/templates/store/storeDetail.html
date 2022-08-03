@@ -49,6 +49,10 @@
 		        <div class="title">
 		            <h1 th:text="${store.storeNm }"></h1>
 		            <h5 th:text="${store.storeIntro }" class="title_small"></h5>
+		           <form action="/store/updateStore" method="post" enctype="multipart/form-data">
+					<input type="hidden" name="storeSeq" th:value="${store.storeSeq}">
+		            <button type="submit" id="btnUpdate" class="btn btn-warning reg-btn">수정</button>
+		           </form>
 		        </div>
 		
 		        <!-- 상세 페이지 콘텐츠 -->

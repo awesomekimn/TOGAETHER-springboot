@@ -130,7 +130,7 @@ public class StoreController {
 
 		storeService.insertStoreFileList(fileList);
 
-		response.sendRedirect("/store/getStoreList");
+		response.sendRedirect("/store/editStore");
 	}
 	
 	
