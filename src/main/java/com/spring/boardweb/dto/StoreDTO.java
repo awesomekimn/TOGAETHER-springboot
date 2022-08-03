@@ -1,6 +1,8 @@
 package com.spring.boardweb.dto;
 
 import java.sql.Date;
+import java.util.List;
+
 import lombok.Data;
 
 @Data
@@ -27,4 +29,6 @@ public class StoreDTO {
 	private Date storeRegdate;
 	private String storeWriter;
 	private String categoryNm;
+	private int fileSeq;
+	private String fileName;
 }

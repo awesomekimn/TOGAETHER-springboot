@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.spring.boardweb.dto.StoreDTO;
 import com.spring.boardweb.dto.StoreFileDTO;
 import com.spring.boardweb.entity.Store;
 import com.spring.boardweb.entity.StoreFile;
@@ -95,6 +96,11 @@ public class StoreServiceImpl implements StoreService {
 		storeFile.setFileSeq(fileSeq);
 
 		storeFileRepository.delete(storeFile);
+	}
+	
+	@Override
+	public List<StoreDTO> getCarousel() {
+		return storeMapper.getCarousel();
 	}
 
 }
