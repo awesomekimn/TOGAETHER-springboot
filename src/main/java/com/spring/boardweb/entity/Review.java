@@ -13,7 +13,7 @@ import com.spring.boardweb.dto.StoreFileDTO;
 import lombok.Data;
 
 @Entity
-@Table(name="STORE")
+@Table(name="REVIEW")
 @Data
 //name: SequenceGenerator의 이름 지정
 //sequenceName: DB에 생성될 시퀀스 이름 지정
@@ -23,7 +23,7 @@ import lombok.Data;
  * @SequenceGenerator( name="T_BOARD_SEQ_GENERATOR", sequenceName="T_BOARD_SEQ",
  * initialValue=1, allocationSize=1 )
  */
-public class Store {
+public class Review {
 	@Id
 	//키 값 생성 전략을 설정한다.
 	//@GeneratedValue를 사용하지 않으면 직접 할당
@@ -37,54 +37,19 @@ public class Store {
 	 * @GeneratedValue(strategy = GenerationType.SEQUENCE, generator =
 	 * "T_BOARD_SEQ_GENERATOR")
 	 */
+	private int reviewSeq;
+	
+	private String userId;
+	
 	private int storeSeq;
 	
-	private String storeNm;
-	
-	private String storeIntro;
-	
-	private String storeAddress;
-	
-	private String storeLink;
-	
-	private String storeTel;
-	
-	private String storeTime;
-	
-	private String storeContent;
-	
-	private String internet;
-	private String petpad;
-	private String parking;
-	private String parkingFree;
-	private String convenience;
-	private String swimming;
-	private String smoking;
-	
-	private String storePolicy;
-	
-	private String storeMenu;
-	
-	private String storeEtc;
+	private String reviewText;
 	
 	private LocalDateTime storeRegdate = LocalDateTime.now();
 	
-	private String storeWriter;
+	private LocalDateTime storeMdfdate = LocalDateTime.now();
 	
-	private String categoryNm;
-	
-	@Transient
-	private String searchCondition;
-	
-	@Transient
-	private String searchKeyword;
-	
-	@Transient
-	private List<StoreFileDTO> fileList;
-	
-	@Transient
-	private String userAni;
-	
+	private int reviewRate;
 	
 	
 	

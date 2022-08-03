@@ -31,52 +31,12 @@
 	                    marginLeft: "0px"
 	                }, 2000);*/
 		
-		            //별점남기기
-		            /*
-		            $("#icon_star1").on("click", function () {
-		                if ($("#icon_star1").attr("src") == "@{/images/star_empty.png}") {
-		                    $("#icon_star1").attr("src", "@{/images/star_half.png}");
-		                } else {
-		                    $("#icon_star1").attr("src", "@{/images/star_ful.png}");
-		                }
-		            });
-		
-		            $("#icon_star2").on("click", function () {
-		                if ($("#icon_star2").attr("src") == "@{/images/star_empty.png}") {
-		                    $("#icon_star1").attr("src", "@{/images/star_ful.png}");
-		                    $("#icon_star2").attr("src", "@{/images/star_half.png}");
-		                } else {
-		                    $("#icon_star2").attr("src", "@{/images/star_ful.png}");
-		                }
-		            });
-		
-		            $("#icon_star3").on("click", function () {
-		                if ($("#icon_star3").attr("src") == "@{/images/star_empty.png}") {
-		                    $("#icon_star1, #icon_star2").attr("src", "@{/images/star_ful.png}");
-		                    $("#icon_star3").attr("src", "@{/images/star_half.png}");
-		                } else {
-		                    $("#icon_star3").attr("src", "@{/images/star_ful.png}");
-		                }
-		            });
-		
-		            $("#icon_star4").on("click", function () {
-		                if ($("#icon_star4").attr("src") == "@{/images/star_empty.png}") {
-		                    $("#icon_star1, #icon_star2, #icon_star3").attr("src", "@{/images/star_ful.png}");
-		                    $("#icon_star4").attr("src", "@{/images/star_half.png}");
-		                } else {
-		                    $("#icon_star4").attr("src", "@{/images/star_ful.png}");
-		                }
-		            });
-		
-		            $("#icon_star5").on("click", function () {
-		                if ($("#icon_star5").attr("src") == "@{/images/star_empty.png}") {
-		                    $("#icon_star1, #icon_star2, #icon_star3, #icon_star4").attr("src",
-		                        "@{/images/star_ful.png}");
-		                    $("#icon_star5").attr("src", "@{/images/star_half.png}");
-		                } else {
-		                    $("#icon_star5").attr("src", "@{/images/star_ful.png}");
-		                }
-		            });*/
+		            
+		            $("#regForm").on("submit", function(e) {
+		            	alert('등록되었습니다.');
+		            })
+		            
+		            
 				});
 			</script>
 		</th:block>
@@ -91,6 +51,10 @@
 		            <h5 th:text="${store.storeIntro }" class="title_small"></h5>
 		            <button type="button" id="updateStore">수정</button>
 		            <button type="button" id="deletestore" th:onClick="@{/store/deleteStore/{storeSeq}}">삭제</button>
+		           <form action="/store/updateStore" method="post" enctype="multipart/form-data">
+					      <input type="hidden" name="storeSeq" th:value="${store.storeSeq}">
+		            <button type="submit" id="btnUpdate" class="btn btn-warning reg-btn">수정</button>
+		           </form>
 		        </div>
 		
 		        <!-- 상세 페이지 콘텐츠 -->
@@ -236,19 +200,22 @@
 		            <h3 id="review">방문자 리뷰
 		                <hr>
 		            </h3>
-		            <div class="star_icon">
-		            	<img id="icon_star1" th:src="@{/images/star_ful.png}" alt="별점남기기">
-		            	<select name="category" class="form-select" aria-label="multiple select example" style="display: inline; width:100px;">
-	                        <option value="5">5</option>
-	                        <option value="4">4</option>
-	                        <option value="3">3</option>
-	                        <option value="2">2</option>
-	                        <option value="1">1</option>
-	                    </select>
-		            </div>
-		            <input type="text" name="userId" th:value="${#authentication.principal.username}" hidden>
-		            <textarea style="padding: 3px 8px; margin-top: 10px;" name="text" placeholder="방문하신 리뷰를 작성해 주세요." cols="50" rows="10"></textarea>
-		            <button type="submit" class="btn btn-warning add_button">등록하기</button>
+		            <form id="regForm" action="/store/insertReview" method="post" enctype="multipart/form-data">
+			            <input type="text" name="userId" th:value="${#authentication.principal.username}" hidden>
+			            <input type="text" name="userAni" th:value="${#authentication.principal.username}" hidden>
+			            <div class="star_icon">
+			            	<img id="icon_star1" th:src="@{/images/star_ful.png}" alt="별점남기기">
+			            	<select name="reviewRate" class="form-select" aria-label="multiple select example" style="display: inline; width:100px;">
+		                        <option value="5">5</option>
+		                        <option value="4">4</option>
+		                        <option value="3">3</option>
+		                        <option value="2">2</option>
+		                        <option value="1">1</option>
+		                    </select>
+			            </div>
+			            <textarea name="reviewText" placeholder="방문하신 리뷰를 작성해 주세요." cols="50" rows="10" required></textarea>
+			            <button type="submit" class="btn btn-warning add_button">등록하기</button>
+		            </form>
 		        </div>
 		
 		        <!-- 사용자 리뷰 

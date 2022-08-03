@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import com.spring.boardweb.dto.StoreDTO;
 import com.spring.boardweb.dto.StoreFileDTO;
 import com.spring.boardweb.entity.Store;
 import com.spring.boardweb.entity.StoreFile;
@@ -26,4 +27,7 @@ public interface StoreService {
    
     void deleteStoreFile(int storeSeq, int fileSeq);
 	
+    List<StoreDTO> getCarousel();
+    
+    String getUserAni(String username);
 }
