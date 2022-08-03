@@ -50,7 +50,7 @@ public class StoreController {
 
 		mv.addObject("storeList", storeList);
 
-		System.out.println(storeList);
+//		System.out.println(storeList);
 
 		return mv;
 	}
