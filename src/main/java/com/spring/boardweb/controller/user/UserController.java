@@ -15,7 +15,7 @@ import com.spring.boardweb.service.user.UserService;
 
 @RestController
 @RequestMapping("/user")
-public class UserController {
+public class UserController {  
 	@Autowired
 	UserService userService;
 	
