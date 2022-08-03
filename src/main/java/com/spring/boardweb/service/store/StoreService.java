@@ -28,4 +28,6 @@ public interface StoreService {
     void deleteStoreFile(int storeSeq, int fileSeq);
 	
     List<StoreDTO> getCarousel();
+    
+    String getUserAni(String username);
 }

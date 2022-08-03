@@ -31,4 +31,6 @@ public class StoreDTO {
 	private String categoryNm;
 	private int fileSeq;
 	private String fileName;
+	private String userAni;
+
 }
