@@ -96,26 +96,26 @@
 		        <article>
 		            <div class="innercontainer" th:if="${store.fileList ne null}">
 		            	<div th:each="file : ${store.fileList}">
-		            		<div th:if="${file.fileSeq == 1}">
+		            		<div th:if="${file.fileSeq == 1}" th:remove="tag">
 			                	<img id="main_image" th:src="@{/upload/} + ${file.fileName}" alt="가게의 모습" style="min-height: 555px;">
 			                </div>
 		            	</div>
-		            	<div style="height: 400px;">
+		            	<div style="margin-bottom: 50px;">
 			                <span id="info_p"><hr/>
 			                    <pre th:text="${store.storeContent }"></pre>
 			                </span>
 		            	</div>
 		
 		                <!-- 중간에 들어가는 업체 추가 이미지 -->
-		                <div th:each="file : ${store.fileList}">
-			                <div th:unless="${file.fileSeq == 1}">
+		                <div th:each="file : ${store.fileList}" th:remove="tag">
+			                <div th:unless="${file.fileSeq == 1}" th:remove="tag">
 			                	<img id="js02" th:src="@{/upload/} + ${file.fileName}">
 			                </div>
 		                </div>
 		
 		                <!-- 예약안내 부분 -->
 		                <div class="reservation">
-		                    <h2 id="res01">예약 안내
+		                    <h2 id="res01" style="padding-top: 50px;">예약 안내
 		                        <hr>
 		                    </h2>
 		                    <div class="reservation_details">
@@ -245,7 +245,7 @@
 	                    </select>
 		            </div>
 		            <input type="text" name="userId" th:value="${#authentication.principal.username}" hidden>
-		            <textarea name="text" placeholder="방문하신 리뷰를 작성해 주세요." cols="50" rows="10"></textarea>
+		            <textarea style="padding: 3px 8px; margin-top: 10px;" name="text" placeholder="방문하신 리뷰를 작성해 주세요." cols="50" rows="10"></textarea>
 		            <button type="submit" class="btn btn-warning add_button">등록하기</button>
 		        </div>
 		
