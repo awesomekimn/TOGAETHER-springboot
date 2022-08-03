@@ -1,0 +1,624 @@
+/* 폰트 추가 */
+@font-face {
+    font-family: 'GmarketSansLight';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body, pre {
+    font-family: 'GmarketSansLight';
+}
+
+.detail_table th, .detail_table2 th {
+	width: 110px;
+}
+
+pre {
+	line-height: 2.5;
+	font-size: medium;
+	margin: 0;
+}
+
+/* COMMON AREA -start */
+/* navbar */
+#mainNavbar {
+    background-color: #f7ae60e7;
+    font-weight: 300;
+    width: 1080px;
+    margin: 0 auto;
+    z-index: 998;
+}
+
+#mainNavbar .nav-link {
+    color: white;
+    font-size: 1.2rem;
+    transition: color 0.25s, text-shadow 0.25s, transform 0.25s;
+    margin-right: 15px;
+}
+
+#mainNavbar .nav-link:hover {
+    color: #ea1c2c;
+    text-shadow: 0 0.5em 0.5em -0.4em darkgray;
+    transform: translateY(-0.1em);
+    cursor: pointer;
+}
+
+#mainNavbar .navbar-brand {
+    color: white;
+    font-size: 2rem;
+    line-height: 1;
+    text-align: center;
+    padding-top: 5px;
+    padding-left: 10px;
+}
+
+.kr-logo {
+    font-size: 1.2rem;
+}
+
+/* footer */
+footer {
+    text-align: center;
+    line-height: 1;
+    padding: 7px;
+}
+
+footer hr {
+    width: 50%;
+    margin: 20px auto;
+}
+
+.contact {
+    font-size: 2.2rem;
+    color: orange;
+    margin: 8px 0 15px;
+}
+
+.info {
+    color: gray;
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* COMMON AREA -end */
+
+/* 리스트 페이지 스타일 적용 */
+body {
+    line-height: 1.7;
+}
+
+
+.wrapper {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 4%;
+}
+
+.ico {
+    padding-top: 200px;
+    padding-left: 15px;
+    max-width: 1080px;
+    margin: 0 auto;
+}
+
+#hotel_icon {
+    width: 100px;
+    height: 100px;
+    float: left;
+
+}
+
+#hotel_ment {
+    width: 1000px;
+    font-weight: bold;
+    margin-top: 58px;
+    margin-left: 130px;
+    color: #f78409;
+}
+
+
+
+/*리스트 타일형 레이아웃 적용*/
+.grid {
+    display: grid;
+    gap: 50px 28px;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    margin-bottom: 150px;
+    margin-top: 70px;
+    padding: 0 7px;
+}
+
+.card_img-wrapper img {
+    height: 150px;
+    width: 300px;
+}
+
+.listarea {
+    margin-top: 30px;
+}
+
+
+.card_body {
+    padding-left: 5px;
+}
+
+.card_title {
+    font-weight: bold;
+}
+
+.card_text {
+    font-size: 80%;
+    max-height: 65px;
+    overflow: hidden;
+}
+
+.card_img {
+    max-width: 100%;
+    min-height: 165px;
+}
+
+
+#icon_location {
+    width: 27px;
+    line-height: 18px;
+
+}
+
+#icon_comment {
+    width: 25px;
+    line-height: 18px;
+
+}
+
+#icon_heart1,
+#icon_heart2,
+#icon_heart3,
+#icon_heart4,
+#icon_heart5,
+#icon_heart6,
+#icon_heart7,
+#icon_heart8,
+#icon_heart9,
+#icon_heart10,
+#icon_heart11,
+#icon_heart12 {
+    width: 25px;
+    line-height: 18px;
+}
+
+
+.comment_heart {
+    margin-left: 120px;
+}
+
+.other {
+    margin-bottom: 10px;
+    border-top: 1px solid gray;
+}
+
+.other_icon {
+    margin-top: 5px;
+}
+
+
+
+#ip {
+    font-size: 13px;
+    display: inline-block;
+    margin: 0 auto;
+    margin-left: 2px;
+}
+
+/* 페이지 소개 반응형 웹 적용 */
+@media screen and (max-width: 600px) {
+
+    #hotel_ment,
+    .ico {
+        flex-direction: column;
+        font-size: 14px;
+        width: 100%;
+    }
+}
+
+/*카드 이미지*/
+@media screen and (max-width: 600px) {
+    .card_img {
+        flex-direction: column;
+        width: 100%;
+    }
+}
+
+/*아이콘 위치*/
+@media screen and (max-width: 600px) {
+    .comment_heart {
+        flex-direction: column;
+        width: 100%;
+        margin-left: 350px;
+    }
+}
+
+
+/******** 상세페이지 ********/
+.container {
+    width: 1080px;
+    margin: 150px auto;
+}
+
+
+.detail-content {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+a:hover {
+    color: #f59025;
+}
+
+/* 본문 내용 부분*/
+article {
+    width: 74%;
+    display: inline-block;
+}
+
+
+
+/* 메인 이미지 */
+#main_image {
+    padding: 70px 0;
+    width: 90%;
+}
+
+/* 소개 글 */
+#info_p {
+    line-height: 250%;
+}
+
+@media screen and (max-width: 600px) {
+    #main_image {
+        flex-direction: column;
+        width: 450px;
+        margin: 0 auto;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .title {
+        flex-direction: column;
+        width: 100%;
+        font-size: 100%;
+        margin: 0 auto;
+    }
+
+    .title_small {
+        width: 100%;
+        font-size: 110%;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    #info_p {
+        flex-direction: column;
+        width: 100%;
+        font-size: 80%;
+        margin: 0 auto;
+        display: flex
+    }
+}
+
+#js02 {
+    float: left;
+    width: 400px;
+    height: 350px;
+}
+
+#js08 {
+    position: relative;
+    left: -5px;
+    top: -80px;
+    float: right;
+    width: 410px;
+    height: 300px;
+}
+
+#js03 {
+    width: 500px;
+}
+
+/* 예약 안내 부분 */
+/* 시설 안내 */
+.reservation_details h5 {
+    height: 40px;
+    font-size: 150%;
+}
+
+.reservation::after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+#res01 {
+    margin-top: 750px;
+    margin-bottom: 50px;
+    text-align: center;
+}
+
+table {
+    margin-bottom: 40px;
+}
+
+
+
+/* 시설 안내 테이블 */
+th,
+td {
+    padding: 20px 10px;
+}
+
+th {
+    font-weight: bold;
+    color: #f59025;
+}
+
+#res_img {
+    width: 35px;
+    height: 35px;
+    margin-left: 23px;
+}
+
+
+/* 요금 및 객실 안내 테이블 */
+
+/* 실시간 예약하기 링크 이미지 */
+#welshcorgi {
+    width: 80px;
+    height: 80px;
+    display: inline-block;
+    margin-left: 50px;
+    margin-top: 10px;
+}
+
+@media screen and (max-width: 600px) {
+    #welshcorgi {
+        flex-direction: column;
+        width: 50px;
+        height: 50px;
+        margin: 0 auto;
+    }
+}
+
+/* 실시간 예약하기 링크 멘트 */
+.link {
+    height: 100px;
+    background-color: #f8cb9baf;
+    margin: 120px 20px 0 120px;
+}
+
+#res_link h3 {
+    display: inline-block;
+    text-align: center;
+}
+
+#res_link h3 {
+    align-items: center;
+
+    margin-left: 15px;
+}
+
+
+#res_link h3:hover {
+    font-size: 200%;
+}
+
+
+
+/* 지도 */
+
+.location-map {
+    margin: 0 auto 110px;
+    width: 1000px;
+}
+
+.location-info {
+    width: 90%;
+    margin: 0 auto;
+}
+
+.location-title {
+
+    font-weight: normal;
+    margin-bottom: 50px;
+}
+
+.map {
+    width: 60%;
+    padding: 0 auto;
+    margin: 0 auto;
+}
+
+
+
+/* 사이드바 부분 */
+aside {
+    width: 22%;
+    display: inline-block;
+    position: absolute;
+    margin-top: 70px;
+}
+
+aside li {
+    list-style: none;
+}
+
+.sub-title {
+    margin-left: 30px;
+}
+
+
+/* 별점 ing 사이즈조정 */
+#star1 {
+    width: 25px;
+    height: 25px;
+}
+
+.star {
+    margin-left: 30px;
+    margin-top: 10px;
+}
+
+/* 공유하기 버튼 부분 */
+.share_button {
+    margin-left: 20px;
+    margin-top: 25px;
+}
+
+#shareTw {
+    padding: 10px;
+}
+
+#shareFb {
+    padding: 7px;
+}
+
+#shareKs {
+    padding: 7px;
+}
+
+aside li {
+    padding: 15px 0;
+    border-bottom: #f59025 1px solid;
+    width: 240px;
+}
+
+/* 리뷰 */
+.rev {
+    width: 55%;
+    margin: 0 auto 80px;
+}
+
+#icon_star1,
+#icon_star2,
+#icon_star3,
+#icon_star4,
+#icon_star5 {
+    width: 30px;
+    height: 30px;
+}
+
+.card-title {
+    display: inline;
+}
+
+.rev_star {
+    /*별*/
+    width: 240px;
+    height: 40px;
+    display: inline-block;
+    padding: 5px;
+}
+
+.rev_star img {
+    display: inline-block;
+    left: 50px;
+    width: 20px;
+    height: 20px;
+    margin-bottom: 5px;
+}
+
+.rev_star h6 {
+    /*평점*/
+    display: inline;
+    margin: 2px 0 1px 5px;
+}
+
+hr {
+    width: 90%;
+}
+
+.rev_1 {
+    position: relative;
+    width: 100%;
+    display: inline-block;
+    margin-bottom: 50px;
+}
+
+.rev_container {
+    margin-left: 10px;
+}
+
+.card-body {
+    border-bottom: 1px gray solid;
+    margin-top: 10px;
+}
+
+.card-content {
+    color: gray;
+}
+
+.review-date {
+    margin-bottom: 0;
+}
+
+textarea {
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    width: 90%;
+    height: 100px;
+    margin-bottom: 40px;
+    font-size: 16px;
+}
+
+.star_icon {
+    margin-bottom: 10px;
+}
+
+.add_button {
+    position: absolute;
+    bottom: 0;
+    right: 110px;
+}
+
+
+
+/* pagination */
+.pagination {
+    margin: 30px auto;
+    display: flex;
+    justify-content: center;
+}
+
+.pagination a {
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+    transition: color 0.25s, text-shadow 0.25s, transform 0.25s;
+}
+
+.pagination a.active {
+    color: #F7AD60;
+    font-weight: bold;
+}
+
+.pagination a:hover:not(.active) {
+    color: #F7AD60;
+    font-weight: bold;
+    text-shadow: 0 0.5em 0.5em -0.4em darkgray;
+    transform: translateY(-0.1em);
+}
+
+/* media query 1100px */
+@media (max-width: 1100px) {
+
+    #mainNavbar {
+        margin: 0;
+        width: auto;
+    }
+}

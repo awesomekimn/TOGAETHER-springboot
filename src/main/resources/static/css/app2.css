@@ -1,0 +1,220 @@
+@font-face {
+    font-family: 'GmarketSansLight';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+* {
+    box-sizing: border-box;
+    font-family: 'GmarketSansLight';
+}
+
+body {
+    margin: 0;
+    background-color: #EEEFF1;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.login-form {
+    width: 500px;
+    border: 0;
+    border-radius: 5px;
+    padding: 70px 40px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: white;
+    height : 100%;
+}
+
+.text-field {
+    font-size: 16px;
+    color: #1A1A1A;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    padding: 10px;
+    border: none;
+    width: 100%;
+    background-color: #EEEFF1;
+}
+
+.submit-btn {
+    color: #EEEFF1;
+    font-size: 16px;
+    background-color: orange;
+    margin-bottom: 30px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    width: 100%;
+}
+
+.links {
+    text-align: center;
+    color: #9b9b9b;
+    padding: auto; 
+   
+    font-size: small;
+}
+
+.idpw {
+    margin-bottom: 20px;
+    padding-left: 50px;
+    padding-right: 50px;
+
+}
+
+a {
+    text-decoration-line: none;
+}
+
+hr, p {
+    color: black;
+}
+
+h6 {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.logo {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 100px;
+}
+
+/*여기까지 login*/
+
+
+.login-form-2 {
+    width: 500px;
+    border: 0;
+    border-radius: 5px;
+    padding: 150px 40px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    background-color: white;
+    height : 100vh;
+}
+
+/*여기까지 forgot_id*/
+
+.logo2-3 { 
+    display: flex;
+    justify-content: space-between;
+    padding: 0 100px;
+    margin-top: 30px;
+    margin-bottom: 40px;
+} 
+
+.signup-form {
+    width: 500px;
+    border: 0;
+    border-radius: 5px;
+    padding: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: white;
+    height : 100vh;
+}
+
+.id-img {
+    position: relative;
+} 
+
+.chkId2{
+    position: absolute;
+    top: -5px;
+    left: 400px;
+    font-size: 16px;
+    margin-left: 10px;
+    height: 35px;
+    border-radius: 5px;
+    color: black;
+    background-color: #EEEFF1;
+    border: none;
+    margin-top: 8px;
+} 
+
+.chkId2 img{
+    width: 20px;
+    height: 20px;
+    -webkit-filter: opacity(0.45) drop-shadow(0 0 10px rgb(255, 254, 253));
+    filter: opacity(0.45) drop-shadow(0 0 10px rgb(252, 251, 251));
+    float: right;
+} 
+
+#chkbutton {
+    border: 0;
+} 
+
+#dropdownMenuButton1 {
+    background-color: #EEEFF1;
+} 
+
+.btn-box {
+    width: 100%;
+    text-align: left;
+    color: black;
+    border-radius: 5px;
+    height: 44px;
+}
+
+.btn-custom {
+    text-decoration-line: none;
+    padding: 0;
+    color: orange;
+    border: none;
+}
+
+.check {
+    text-align: left;
+    color: #9b9b9b;
+    margin-top: 30px;
+} 
+
+.modal-body {
+    color: black;
+} 
+
+.ol-font {
+    font-size: small;
+} 
+
+
+hr, span {
+    color: black;
+} 
+
+.h3 {
+    text-align: center;
+    margin-top: 20px;
+} 
+
+/*여기까지 signup*/
+
+.complete-form {
+    width: 500px;
+    border: 0;
+    border-radius: 5px;
+    padding: 150px 40px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    background-color: white;
+    height : 100vh;
+}
+
+/* complete */

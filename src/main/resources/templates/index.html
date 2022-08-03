@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ko"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layouts/layout}">
+	<head>
+		<meta charset="UTF-8">
+		<title>index</title>
+		<th:block layout:fragment="css">
+			<link rel="stylesheet" th:href="@{/css/app1.css}">
+		</th:block>
+		<th:block layout:fragment="script">
+			<script>
+				// running dog gif
+		        var $dog = $("#dogGif"),
+		            timerID = 0,
+		            x = parseInt($dog.css("marginLeft"));
+		
+		        timerID = setInterval(function () {
+		            x += 30;
+		            $dog.css("marginLeft", x + 'px');
+		            console.log($dog.css("marginLeft"));
+		        }, 100);
+		
+		        // main page loader
+		        $(window).on("load", function () {
+		            $(".loader").slideUp(3000, function() {
+		                clearInterval(timerID);
+		            });
+		        });
+		
+		        // main page slide
+		        var slideIndex = 1;
+		
+		        $(document).ready(function () {
+		            showSlides(slideIndex);
+		
+		            // setInterval(function() {
+		            //     showSlides(++slideIndex);
+		            // }, 3000);
+		        });
+		
+		        function plusSlides(n) {
+		            showSlides(slideIndex += n);
+		        }
+		
+		        function showSlides(n) {
+		            var i;
+		            var slides = document.getElementsByClassName("mainSlides");
+		
+		            if (n > slides.length) {
+		                slideIndex = 1
+		            }
+		
+		            if (n < 1) {
+		                slideIndex = slides.length
+		            }
+		
+		            for (i = 0; i < slides.length; i++) {
+		                slides[i].style.display = "none";
+		            }
+		
+		            slides[slideIndex - 1].style.display = "flex";
+		        }
+			</script>
+		</th:block>
+	</head>
+	<body class="mainBg">
+		<div layout:fragment="content" class="container">
+
+		    <!-- main page loader 
+		    <div class="loader">
+		        <iframe id="dogGif" src="https://giphy.com/embed/LRrc3OGe0cbrNO5US5" width="480" height="296" frameBorder="0"
+		            class="giphy-embed" allowFullScreen></iframe>
+		        <p>TOGAETHER</p>
+		    </div> -->
+			
+			<!-- search bar -->
+		    <div class="search-box fixed-top">
+		        <div class="search-container">
+		            <div class="search-input">
+		                <a href="search.html">
+		                    <input type="text" placeholder="어떤 서비스가 필요하세요?" disabled>
+		                    <button type="submit" id="search-button">
+		                        <img class="search-img" th:src="@{/images/search.png}" alt="search">
+		                    </button>
+		                </a>
+		            </div>
+		        </div>
+		    </div>
+		    
+		    <div class="main-container">
+		
+		        <!-- silde category header -->
+		        <header class="row">
+		            <a th:href="@{/store/getStoreList/{categoryNm} (categoryNm='hotel')}" class="category col-4">
+		                <div class="category-header">
+		                    <div class="categoryText">
+		                        <img th:src="@{/images/hotel.png}" alt="여행">
+		                        여행
+		                    </div>
+		                    <div>
+		                        <span class="more-info">더보기+</span>
+		                    </div>
+		                </div>
+		            </a>
+		            <a th:href="@{/store/getStoreList/{categoryNm} (categoryNm='meal')}" class="category col-4">
+		                <div class="category-header">
+		                    <div class="categoryText">
+		                        <img th:src="@{/images/room-service.png}" alt="식당">
+		                        식당
+		                    </div>
+		                    <div>
+		                        <span class="more-info">더보기+</span>
+		                    </div>
+		                </div>
+		            </a>
+		            <a href="/store/getStoreList" class="category col-4">
+		                <div class="category-header">
+		                    <div class="categoryText">
+		                        <img th:src="@{/images/breakfast.png}" alt="카페">
+		                        카페
+		                    </div>
+		                    <div>
+		                        <span class="more-info">더보기+</span>
+		                    </div>
+		                </div>
+		            </a>
+		        </header>
+		
+		        <!-- silde pointer -->
+		        <a class="prev" onclick="plusSlides(-1)">❮❮</a>
+		        <a class="next" onclick="plusSlides(1)">❯❯</a>
+		
+		        <!-- silde -->
+		        <section>
+		            <div class="main-carousel">
+		            
+		                <!-- 1st silde -->
+		                <div class="mainSlides row fade">
+		                    <div class="mainSlide-div col-4">
+		                        <a href="details_hotel.html">
+		                            <figure>
+		                                <img th:src="@{/images/JS애견풀빌라_여행.jpg}" alt="JS 애견 풀빌라">
+		                                <figcaption>JS 애견 풀빌라</figcaption>
+		                            </figure>
+		                        </a>
+		                    </div>
+		                    
+		                    <div class="mainSlide-div col-4">
+		                        <a href="details_restaurant.html">
+		                            <figure>
+		                                <img th:src="@{/images/초원행_식당.jpg}" alt="초원행">
+		                                <figcaption>초원행</figcaption>
+		                            </figure>
+		                        </a>
+		                    </div>
+		                    
+		                    <div class="mainSlide-div col-4">
+		                        <a href="details_cafe.html">
+		                            <figure>
+		                                <img th:src="@{/images/테일더블루.jpg}" alt="테일더블루">
+		                                <figcaption>테일더블루</figcaption>
+		                            </figure>
+		                        </a>
+		                    </div>
+		                </div>
+		                
+		            </div>
+		        </section>
+		
+		    </div>
+	    </div>
+	</body>
+</html>

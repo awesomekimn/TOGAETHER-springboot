@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+	  <head>
+	  	<meta charset="UTF-8">
+	  	<title>header</title>
+	  </head>
+	  <body>
+	  	<header th:fragment="header">
+			<!-- navbar -->
+		    <nav id="mainNavbar" class="navbar navbar-dark navbar-expand-md py-0 fixed-top main_page_navbar">
+		        <a th:href="@{/}" class="navbar-brand">TO GAE THER<br><span class="kr-logo">투개더</span></a>
+		        <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navLinks"
+		            aria-label="Toggle navigation">
+		            <span class="navbar-toggler-icon"></span>
+		        </button>
+		        <div class="collapse navbar-collapse" id="navLinks">
+		            <ul class="navbar-nav ms-auto navbar-center">
+						<div sec:authorize="!isAuthenticated()" th:remove="tag">
+			                <li class="nav-item">
+			                    <a href="/user/join" class="nav-link">회원가입</a>
+			                </li>
+			                <li class="nav-item">
+			                    <a href="/user/login" class="nav-link">로그인</a>
+			                </li>
+			                <li class="nav-item">
+			                    <a href="/board/getBoardList" class="nav-link">Q&A</a>
+			                </li>
+						</div>
+						<div sec:authorize="isAuthenticated()" th:remove="tag">
+			                <li class="nav-item">
+			                    <a href="/user/mypage" class="nav-link" sec:authentication="principal.username"></a>
+			                </li>
+			                <li class="nav-item">
+			                    <a href="/board/getBoardList" class="nav-link">Q&A</a>
+			                </li>
+			                <div th:if="${#authentication.principal.username.equals('admin')}" th:remove="tag">
+				                <li class="nav-item">
+				                    <a href="/store/insertStore" class="nav-link">업체 등록</a>
+				                </li>
+			                </div>
+			                <div th:unless="${#authentication.principal.username.equals('admin')}" th:remove="tag">
+				                <li class="nav-item">
+				                    <a href="/mypage/mypage" class="nav-link">MY PAGE</a>
+				                </li>
+			                </div>
+			                <li class="nav-item">
+			                    <a href="/user/logout" class="nav-link">LOGOUT</a>
+			                </li>						
+						</div>
+		            </ul>
+		        </div>
+		    </nav>
+		</header>
+	  </body>
+</html>

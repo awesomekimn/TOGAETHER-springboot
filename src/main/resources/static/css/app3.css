@@ -1,0 +1,551 @@
+@font-face {
+  font-family: "GmarketSansLight";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  font-family: "GmarketSansLight";
+}
+
+/* COMMON AREA -start */
+/* navbar */
+#mainNavbar {
+  background-color: #f7ae60e7;
+  font-weight: 300;
+  width: 1080px;
+  margin: 0 auto;
+  z-index: 998;
+}
+
+#mainNavbar .nav-link {
+  color: white;
+  font-size: 1.2rem;
+  transition: color 0.25s, text-shadow 0.25s, transform 0.25s;
+  margin-right: 15px;
+}
+
+#mainNavbar .nav-link:hover {
+  color: #ea1c2c;
+  text-shadow: 0 0.5em 0.5em -0.4em darkgray;
+  transform: translateY(-0.1em);
+  cursor: pointer;
+}
+
+#mainNavbar .navbar-brand {
+  color: white;
+  font-size: 2rem;
+  line-height: 1;
+  text-align: center;
+  padding-top: 5px;
+  padding-left: 10px;
+}
+
+.kr-logo {
+  font-size: 1.2rem;
+}
+
+/* footer */
+footer {
+  text-align: center;
+  line-height: 1;
+  padding: 7px;
+}
+
+footer hr {
+  width: 50%;
+  margin: 20px auto;
+}
+
+.contact {
+  font-size: 2.2rem;
+  color: orange;
+  margin: 8px 0 15px;
+}
+
+.info {
+  color: gray;
+  margin: 0;
+  line-height: 1.5;
+}
+
+
+/* modal */
+.modal-title {
+  /*계정 설정*/
+  width: 100%;
+  color: #f79b38;
+  font-weight: bolder;
+  text-align: center;
+}
+
+.changeList {
+  /*계정 설정 리스트*/
+  width: 300px;
+  border: 0;
+  border-radius: 5px;
+  padding: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: white;
+  height: 100%;
+}
+
+.newId-field {
+  /*계정 설정 리스트 요소*/
+  font-size: 16px;
+  margin-bottom: 10px;
+  width: 100%;
+  height: 45px;
+  border-radius: 5px;
+  padding: 10px;
+  color: black;
+  background-color: #eff2f8;
+  border: none;
+}
+
+#Id {
+  width: 100%;
+  margin-right: 0;
+}
+
+.chkId {
+  position: relative;
+}
+
+.chkId2 {
+  position: absolute;
+  top: 0px;
+  left: 220px;
+  width: 30px;
+  font-size: 16px;
+  margin: 0 0 10px -8px;
+  height: 45px;
+  border-radius: 5px;
+  padding: 10px;
+  color: black;
+  background-color: #eff2f8;
+  border: none;
+}
+
+.chkId2 img {
+  width: 20px;
+  height: 20px;
+  -webkit-filter: opacity(0.45) drop-shadow(0 0 10px rgb(255, 254, 253));
+  filter: opacity(0.45) drop-shadow(0 0 10px rgb(252, 251, 251));
+}
+
+.check {
+  text-align: left;
+  color: #9b9b9b;
+  margin-top: 30px;
+}
+
+.modal-body {
+  color: black;
+}
+
+.ol-font {
+  font-size: small;
+}
+
+.newId-field:hover {
+  /*계정 설정 리스트 요소 호버*/
+  box-shadow: 2px 2px 1px 1px rgb(0, 0, 0, 0.5);
+}
+
+#dropdownMenuButton1 {
+  /*반려동물 드롭다운 버튼*/
+  margin: 0 auto;
+  text-align: left;
+  background-color: #eff2f8;
+  color: rgb(112, 112, 112);
+  border: none;
+}
+
+#dropdownMenuButton1:hover {
+  box-shadow: 2px 2px 1px 1px rgb(0, 0, 0, 0.5);
+}
+
+.btn-box {
+  width: 100%;
+  border-radius: 5px;
+  height: 44px;
+}
+
+.modal-footer-btn {
+  /*취소 변경 버튼 위치 조정*/
+  text-align: center;
+  width: 100%;
+}
+
+.modal-footer .btn {
+  /*취소 변경 버튼*/
+  width: 60px;
+  height: 35px;
+}
+
+.modal-footer .btn span {
+  /*취소 변경 텍스트 스타일*/
+  color: white;
+  font-size: 0.8rem;
+}
+
+#modalbtn {
+  margin: 0 10px 0 0;
+}
+
+/* mypage */
+main {
+  max-width: 1080px;
+  width: 100%;
+  margin: 0 auto;
+  padding-top: 74px;
+}
+
+.mypage {
+  /*마이페이지*/
+  margin: 80px;
+  left: 10%;
+  color: #ff8e14;
+  font-size: 2rem;
+  font-weight: bolder;
+}
+
+.intro {
+  /*안녕하세요, --- 님!*/
+  margin: 8px 0 0 -1px;
+  color: black;
+  font-size: medium;
+  font-weight: bold;
+}
+
+.intro span {
+  /*투개더*/
+  color: #f79b38;
+}
+
+.btn {
+  /*계정 설정*/
+  margin: 0 0 6px 20px;
+}
+
+.btn-outline-warning {
+  font-weight: bold;
+  font-size: 0.2rem;
+  color: #f79b38;
+}
+
+main h4 {
+  /*찜 목록, 리뷰 폰트 스타일*/
+  display: inline-block;
+  font-weight: 700;
+}
+
+.heartlist {
+  /*찜 목록*/
+  margin: 120px 5% 0 5%;
+}
+
+.heartlist a {
+  /*찜 목록 더보기*/
+  float: right;
+  text-decoration: none;
+  color: rgb(130, 127, 127);
+  font-weight: bold;
+}
+
+.reviewlist {
+  /*내가 등록한 리뷰*/
+  margin: 50px 5% 0 5%;
+}
+
+.reviewlist a {
+  /*내가 등록한 리뷰 더보기*/
+  float: right;
+  text-decoration: none;
+  color: rgb(130, 127, 127);
+  font-weight: bold;
+}
+
+.h-grid {
+  /*찜목록 반응형 적용*/
+  display: grid;
+  gap: 25px;
+  margin: 2.5% 10px 20px 10px;
+}
+
+@media screen and (min-width: 1100px) {
+  .h-grid {
+    grid-template-columns: repeat(4, minmax(230px, 1fr));
+  }
+}
+
+@media screen and (max-width: 1099px) {
+  .h-grid {
+    grid-template-columns: repeat(3, minmax(230px, 1fr));
+  }
+}
+
+@media screen and (max-width: 819px) {
+  .h-grid {
+    grid-template-columns: repeat(2, minmax(230px, 1fr));
+  }
+}
+
+.h-grid a {
+  /*업체 상세페이지 링크*/
+  position: relative;
+  width: 250px;
+  height: 200px;
+}
+
+.h-grid img {
+  /*업체 이미지*/
+  width: 250px;
+  height: 200px;
+}
+
+.h-grid p {
+  /*업체명*/
+  text-align: center;
+  position: absolute;
+  margin-bottom: 0;
+  width: 100%;
+  bottom: 0%;
+  text-decoration: none;
+  background-color: rgba(0, 0, 0, 0.378);
+  color: white;
+}
+
+.h-grid .heart {
+  /*하트*/
+  position: absolute;
+  width: 13%;
+  height: 13%;
+  right: 5%;
+  bottom: 30px;
+}
+
+.reviews {
+  /*리뷰 박스*/
+  margin: 2.5%;
+}
+
+.row {
+  width: 100%;
+  flex-wrap: nowrap;
+  margin-bottom: 15px;
+}
+
+.card-body {
+  position: relative;
+  width: 100%;
+}
+
+.card {
+  border: none;
+}
+
+.card-title {
+  /*리뷰 장소*/
+  width: 80%;
+  display: inline;
+}
+
+.card-text {
+  position: relative;
+  min-block-size: fit-content;
+}
+
+.mpg-card-text {
+  height: 50%;
+}
+
+.star {
+  /*별*/
+  width: 240px;
+  height: 40px;
+  display: inline-block;
+  padding: 5px;
+}
+
+.star img {
+  display: inline-block;
+  left: 50px;
+  width: 20px;
+  height: 20px;
+  margin-bottom: 5px;
+}
+
+.star h6 {
+  /*평점*/
+  display: inline;
+  margin: 2px 0 1px 5px;
+}
+
+.modification {
+  /*수정*/
+  font-weight: none;
+  display: inline-block;
+  margin-left: 50px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  color: rgb(130, 127, 127);
+}
+
+.delbtn,
+.modifybtn {
+  /*삭제*/
+  float: right;
+  cursor: pointer;
+  font-size: 0.8rem;
+  color: rgb(130, 127, 127);
+  margin-left: 10px;
+}
+
+.row-img {
+  /*업체 사진*/
+  width: 27%;
+  padding: 0;
+  margin-right: 15px;
+}
+
+.row-img img {
+  width: 300px;
+  height: 150px;
+}
+
+.row-content {
+  /*리뷰 내용*/
+  width: 70%;
+}
+
+.rounded-start {
+  border-bottom-right-radius: var(--bs-border-radius);
+  border-top-right-radius: var(--bs-border-radius);
+}
+
+@media screen and (max-width: 500px) {
+  .row {
+    flex-direction: column;
+    margin-bottom: 0%;
+  }
+
+  .row-img {
+    width: 60%;
+    display: block;
+    margin: 0 auto;
+  }
+
+  .img-fluid {
+    width: 100%;
+    padding-right: 0;
+  }
+
+  .rounded-start {
+    border-bottom-right-radius: var(--bs-border-radius) !important;
+    border-top-right-radius: var(--bs-border-radius) !important;
+  }
+
+  .delbtn {
+    float: right;
+  }
+
+  .card-body {
+    padding: 30px;
+  }
+
+  .card-content p {
+    height: 30%;
+    margin-top: 15px;
+    margin-left: -100px;
+  }
+}
+
+/*heartlist plus*/
+.listplus {
+  margin: 80px;
+  left: 10%;
+  font-size: 2rem;
+  font-weight: bolder;
+  color: black;
+}
+
+/*review plus*/
+.review-date {
+  margin: 0;
+}
+
+.card-content {
+  height: 35%;
+}
+
+.card-header {
+  margin-top: 10px;
+}
+
+/* review modal */
+.review-modal-body {
+  width: 70%;
+  margin: 20px auto;
+}
+
+.review-info img {
+  width: 30%;
+  display: block;
+  margin: 0 auto;
+}
+
+.review-textarea {
+  width: 100%;
+  background-color: #f2f2f2;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.newid-delbtn {
+  background-color: white;
+}
+
+.newid-delbtn span {
+  color: orange;
+}
+
+.my-modifybtn {
+  background-color: rgb(255, 179, 37);
+  color: white;
+}
+
+#icon_star1,
+#icon_star2,
+#icon_star3,
+#icon_star4,
+#icon_star5 {
+  width: 40px;
+  height: 40px;
+  margin: 10px auto 10px auto;
+}
+
+.star-edit {
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.mdf-ctitle {
+  display: block;
+  margin: 10px auto;
+  text-align: center;
+}
+
+/* media query 1100px */
+@media (max-width: 1100px) {
+
+  #mainNavbar {
+      margin: 0;
+      width: auto;
+  }
+}

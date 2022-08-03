@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="ko"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layouts/layout}">
+	<head>
+		<meta charset="UTF-8">
+		<title>index</title>
+		<th:block layout:fragment="css">
+			<link rel="stylesheet" th:href="@{/css/app4.css}">
+		</th:block>
+		<th:block layout:fragment="script">
+			<script th:inline="javascript">
+				$(function() {
+					//업체 이미지 애니메이션 효과
+					/*$("#js02").delay(5000).animate({
+		                marginLeft: "270px"
+		            }, 8000, function () {});
+		
+		            $("#js08").delay(3000).animate({
+		                marginRight: "270px",
+		            }, 5000);
+		
+		            $(".page-title").animate({
+	                    marginRight: "100px",
+	                }, 2000)
+	                .animate({
+	                    marginLeft: "250px"
+	                }, 2000)
+	                .animate({
+	                    marginLeft: "0px"
+	                }, 2000);*/
+		
+		            //별점남기기
+		            /*
+		            $("#icon_star1").on("click", function () {
+		                if ($("#icon_star1").attr("src") == "@{/images/star_empty.png}") {
+		                    $("#icon_star1").attr("src", "@{/images/star_half.png}");
+		                } else {
+		                    $("#icon_star1").attr("src", "@{/images/star_ful.png}");
+		                }
+		            });
+		
+		            $("#icon_star2").on("click", function () {
+		                if ($("#icon_star2").attr("src") == "@{/images/star_empty.png}") {
+		                    $("#icon_star1").attr("src", "@{/images/star_ful.png}");
+		                    $("#icon_star2").attr("src", "@{/images/star_half.png}");
+		                } else {
+		                    $("#icon_star2").attr("src", "@{/images/star_ful.png}");
+		                }
+		            });
+		
+		            $("#icon_star3").on("click", function () {
+		                if ($("#icon_star3").attr("src") == "@{/images/star_empty.png}") {
+		                    $("#icon_star1, #icon_star2").attr("src", "@{/images/star_ful.png}");
+		                    $("#icon_star3").attr("src", "@{/images/star_half.png}");
+		                } else {
+		                    $("#icon_star3").attr("src", "@{/images/star_ful.png}");
+		                }
+		            });
+		
+		            $("#icon_star4").on("click", function () {
+		                if ($("#icon_star4").attr("src") == "@{/images/star_empty.png}") {
+		                    $("#icon_star1, #icon_star2, #icon_star3").attr("src", "@{/images/star_ful.png}");
+		                    $("#icon_star4").attr("src", "@{/images/star_half.png}");
+		                } else {
+		                    $("#icon_star4").attr("src", "@{/images/star_ful.png}");
+		                }
+		            });
+		
+		            $("#icon_star5").on("click", function () {
+		                if ($("#icon_star5").attr("src") == "@{/images/star_empty.png}") {
+		                    $("#icon_star1, #icon_star2, #icon_star3, #icon_star4").attr("src",
+		                        "@{/images/star_ful.png}");
+		                    $("#icon_star5").attr("src", "@{/images/star_half.png}");
+		                } else {
+		                    $("#icon_star5").attr("src", "@{/images/star_ful.png}");
+		                }
+		            });*/
+				});
+			</script>
+		</th:block>
+	</head>
+	<body>
+		<div layout:fragment="content">
+			<div class="container">
+		    <input type="hidden" name="storeSeq" th:value="${store.storeSeq }">
+		        <!-- 상세 페이지 제목 -->
+		        <div class="title">
+		            <h1 th:text="${store.storeNm }"></h1>
+		            <h5 th:text="${store.storeIntro }" class="title_small"></h5>
+		        </div>
+		
+		        <!-- 상세 페이지 콘텐츠 -->
+		        <!-- 업체 소개글 -->
+		        <article>
+		            <div class="innercontainer" th:if="${store.fileList ne null}">
+		            	<div th:each="file : ${store.fileList}">
+		            		<div th:if="${file.fileSeq == 1}">
+			                	<img id="main_image" th:src="@{/upload/} + ${file.fileName}" alt="가게의 모습" style="min-height: 555px;">
+			                </div>
+		            	</div>
+		            	<div style="height: 400px;">
+			                <span id="info_p"><hr/>
+			                    <pre th:text="${store.storeContent }"></pre>
+			                </span>
+		            	</div>
+		
+		                <!-- 중간에 들어가는 업체 추가 이미지 -->
+		                <div th:each="file : ${store.fileList}">
+			                <div th:unless="${file.fileSeq == 1}">
+			                	<img id="js02" th:src="@{/upload/} + ${file.fileName}">
+			                </div>
+		                </div>
+		
+		                <!-- 예약안내 부분 -->
+		                <div class="reservation">
+		                    <h2 id="res01">예약 안내
+		                        <hr>
+		                    </h2>
+		                    <div class="reservation_details">
+		                        <h5>시설 안내</h5>
+		                        <table class="detail_table">
+		                            <tr>
+		                                <th>편의 서비스</th>
+	                                    <td th:if="${store.internet ne null}"><img id="res_img" th:src="@{/images/wifi.png}"/>인터넷/WIFI</td>
+		                                <td th:if="${store.petpad ne null}"><img id="res_img" th:src="@{/images/pet.png}"/>배변패드</td>
+		                            </tr>
+		                            <tr>
+		                                <th>편의 시설</th>
+		                                <td th:if="${store.parking ne null}"><img id="res_img" th:src="@{/images/parking.png}"/>주차장(유료)</td>
+		                                <td th:if="${store.parkingFree ne null}"><img id="res_img" th:src="@{/images/parking.png}"/>주차장(무료)</td>
+		                                <td th:if="${store.convenience ne null}"><img id="res_img" th:src="@{/images/mart.png}"/>편의점</td>
+                                    	<td th:if="${store.swimming ne null}"><img id="res_img" th:src="@{/images/waterful.png}"/>수영장(하절기)</td>
+		                            </tr>
+		                        </table>
+		
+		                        <h5 th:if="${store.categoryNm.equals('hotel')}">숙소 정책</h5>
+		                        <h5 th:if="${store.categoryNm.equals('meal')}">식당 정책</h5>
+		                        <h5 th:if="${store.categoryNm.equals('cafe')}">카페 정책</h5>
+		                        <table class="detail_table2">
+		                            <div class="longlong">
+		                                <tr>
+		                                    <th th:if="${store.categoryNm.equals('hotel')}">속소 정책</th>
+		                                    <th th:if="${store.categoryNm.equals('meal')}">식당 정책</th>
+		                                    <th th:if="${store.categoryNm.equals('cafe')}">카페 정책</th>
+		                                    <td><pre th:text="${store.storePolicy }"></pre></td>
+		                                </tr>
+		
+		                                <tr>
+		                                    <th>영업시간</th>
+		                                    <td><pre th:text="${store.storeTime }"></pre></td>
+		                                </tr>
+		
+		                                <tr>
+		                                    <th>예약안내</th>
+		                                    <td><pre th:text="${store.storeTel }"></pre></td>
+		                                </tr>
+		
+		                                <tr>
+		                                    <th>메뉴 가격표</th>
+		                                    <td><pre th:text="${store.storeMenu }"></pre></td>
+		                                </tr>
+		                                <tr>
+		                                	<th>유의사항</th>
+		                                    <td><pre th:text="${store.storeEtc }"></pre></td>
+		                                </tr>
+		                            </div>
+		                        </table>
+		                    </div>
+		                </div>
+		
+		                <!-- 예약 바로가기 링크 -->
+		                <div class="link">
+		                    <a id="res_link" th:href="${store.storeLink }" target="_blank"><img
+		                            id="welshcorgi" th:src="@{/images/웰시코기.png}">
+		                        <h3><span th:text="${store.storeNm }"></span> 예약하러 바로가기</h3>
+		                    </a>
+		                </div>
+		            </div>
+		        </article>
+		
+		        <!-- 사이드바 부분 -->
+		        <aside>
+		            <h3 class="sub-title">Info</h3>
+		            <ul class="sub-menu">
+		                <li th:text="${store.storeAddress }"></li>
+		                <li><a th:href="${store.storeLink }" th:text="${store.storeLink }"></a></li>
+		                <li th:text="${store.storeTime }"></li>
+		                <li th:text="${store.storeTel }"></li>
+		            </ul>
+		
+		            <!-- 사이드바 별점/평점 -->
+		            <div class="star">
+		                <img id="star1" th:src="@{/images/star_ful.png}">
+		                <img id="star1" th:src="@{/images/star_ful.png}">
+		                <img id="star1" th:src="@{/images/star_ful.png}">
+		                <img id="star1" th:src="@{/images/star_ful.png}">
+		                <img id="star1" th:src="@{/images/star_half.png}">
+		                <!-- <h3><span th:text="${review.reviewAvg }"></span> / 5.0</h3> -->
+		            </div>
+		
+		            <!-- 사이드바 공유하기 버튼 -->
+		            <div class="share_button">
+		                <img id="shareTw" th:src="@{/images/twitter.png}" alt="트위터로 공유하기">
+		                <img id="shareFb" th:src="@{/images/facebook.png}" alt="페이스북으로 공유하기">
+		                <img id="shareKs" th:src="@{/images/kakao.png}" alt="카카오톡으로 공유하기">
+		            </div>
+		        </aside>
+		    </div>
+		
+		    <!-- 지도이미지 들어갈 부분 -->
+		    <div class="map">
+		        <div class="location-info">
+		            <h3 class="location-title">위치
+		                <hr>
+		            </h3>
+		        </div>
+		        <div class="location-map">
+		            <!-- 지도 노드 -->
+		            <iframe
+		                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3135.207469531536!2d128.5806086156463!3d38.20507969505763!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x5fd8bc7a9a842191%3A0x7c624f00b8d5c81a!2z6rCV7JuQ64-EIOyGjey0iOyLnCDrsojsmIHroZw0OeuyiOq4uCAxNiAx7Li1!5e0!3m2!1sko!2skr!4v1655879646073!5m2!1sko!2skr"
+		                width="900" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+		                referrerpolicy="no-referrer-when-downgrade"></iframe>
+		        </div>
+		    </div>
+		
+		
+		
+		    <!-- 리뷰 및 별점 남기기 부분 -->
+		
+		    <div class="rev">
+		        <div class="rev_1">
+		            <h3 id="review">방문자 리뷰
+		                <hr>
+		            </h3>
+		            <div class="star_icon">
+		            	<img id="icon_star1" th:src="@{/images/star_ful.png}" alt="별점남기기">
+		            	<select name="category" class="form-select" aria-label="multiple select example" style="display: inline; width:100px;">
+	                        <option value="5">5</option>
+	                        <option value="4">4</option>
+	                        <option value="3">3</option>
+	                        <option value="2">2</option>
+	                        <option value="1">1</option>
+	                    </select>
+		            </div>
+		            <input type="text" name="userId" th:value="${#authentication.principal.username}" hidden>
+		            <textarea name="text" placeholder="방문하신 리뷰를 작성해 주세요." cols="50" rows="10"></textarea>
+		            <button type="submit" class="btn btn-warning add_button">등록하기</button>
+		        </div>
+		
+		        <!-- 사용자 리뷰 
+		        <div class="rev_table">
+		            <article class="reviewlist">
+		                <div th:if="${reviewList ne null}" th:each="review : ${reviewList}" th:remove="tag" class="row rev_container">
+		                    <div class="card-body">
+	                            <h5 th:text="${review.userId}" class="card-title">, <span th:text="${review.userAni}"></span></h5>
+	                            <div class="rev_star">
+	                                <img src="https://cdn-icons-png.flaticon.com/128/1828/1828884.png}" alt="별점">
+	                                <h6><span th:text="${review.rate}"></span> / 5</h6>
+	                            </div>
+		                        <p th:text="${review.text}" class="card-text card-content"></p>
+		                        <p class="review-date"><small class="text-muted">게시한 날짜 <span th:text="${#temporals.format(review.regDate, 'yyyy/MM/dd')}"></span></small></p>
+		                    </div>
+		                </div>
+		            </article>
+		        </div> -->
+		    </div>
+	   	</div>
+	</body>
+</html>

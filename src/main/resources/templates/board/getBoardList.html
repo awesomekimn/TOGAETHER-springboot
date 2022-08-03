@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ko"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layouts/layout}">
+	<head>
+		<meta charset="UTF-8">
+		<title>index</title>
+		<th:block layout:fragment="css">
+			<link rel="stylesheet" th:href="@{/css/app1.css}">
+		</th:block>
+		<th:block layout:fragment="script">
+			<script th:inline="javascript">
+				$(function() {
+					
+					$("#search-button").on("click", function() {
+						$("input[name='page']").val('0');
+						searchForm.submit();
+					});
+					
+					// board-body toggle
+			        $(".board-body").hide();
+			        $(".board-title").click(function (e) {
+			            $(this).next().toggle();
+						
+			            /*<[CDATA[*/
+						const loginUserId = /*[[${#authentication.principal.username}]]*/;
+						/*]]>*/
+						const boardWriter = $(this).children().eq(2).text();
+						
+						if(loginUserId === "admin") {
+							
+						} else if(loginUserId !== boardWriter) {
+						// 작성자와 로그인유저id 같을 때만 delete버튼 표출
+							if($(this).next().children().length == 3) {
+								$(this).next().children().eq(2).hide();
+							} else {
+								$(this).next().children().eq(1).hide();
+							}
+						}
+			        });
+			
+			        // pagination active
+			        $(".pagination li a").on("click", function () {
+			          $(".pagination li a").removeClass("active");
+			          $(this).addClass("active");
+			        });
+			        
+				});
+			</script>
+		</th:block>
+	</head>
+	
+	<body>
+		<div layout:fragment="content" class="qna-container">
+	      <div class="inner-container">
+	        <!-- Q&A header -->
+	        <div class="qna-header">
+	          <h1>Q&A</h1>
+	        </div>
+	
+	        <div class="sub-container">
+	          <!-- search bar -->
+	          <div class="search-container">
+	            <div class="search-input">
+	            	<form id="searchForm" action="/board/getBoardList" method="get">
+		                <input type="text" name="searchKeyword" th:value="${searchKeyword}" placeholder="어떤 서비스가 필요하세요?" />
+		                <button type="button" id="search-button">
+		                    <img class="search-img" th:src="@{/images/search.png}" alt="search"/>
+		                </button>
+	                </form>
+	            </div>
+	          </div>
+	          <!-- write button -->
+	          <div>
+	            <form action="/board/insertBoard">
+	              <button type="submit" class="btn btn-warning write_btn">WRITE</button>
+	            </form>
+	          </div>
+	        </div>
+	
+	        <!-- Q&A board -->
+	        <div class="qna-board">
+	          <!-- Q&A board header -->
+	          <div class="board-header row">
+	            <div class="board-title-info col-sm-7">제목</div>
+	            <div class="board-title-date col-sm-3">등록일</div>
+	            <div class="board-title-user col-sm-2">작성자</div>
+	          </div>
+	
+	          <!-- Q&A -->
+	          <div th:if="${board.boardCategory.equals('notification')}" th:each="board : ${boardList}" th:remove="tag">
+		          <div class="board-title row">
+			          <div class="board-title-info col-sm-7">
+			              <span id="boardCtg" th:if="${board.boardCategory.equals('notification')}" class="qna_category_notice">공지</span>
+			              <span th:text="${board.boardTitle}"></span>
+			          </div>
+			          <div th:text="${#temporals.format(board.boardRgsdate, 'yyyy.MM.dd')}" class="board-title-date col-sm-3"></div>
+			          <div th:if="${board.boardWriter.equals('admin')}" class="board-title-user col-sm-2">관리자</div>
+		          </div>
+		          <section class="board-body">
+		            <pre th:text="${board.boardContent}"></pre>
+		            <div>
+			            <div th:if="${board.fileList ne null}" th:each="file : ${board.fileList}" th:remove="tag">
+							<img style="max-width: 200px; max-height: 200px;" th:src="@{/upload/} + ${file.fileName}">
+						</div>
+					</div>
+					<a style="display: block; margin-top: 30px;" th:href="@{/board/deleteBoard/{boardSeq} (boardSeq=${board.boardSeq})}" id="btnDelete" class="btn btn-outline-danger">DELETE</a>
+		          </section>
+	          </div>
+	          <div th:unless="${board.boardCategory.equals('notification')}" th:each="board : ${boardList}" th:remove="tag">
+	              <!-- 글쓴이와 로그인 유저가 같을때 비밀글 표출 -->
+	              <div th:if="${board.boardWriter.equals(#authentication.principal.username) or board.secret == null or #authentication.principal.username.equals('admin')}">
+			          <div class="board-title row">
+				          <div class="board-title-info col-sm-7">
+				              <span id="boardCtg" th:if="${board.boardCategory.equals('register')}">[업체 등록]</span>
+				              <span id="boardCtg" th:if="${board.boardCategory.equals('tipoff')}">[제보]</span>
+				              <span id="boardCtg" th:if="${board.boardCategory.equals('question')}">[문의]</span>
+				              <span th:text="${board.boardTitle}"></span>
+				          </div>
+				          <div th:text="${#temporals.format(board.boardRgsdate, 'yyyy.MM.dd')}" class="board-title-date col-sm-3"></div>
+				          <div th:text="${board.boardWriter}" class="board-title-user col-sm-2"></div>
+			          </div>
+			          <section class="board-body">
+			            <pre th:text="${board.boardContent}"></pre>
+			            <div>
+				            <div th:if="${board.fileList ne null}" th:each="file : ${board.fileList}" th:remove="tag">
+								<img style="max-width: 200px; max-height: 200px;" th:src="@{/upload/} + ${file.fileName}">
+							</div>
+						</div>
+						<a style="display: block; margin-top: 30px;" th:href="@{/board/deleteBoard/{boardSeq} (boardSeq=${board.boardSeq})}" id="btnDelete" class="btn btn-outline-danger">DELETE</a>
+			          </section>
+	              </div>
+	              <!-- 글쓴이와 로그인 유저가 다를때 비밀글 숨김 -->
+	              <div th:if="${board.boardWriter != #authentication.principal.username and board.secret != null and #authentication.principal.username != 'admin'}">
+	              	  <div class="board-title row">
+				          <div class="board-title-info col-sm-7">
+				              <span id="boardCtg" th:if="${board.boardCategory.equals('register')}">[업체 등록]</span>
+				              <span id="boardCtg" th:if="${board.boardCategory.equals('tipoff')}">[제보]</span>
+				              <span id="boardCtg" th:if="${board.boardCategory.equals('question')}">[문의]</span>
+				              <span>비밀글입니다.🔒︎</span>
+				          </div>
+				          <div th:text="${#temporals.format(board.boardRgsdate, 'yyyy.MM.dd')}" class="board-title-date col-sm-3"></div>
+				          <div th:text="${board.boardWriter}" class="board-title-user col-sm-2">︎</div>
+			          </div>
+	              </div>
+	          </div>
+	          
+	          <!-- pagination -->
+	          <div class="paginations">
+	          	<ul style="padding: 0;" class="pagination" th:with="pageNumber = ${boardList.pageable.pageNumber},
+			                    pageSize = ${boardList.pageable.pageSize},
+			                    totalPages = ${boardList.totalPages},
+			                    startPage = ${T(java.lang.Math).floor(pageNumber / pageSize) * pageSize + 1},
+			                    tempEndPage = ${startPage + pageSize - 1},
+			                    endPage = ${tempEndPage > totalPages ? totalPages : tempEndPage}">
+			
+				    <li class="pagination_button" th:if="${pageNumber > 0}">
+				        <a th:href="@{/board/getBoardList(page=${pageNumber - 1}, searchCondition=${searchCondition}, searchKeyword=${searchKeyword})}">&laquo;</a>
+				    </li>
+				
+				
+		   	        <li class="pagination_button" th:each="page : ${#numbers.sequence(startPage, endPage)}">
+				        <a th:href="@{/board/getBoardList(page=${page - 1}, searchCondition=${searchCondition}, searchKeyword=${searchKeyword})}" th:text="${page}"></a>
+			        </li>
+				
+				    <li class="pagination_button" th:if="${pageNumber < totalPages - 1}">
+				        <a th:href="@{/board/getBoardList(page=${pageNumber + 1}, searchCondition=${searchCondition}, searchKeyword=${searchKeyword})}">&raquo;</a>
+				    </li>
+			    </ul>
+	          </div>
+	        </div>
+	      </div>
+	    </div>
+	</body>
+</html>
