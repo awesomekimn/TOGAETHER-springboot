@@ -30,7 +30,6 @@ public class StoreServiceImpl implements StoreService {
 	
 	@Autowired
 	ReviewMapper reviewMapper;
-	
 
 	@Override
 	public Page<Store> getStoreList(String categoryNm, Pageable pageable) {
