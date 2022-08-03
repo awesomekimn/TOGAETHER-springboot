@@ -27,5 +27,8 @@ public class StoreDTO {
 	private Date storeRegdate;
 	private String storeWriter;
 	private String categoryNm;
+	private int fileSeq;
+	private String fileName;
 	private String userAni;
+	
 }
