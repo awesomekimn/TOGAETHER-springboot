@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout}">
+
+<head>
+	<meta charset="UTF-8">
+	<title>index</title>
+	<th:block layout:fragment="css">
+		<link rel="stylesheet" th:href="@{/css/app3.css}">
+	</th:block>
+	<th:block layout:fragment="script">
+		<script th:inline="javascript">
+			//하트 이미지 변환
+			$(function () {
+				$("#lastheart").on("click", function (e) {
+					e.preventDefault();
+					$("#lastheart").attr(
+						"src",
+						"https://cdn-icons.flaticon.com/png/128/2961/premium/2961957.png?token=exp=1655450638~hmac=82d287cb31213afea8822373b6052dab"
+					);
+					//변환된 하트 클릭 시 목록에서 제거
+					const timeout = setTimeout(function () {
+						$("#lastlist").css("display", "none");
+					}, 100);
+				});
+			});
+
+			//리뷰 수정 완료 alert
+			function submit() {
+				alert('리뷰 수정이 완료되었습니다')
+			};
+
+			// 리뷰 삭제
+			$(function () {
+				$(".delbtn").on("click", function (e) {
+					var delconfirm = confirm('삭제하시겠습니까?');
+					if (delconfirm) {
+						$(this).parent().parent().parent().css("display",
+							"none");
+					};
+				});
+			});
+
+			//계정 설정 아이디 확인
+			$(function () {
+				$("#chkimg").on("click", function () {
+					$("#chkimg").attr("src",
+						"https://cdn-icons-png.flaticon.com/128/7079/7079987.png"
+					)
+				});
+			});
+
+			//계정 변경 완료 alert
+			function submit() {
+				alert('변경이 완료되었습니다')
+			};
+		</script>
+	</th:block>
+</head>
+
+<body>
+	<main layout:fragment="content">
+		<section class="mypage">
+			<span>마이페이지</span>
+			<button type="button" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#newId">계정
+				설정</button>
+			<br>
+			<p class="intro">안녕하세요, <span th:text="${user.userId}"></span>님!</p>
+		</section>
+		<section>
+			<div class="heartlist">
+				<h4>찜 목록</h4>
+				<a href="listplus.html">더보기+</a>
+			</div>
+			<article class="h-grid">
+				<!--장소 사진-->
+				<div th:if="${fileList ne null}" th:each="file : ${fileList}" th:remove="tag">
+					<a th:href="#" id="lastlist">
+						<img th:src="@{/upload/} + ${file.fileName}" alt="item">
+						<img class="heart" id="lastheart" src="https://cdn-icons-png.flaticon.com/128/833/833472.png"
+							alt="heartimg">
+						<p th:text="${store.storeNm}"></p>
+					</a>
+				</div>
+			</article>
+		</section>
+		<section>
+			<article class="reviewlist">
+				<h4>내가 등록한 리뷰</h4>
+				<a th:href="#">더보기+</a>
+				<div class="reviews">
+					<div class="card" style="max-width: 100%;">
+						<div class="row">
+							<!--장소 사진-->
+							<div class="row-img" th:if="${fileList ne null}" th:each="file : ${fileList}" th:remove="tag">
+								<img th:src="@{/upload/} + ${file.fileName}" alt="장소 사진">
+								<a th:href="#"></a>
+							</div>
+							<div class="card-body">
+								<div class="card-text">
+									<h5 class="card-title" th:text="${store.storeNm}"></h5>
+									<div class="delbtn">삭제</div>
+									<div class="modifybtn" data-bs-toggle="modal" data-bs-target="#review-edit">수정</div>
+									<div class="modal" tabindex="-1" id="review-edit">
+										<div class="modal-dialog" role="document">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h5 class="modal-title">리뷰 수정</h5>
+												</div>
+												<div class="review-modal-body">
+													<div class="review-info" th:if="${fileList ne null}" th:each="file : ${fileList}" th:remove="tag">
+														<img th:src="@{/upload/} + ${file.fileName}" alt="장소 사진">
+														<h5 class="card-title mdf-ctitle" th:text="${store.storeNm}"></h5>
+													</div>
+													<!--별점-->
+													<img id="icon_star1" th:src="@{/images/star_ful.png}" alt="별점남기기">
+									            	<select name="category" class="form-select" aria-label="multiple select example" style="display: inline; width:100px;">
+								                        <option value="5">5</option>
+								                        <option value="4">4</option>
+								                        <option value="3">3</option>
+								                        <option value="2">2</option>
+								                        <option value="1">1</option>
+								                    </select>
+													<div class="text-edit">
+														<textarea class="review-textarea" rows="10" th:text="${review.reviewText}"></textarea>
+													</div>
+												</div>
+												<div class="modal-footer">
+													<div class="modal-footer-btn">
+														<button type="button" class="btn btn-outline-warning"
+															data-bs-dismiss="modal" id="modalbtn">
+															취소
+														</button>
+														<button type="button"
+															class="btn btn-outline-warning my-modifybtn"
+															data-bs-dismiss="modal" id="modalbtn"
+															onclick="javascript:submit()">
+															변경
+														</button>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="star">
+										<img src="https://cdn-icons-png.flaticon.com/128/1828/1828884.png" alt="별점">
+										<h6 th:text="${review.reviewRate}"></h6>
+									</div>
+								</div>
+								<p class="card-text mpg-card-text" th:text="${review.reviewText}"></p>
+								<p class="review-date"><small class="text-muted" th:text="${review.reviewRgstdate}"></small></p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</article>
+		</section>
+	</main>
+	<!--계정 변경 모달 시작-->
+	<div class="modal" tabindex="-1" id="newId">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">계정 설정</h5>
+				</div>
+				<div class="modal-body">
+					<form class="changeList">
+						<div class="chkId">
+							<input type="text" id="Id" class="newId-field" placeholder="아이디" value="togaether">
+							<div class="chkId2">
+								<button type="button" id="chkbutton">
+									<img src="https://cdn-icons-png.flaticon.com/128/3917/3917749.png" alt="id확인"
+										id="chkimg">
+								</button>
+							</div>
+						</div>
+						<input type="password" id="PW" class="newId-field" placeholder="현재 비밀번호">
+						<input type="password" id="PW" class="newId-field" placeholder="새 비밀번호">
+						<input type="password" id="PW" class="newId-field" placeholder="새 비밀번호 확인">
+						<input type="number" id="Num" class="newId-field" placeholder="휴대폰 번호" value="0100000000">
+						<input type="email" id="email" class="newId-field" placeholder="이메일" value="aa@gmail.com">
+						<div class="dropdown">
+			                <label for="animal" style="margin: 0 20px">
+			                    반려동물
+			                </label>
+			
+			                <select name="animal" id="animal" style="width: 290px; height:34px; border: none; border-bottom: 1px solid gray; background: #EEEFF1;">
+			                    <option value="1">소형견</option>
+			                    <option value="2">중형견</option>
+			                    <option value="3">대형견</option>
+			                </select>
+			            </div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<div class="modal-footer-btn">
+						<button type="button" class="btn btn-outline-warning" data-bs-dismiss="modal" id="modalbtn">
+							취소
+						</button>
+						<button type="button" class="btn btn-outline-warning my-modifybtn" data-bs-dismiss="modal"
+							id="modalbtn" onclick="javascript:submit()">
+							변경
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--모달 끝-->
+</body>
+
+</html>
