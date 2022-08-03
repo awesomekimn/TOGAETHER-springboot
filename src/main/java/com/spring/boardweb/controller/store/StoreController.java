@@ -20,13 +20,9 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.boardweb.commons.PicUtils;
-import com.spring.boardweb.dto.StoreDTO;
-import com.spring.boardweb.dto.StoreFileDTO;
 import com.spring.boardweb.entity.Store;
 import com.spring.boardweb.entity.StoreFile;
-import com.spring.boardweb.entity.User;
 import com.spring.boardweb.service.store.StoreService;
-import com.spring.boardweb.service.user.UserService;
 
 @RestController
 @RequestMapping("/store")
@@ -67,11 +63,11 @@ public class StoreController {
 		store.setFileList(storeService.getStoreFileList(store.getStoreSeq()));
 		store.setUserAni(storeService.getUserAni(session.getId()));
 //		List<Review> reviewList = storeService.getreviewList(reviewSeq);
-		System.out.println(store.getParking());
+//		System.out.println(store.getParking());
 		mv.addObject("store", store);
 //		mv.addObject("reviewList", reviewList);
 		
-		System.out.println(store.getUserAni());
+		System.out.println(session.getAttribute("loginUser") + "////////////////////////");
 
 		return mv;
 	}

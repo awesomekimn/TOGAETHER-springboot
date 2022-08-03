@@ -109,8 +109,8 @@ public class StoreServiceImpl implements StoreService {
 	}
 	
 	@Override
-	public String getUserAni(String username) {
-		return reviewMapper.getUserAni(username);
+	public String getUserAni(String userId) {
+		return reviewMapper.getUserAni(userId);
 	}
 	
 	

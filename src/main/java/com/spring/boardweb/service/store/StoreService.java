@@ -29,5 +29,5 @@ public interface StoreService {
 	
     List<StoreDTO> getCarousel();
     
-    String getUserAni(String username);
+    String getUserAni(String userId);
 }

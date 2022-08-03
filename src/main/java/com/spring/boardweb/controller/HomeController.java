@@ -21,8 +21,6 @@ public class HomeController {
 		
 		List<StoreDTO> carouselList = storeService.getCarousel();
 		
-		System.out.println(carouselList);
-		
 		mv.addObject("carouselList", carouselList);
 		mv.setViewName("index.html");
 		
