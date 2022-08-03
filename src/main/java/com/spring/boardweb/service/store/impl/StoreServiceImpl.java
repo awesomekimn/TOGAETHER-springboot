@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.spring.boardweb.dto.StoreFileDTO;
 import com.spring.boardweb.entity.Store;
 import com.spring.boardweb.entity.StoreFile;
+import com.spring.boardweb.mapper.ReviewMapper;
 import com.spring.boardweb.mapper.StoreMapper;
 import com.spring.boardweb.repository.StoreFileRepository;
 import com.spring.boardweb.repository.StoreRepository;
@@ -25,6 +26,10 @@ public class StoreServiceImpl implements StoreService {
 
 	@Autowired
 	StoreMapper storeMapper;
+	
+	@Autowired
+	ReviewMapper reviewMapper;
+	
 
 	@Override
 	public Page<Store> getStoreList(String categoryNm, Pageable pageable) {
@@ -96,5 +101,12 @@ public class StoreServiceImpl implements StoreService {
 
 		storeFileRepository.delete(storeFile);
 	}
+	
+	@Override
+	public String getUserAni(String username) {
+		return reviewMapper.getUserAni(username);
+	}
+	
+	
 
 }

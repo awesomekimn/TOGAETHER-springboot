@@ -27,4 +27,5 @@ public class StoreDTO {
 	private Date storeRegdate;
 	private String storeWriter;
 	private String categoryNm;
+	private String userAni;
 }

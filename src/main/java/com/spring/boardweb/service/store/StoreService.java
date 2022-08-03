@@ -26,4 +26,5 @@ public interface StoreService {
    
     void deleteStoreFile(int storeSeq, int fileSeq);
 	
+    String getUserAni(String username);
 }
