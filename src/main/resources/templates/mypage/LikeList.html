@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout}">
+
+<head>
+	<meta charset="UTF-8">
+	<title>index</title>
+	<th:block layout:fragment="css">
+		<link rel="stylesheet" th:href="@{/css/app3.css}">
+	</th:block>
+	<th:block layout:fragment="script">
+		<script th:inline="javascript">
+			$(function () {
+				$("#lastheart").on("click", function (e) {
+					e.preventDefault();
+					$("#lastheart").attr(
+						"src",
+						"https://cdn-icons.flaticon.com/png/128/2961/premium/2961957.png?token=exp=1655450638~hmac=82d287cb31213afea8822373b6052dab"
+					);
+					const timeout = setTimeout(function () {
+						$("#lastlist").css("display", "none");
+					}, 100);
+				});
+			});
+		</script>
+	</th:block>
+</head>
+
+<body>
+	<main layout:fragment="content">
+		<section class="listplus">
+			<span>찜 목록</span>
+			<br />
+			<p class="intro">안녕하세요, <span th:text="${user.userId}"></span>님!</p>
+		</section>
+		<section>
+			<article class="h-grid" id="h-list-plus">
+				<div class="row-img" th:if="${fileList ne null}" th:each="file : ${fileList}" th:remove="tag">
+					<a th:href="#" id="lastlist">
+						<img th:src="@{/upload/} + ${file.fileName}">
+						<img class="heart" id="lastheart" src="https://cdn-icons-png.flaticon.com/128/833/833472.png"
+							alt="heartimg">
+						<p th:text="${store.storeNm}"></p>
+					</a>
+				</div>
+			</article>
+		</section>
+	</main>
+</body>
+
+</html>
