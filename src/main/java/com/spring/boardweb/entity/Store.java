@@ -85,7 +85,4 @@ public class Store {
 	@Transient
 	private String userAni;
 	
-	
-	
-	
 }

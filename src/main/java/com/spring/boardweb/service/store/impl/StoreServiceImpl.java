@@ -81,7 +81,7 @@ public class StoreServiceImpl implements StoreService {
 	@Override
 	public List<StoreFileDTO> getStoreFileList(int storeSeq) {
 		List<StoreFileDTO> fileList = storeMapper.selectStoreFileList(storeSeq);
-		System.out.println(fileList);
+//		System.out.println(fileList);
 //		if (fileList == null || fileList.isEmpty()) {
 //			System.out.println(fileList);
 //			return null;
