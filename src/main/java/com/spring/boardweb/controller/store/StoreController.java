@@ -19,9 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.nimbusds.common.contenttype.ContentType;
 import com.spring.boardweb.commons.PicUtils;
-import com.spring.boardweb.entity.Board;
+import com.spring.boardweb.dto.StoreDTO;
+import com.spring.boardweb.dto.StoreFileDTO;
 import com.spring.boardweb.entity.Store;
 import com.spring.boardweb.entity.StoreFile;
 import com.spring.boardweb.entity.User;
@@ -94,7 +94,7 @@ public class StoreController {
 
 		storeService.insertStoreFileList(fileList);
 
-		response.sendRedirect("/store/getStoreList");
+		response.sendRedirect("/store/storeDetail/" + storeSeq);
 	}
 	
 //	@GetMapping("/insertReview/{username}")
@@ -110,7 +110,7 @@ public class StoreController {
 	}
 	
 
-	@GetMapping("deleteStore/{storeSeq}")
+	@GetMapping("/deleteStore/{storeSeq}")
 	public void deleteStore(@PathVariable int storeSeq, HttpServletResponse response) throws IOException {
 		storeService.deleteStore(storeSeq);
 
@@ -132,5 +132,7 @@ public class StoreController {
 
 		response.sendRedirect("/store/getStoreList");
 	}
+	
+	
 
 }

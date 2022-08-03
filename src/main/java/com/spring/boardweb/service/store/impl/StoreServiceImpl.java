@@ -108,12 +108,10 @@ public class StoreServiceImpl implements StoreService {
 		return storeMapper.getCarousel();
 	}
 	
-	
 	@Override
 	public String getUserAni(String username) {
 		return reviewMapper.getUserAni(username);
 	}
 	
 	
-
 }
