@@ -25,6 +25,7 @@ public class StoreServiceImpl implements StoreService {
 
 	@Autowired
 	StoreMapper storeMapper;
+	
 
 	@Override
 	public Page<Store> getStoreList(String categoryNm, Pageable pageable) {

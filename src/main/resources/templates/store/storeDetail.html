@@ -89,6 +89,8 @@
 		        <div class="title">
 		            <h1 th:text="${store.storeNm }"></h1>
 		            <h5 th:text="${store.storeIntro }" class="title_small"></h5>
+		            <button type="button" id="updateStore">수정</button>
+		            <button type="button" id="deletestore" th:onClick="@{/store/deleteStore/{storeSeq}}">삭제</button>
 		        </div>
 		
 		        <!-- 상세 페이지 콘텐츠 -->
