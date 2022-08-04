@@ -1,3 +1,5 @@
+
+
 package com.spring.boardweb.controller.store;
 
 import java.io.IOException;
@@ -45,7 +47,6 @@ public class StoreController {
 
 		for (Store content : storeList) {
 			content.setFileList(storeService.getStoreFileList(content.getStoreSeq()));
-
 			content.setReviewCnt(storeService.getReviewCnt(content.getStoreSeq()));
 		}
 		
@@ -95,7 +96,7 @@ public class StoreController {
 
 		storeService.insertStoreFileList(fileList);
 
-		response.sendRedirect("/store/storeDetail/" + storeSeq);
+		response.sendRedirect("/store/storeDetail/" +storeSeq );
 	}
 
 	@PostMapping("/insertReview")
@@ -116,12 +117,24 @@ public class StoreController {
 		response.sendRedirect("/store/storeDetail/" + review.getStore().getStoreSeq());
 	}
 
-	@GetMapping("/deleteStore/{storeSeq}")
+	/*@GetMapping("/deleteStore/{storeSeq}")
 	public void deleteStore(@PathVariable int storeSeq, HttpServletResponse response) throws IOException {
 		storeService.deleteStore(storeSeq);
 
 		response.sendRedirect("/store/getStoreList");
+	}*/
+	
+	@GetMapping("/deleteStore")
+	public void deleteStore(@RequestParam int storeSeq,@RequestParam String categoryNm, HttpServletResponse response) throws IOException {
+		
+		System.out.println("categoryNm========================================"+categoryNm);
+		storeService.deleteStore(storeSeq);
+
+		response.sendRedirect("/store/getStoreList/"+categoryNm);
 	}
+	
+	
+	
 
 	@PostMapping("/updateStore")
 	public void updateStore(Store store, HttpServletResponse response, HttpServletRequest request,
