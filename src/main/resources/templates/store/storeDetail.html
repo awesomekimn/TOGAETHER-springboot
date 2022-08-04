@@ -63,17 +63,8 @@
 		            <h1 th:text="${store.storeNm }"></h1>
 		            <h5 th:text="${store.storeIntro }" class="title_small"></h5>
 
-		            <button type="button" id="updateStore">수정</button>
 		            <a class="btn btn-warning reg-btn" id="deletestore" th:href="@{/store/deleteStore/(storeSeq=${store.storeSeq}, categoryNm=${store.categoryNm})}">삭제</a>	
 		                    
-		        
-		           <form action="/store/updateStore" method="post" enctype="multipart/form-data">
-					      <input type="hidden" name="storeSeq" th:value="${store.storeSeq}">
-		            <button type="submit" id="btnUpdate" class="btn btn-warning reg-btn">수정</button>
-		           </form>
-
-		            <a th:href="@{/store/updateStore/{storeSeq}(storeSeq=${store.storeSeq})}">수정</a>
-
 		        </div>
 					</form>
 		        <!-- 상세 페이지 콘텐츠 -->
@@ -93,7 +84,7 @@
 		
 		                <!-- 중간에 들어가는 업체 추가 이미지 -->
 		                <div th:each="file : ${store.fileList}" th:remove="tag">
-			                <div th:unless="${file.fileSeq == 1}" th:remove="tag">
+			                <div th:if="${file.fileSeq == 2 or file.fileSeq == 3}" th:remove="tag">
 			                	<img id="js02" th:src="@{/upload/} + ${file.fileName}">
 			                </div>
 		                </div>

@@ -61,6 +61,7 @@ public class StoreController {
 	@GetMapping("/storeDetail/{storeSeq}")
 	public ModelAndView getStoreView(@PathVariable int storeSeq) {
 		ModelAndView mv = new ModelAndView();
+		
 		mv.setViewName("store/storeDetail.html");
 
 		Store store = storeService.getStore(storeSeq);
@@ -161,7 +162,6 @@ public class StoreController {
 		Store store = storeService.getStore(storeSeq);
 		
 		store.setFileList(storeService.getStoreFileList(store.getStoreSeq()));
-		//store.set
 		
 		System.out.println(store.toString());
 		System.out.println(store.getParking());
