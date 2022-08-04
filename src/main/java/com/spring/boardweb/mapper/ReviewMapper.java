@@ -12,8 +12,8 @@ public interface ReviewMapper {
 	
 	@Update("UPDATE TO_REVIEW SET REVIEW_SEQ = REVIEW_SEQ - 1 WHERE REVIEW_SEQ > #{reviewSeq}")
 	void updateReviewSeq(int reviewSeq);
-
-	@Select("SELECT USER_ANI FROM TO_USER WHERE USER_ID = #{username}")
-	 String getUserAni(String username); 
+	
+	@Select("SELECT USER_ANI FROM USER WHERE USER_ID = #{userId}")
+	 String getUserAni(String userId); 
 
 }
