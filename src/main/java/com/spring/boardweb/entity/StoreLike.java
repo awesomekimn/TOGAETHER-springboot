@@ -30,6 +30,11 @@ public class StoreLike {
 	private User user;
 	
 	@Id
-	private int likeSeq;
+	@ManyToOne
+	@JoinColumn(name="STORE_SEQ")
+	private Store store;
+	
+//	@Id
+//	private int likeSeq;
 	
 }

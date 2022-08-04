@@ -9,10 +9,12 @@ import org.springframework.stereotype.Service;
 
 import com.spring.boardweb.dto.StoreDTO;
 import com.spring.boardweb.dto.StoreFileDTO;
+import com.spring.boardweb.entity.Review;
 import com.spring.boardweb.entity.Store;
 import com.spring.boardweb.entity.StoreFile;
 import com.spring.boardweb.mapper.ReviewMapper;
 import com.spring.boardweb.mapper.StoreMapper;
+import com.spring.boardweb.repository.ReviewRepository;
 import com.spring.boardweb.repository.StoreFileRepository;
 import com.spring.boardweb.repository.StoreRepository;
 import com.spring.boardweb.service.store.StoreService;
@@ -30,6 +32,9 @@ public class StoreServiceImpl implements StoreService {
 	
 	@Autowired
 	ReviewMapper reviewMapper;
+	
+	@Autowired
+	ReviewRepository reviewRepository;
 
 	@Override
 	public Page<Store> getStoreList(String categoryNm, Pageable pageable) {
@@ -111,6 +116,21 @@ public class StoreServiceImpl implements StoreService {
 	public String getUserAni(String userId) {
 		return reviewMapper.getUserAni(userId);
 	}
-	
+
+	@Override
+	public void insertReview(Review review) {
+		review.setReviewSeq(reviewMapper.getNextReviewSeq());
+		reviewRepository.save(review);
+	}
+
+	@Override
+	public String getReviewAvg(int storeSeq) {
+		return reviewMapper.getReviewAvg(storeSeq);
+	}
+
+	@Override
+	public List<Review> getreviewList(int storeSeq) {
+		return reviewRepository.findByStoreStoreSeqOrderByReviewSeqDesc(storeSeq);
+	}
 	
 }
