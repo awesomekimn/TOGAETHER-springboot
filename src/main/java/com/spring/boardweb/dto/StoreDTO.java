@@ -32,5 +32,5 @@ public class StoreDTO {
 	private int fileSeq;
 	private String fileName;
 	private String userAni;
-
+	private double reviewAvg;
 }

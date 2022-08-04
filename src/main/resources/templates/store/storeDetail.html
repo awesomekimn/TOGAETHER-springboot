@@ -152,13 +152,19 @@
 		            </ul>
 		
 		            <!-- 사이드바 별점/평점 -->
-		            <div class="star">
-		                <img id="star1" th:src="@{/images/star_ful.png}">
-		                <img id="star1" th:src="@{/images/star_ful.png}">
-		                <img id="star1" th:src="@{/images/star_ful.png}">
-		                <img id="star1" th:src="@{/images/star_ful.png}">
-		                <img id="star1" th:src="@{/images/star_half.png}">
-		                <!-- <h3><span th:text="${review.reviewAvg }"></span> / 5.0</h3> -->
+		            <div class="star" >
+		                <img th:if="${store.reviewAvg == 0}" id="star1" th:src="@{/images/star_gray.png}">
+		                <img th:if="${store.reviewAvg >= 1}" id="star1" th:src="@{/images/star_ful.png}">
+		                <img th:if="${store.reviewAvg >= 2}" id="star1" th:src="@{/images/star_ful.png}">
+		                <img th:if="${store.reviewAvg >= 3}" id="star1" th:src="@{/images/star_ful.png}">
+		                <img th:if="${store.reviewAvg >= 4}" id="star1" th:src="@{/images/star_ful.png}">
+		                <img th:if="${store.reviewAvg != 0 and store.reviewAvg != 1 and store.reviewAvg != 2 and store.reviewAvg != 3 and store.reviewAvg != 4}" id="star1" th:src="@{/images/star_half.png}">
+		                <img th:if="${store.reviewAvg == 0 or store.reviewAvg <= 1}" id="star1" th:src="@{/images/star_gray.png}">
+		                <img th:if="${store.reviewAvg == 0 or store.reviewAvg <= 2}" id="star1" th:src="@{/images/star_gray.png}">
+		                <img th:if="${store.reviewAvg == 0 or store.reviewAvg <= 3}" id="star1" th:src="@{/images/star_gray.png}">
+		                <img th:if="${store.reviewAvg == 0 or store.reviewAvg <= 4}" id="star1" th:src="@{/images/star_gray.png}">
+		                <img th:if="${store.reviewAvg == 5}" id="star1" th:src="@{/images/star_ful.png}">
+		                <h3 style="margin-top: 10px;"><span th:text="${store.reviewAvg }"></span> / 5.0</h3>
 		            </div>
 		
 		            <!-- 사이드바 공유하기 버튼 -->
@@ -195,9 +201,11 @@
 		            <h3 id="review">방문자 리뷰
 		                <hr>
 		            </h3>
-		            <form id="regForm" action="/store/insertReview" method="post" enctype="multipart/form-data">
+		            <form id="regForm" sec:authorize="isAuthenticated()" action="/store/insertReview" method="post" enctype="multipart/form-data">
 			            <input type="text" name="userId" th:value="${#authentication.principal.username}" hidden>
-			            <input type="text" name="userAni" th:value="${#authentication.principal.username}" hidden>
+			            <!--<input type="text" name="userAni" th:value="${store.userAni}" hidden>-->
+			            <input type="text" name="storeSeq" th:value="${store.storeSeq}" hidden>
+			            
 			            <div class="star_icon">
 			            	<img id="icon_star1" th:src="@{/images/star_ful.png}" alt="별점남기기">
 			            	<select name="reviewRate" class="form-select" aria-label="multiple select example" style="display: inline; width:100px;">
@@ -208,27 +216,31 @@
 		                        <option value="1">1</option>
 		                    </select>
 			            </div>
-			            <textarea name="reviewText" placeholder="방문하신 리뷰를 작성해 주세요." cols="50" rows="10" required></textarea>
+			            <textarea style="margin-top: 10px; padding: 3px 5px" name="reviewText" placeholder="방문하신 리뷰를 작성해 주세요." cols="50" rows="10" required></textarea>
 			            <button type="submit" class="btn btn-warning add_button">등록하기</button>
 		            </form>
 		        </div>
 		
-		        <!-- 사용자 리뷰 
+		        <!-- 사용자 리뷰 -->
 		        <div class="rev_table">
 		            <article class="reviewlist">
 		                <div th:if="${reviewList ne null}" th:each="review : ${reviewList}" th:remove="tag" class="row rev_container">
 		                    <div class="card-body">
-	                            <h5 th:text="${review.userId}" class="card-title">, <span th:text="${review.userAni}"></span></h5>
+	                            <h5 class="card-title"><span th:text="${review.userId}"></span>, 
+	                            	<span th:if="${review.userAni eq '1'}">소형견</span>
+	                            	<span th:if="${review.userAni eq '2'}">중형견</span>
+	                            	<span th:if="${review.userAni eq '3'}">대형견</span>
+	                            </h5>
 	                            <div class="rev_star">
-	                                <img src="https://cdn-icons-png.flaticon.com/128/1828/1828884.png}" alt="별점">
-	                                <h6><span th:text="${review.rate}"></span> / 5</h6>
+	                                <img th:src="@{/images/star_ful.png}" alt="별점">
+	                                <h6><span th:text="${review.reviewRate}"></span> / 5</h6>
 	                            </div>
-		                        <p th:text="${review.text}" class="card-text card-content"></p>
-		                        <p class="review-date"><small class="text-muted">게시한 날짜 <span th:text="${#temporals.format(review.regDate, 'yyyy/MM/dd')}"></span></small></p>
+		                        <p th:text="${review.reviewText}" class="card-text card-content"></p>
+		                        <p class="review-date"><small class="text-muted">게시한 날짜 <span th:text="${#temporals.format(review.reviewRegdate, 'yyyy/MM/dd')}"></span></small></p>
 		                    </div>
 		                </div>
 		            </article>
-		        </div> -->
+		        </div> 
 		    </div>
 	   	</div>
 	</body>

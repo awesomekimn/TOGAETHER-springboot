@@ -5,7 +5,7 @@ import java.io.Serializable;
 import lombok.Data;
 
 @Data
-public class StoreLikeId implements Serializable{
-	private String user;
+public class ReviewId implements Serializable{
 	private int store;
+	private int reviewSeq;
 }

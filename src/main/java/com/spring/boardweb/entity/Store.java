@@ -4,9 +4,12 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+
+import org.hibernate.annotations.ColumnDefault;
 
 import com.spring.boardweb.dto.StoreFileDTO;
 
@@ -73,6 +76,8 @@ public class Store {
 	
 	private String categoryNm;
 	
+	private double reviewAvg;
+	
 	@Transient
 	private String searchCondition;
 	
@@ -82,7 +87,6 @@ public class Store {
 	@Transient
 	private List<StoreFileDTO> fileList;
 	
-	@Transient
-	private String userAni;
+	
 	
 }

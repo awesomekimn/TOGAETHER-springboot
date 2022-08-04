@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
@@ -21,6 +22,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.spring.boardweb.commons.PicUtils;
 import com.spring.boardweb.dto.StoreDTO;
 import com.spring.boardweb.dto.StoreFileDTO;
+import com.spring.boardweb.entity.CustomUserDetails;
+import com.spring.boardweb.entity.Review;
 import com.spring.boardweb.entity.Store;
 import com.spring.boardweb.entity.StoreFile;
 import com.spring.boardweb.service.store.StoreService;
@@ -30,7 +33,7 @@ import com.spring.boardweb.service.store.StoreService;
 public class StoreController {
 	@Autowired
 	StoreService storeService;
-
+	
 	@GetMapping("/getStoreList/{categoryNm}")
 	public ModelAndView getStoreListView(@PathVariable String categoryNm,
 			@PageableDefault(page = 0, size = 12) Pageable pageable) {
@@ -38,11 +41,11 @@ public class StoreController {
 		mv.setViewName("store/getStoreList.html");
 
 		Page<Store> storeList = storeService.getStoreList(categoryNm, pageable);
-		
-		//System.out.println(storeList.getNumberOfElements());
+
+		// System.out.println(storeList.getNumberOfElements());
 
 		for (Store content : storeList) {
-			//System.out.println(content.getStoreSeq());
+			// System.out.println(content.getStoreSeq());
 			content.setFileList(storeService.getStoreFileList(content.getStoreSeq()));
 //			System.out.println(content + "////////////////////");
 		}
@@ -62,10 +65,16 @@ public class StoreController {
 		Store store = storeService.getStore(storeSeq);
 
 		store.setFileList(storeService.getStoreFileList(store.getStoreSeq()));
-//      List<StoreFile> fileList = storeService.getStoreFileList(storeSeq);
-		System.out.println(store.getParking());
+		
+		if(storeService.getReviewAvg(storeSeq) == null) {
+			store.setReviewAvg(0);
+		} else {
+			store.setReviewAvg(Double.parseDouble(storeService.getReviewAvg(storeSeq)));
+		}
+
+		List<Review> reviewList = storeService.getreviewList(storeSeq);
 		mv.addObject("store", store);
-//      mv.addObject("fileList", fileList);
+		mv.addObject(reviewList);
 
 		return mv;
 	}
@@ -89,6 +98,24 @@ public class StoreController {
 		storeService.insertStoreFileList(fileList);
 
 		response.sendRedirect("/store/storeDetail/" + storeSeq);
+	}
+
+	@PostMapping("/insertReview")
+	public void insertReview(HttpServletResponse response, Review review, @RequestParam int storeSeq,
+			@AuthenticationPrincipal CustomUserDetails loginUser) throws IOException {
+		Store store = new Store();
+		store.setStoreSeq(storeSeq);
+		
+		review.setStore(store);
+		
+		if (loginUser != null) {
+			review.setUserAni(storeService.getUserAni(loginUser.getUsername()));
+		}
+		System.out.println(review.getUserAni());
+		
+		storeService.insertReview(review);
+		
+		response.sendRedirect("/store/storeDetail/" + review.getStore().getStoreSeq());
 	}
 
 	@GetMapping("/deleteStore/{storeSeq}")
