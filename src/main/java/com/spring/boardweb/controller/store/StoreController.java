@@ -1,3 +1,5 @@
+[storeController]
+
 package com.spring.boardweb.controller.store;
 
 import java.io.IOException;
@@ -5,7 +7,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
@@ -90,7 +92,7 @@ public class StoreController {
 
 		storeService.insertStoreFileList(fileList);
 
-		response.sendRedirect("/store/storeDetail/" + storeSeq);
+		response.sendRedirect("/store/storeDetail/" + storeSeq );
 	}
 	
 //	@GetMapping("/insertReview/{username}")
@@ -106,12 +108,23 @@ public class StoreController {
 	}
 	
 
-	@GetMapping("/deleteStore/{storeSeq}")
+	/*@GetMapping("/deleteStore/{storeSeq}")
 	public void deleteStore(@PathVariable int storeSeq, HttpServletResponse response) throws IOException {
 		storeService.deleteStore(storeSeq);
 
 		response.sendRedirect("/store/getStoreList");
+	}*/
+	
+	@GetMapping("/deleteStore")
+	public void deleteStore(@RequestParam int storeSeq,@RequestParam String categoryNm, HttpServletResponse response) throws IOException {
+		System.out.println("categoryNm========================================"+categoryNm);
+		storeService.deleteStore(storeSeq);
+
+		response.sendRedirect("/store/getStoreList/"+categoryNm);
 	}
+	
+	
+	
 
 	@PostMapping("/updateStore")
 	public void updateStore(Store store, HttpServletResponse response, HttpServletRequest request,

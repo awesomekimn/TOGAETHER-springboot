@@ -50,7 +50,7 @@
 		            <h1 th:text="${store.storeNm }"></h1>
 		            <h5 th:text="${store.storeIntro }" class="title_small"></h5>
 		            <button type="button" id="updateStore">수정</button>
-		            <button type="button" id="deletestore" th:onClick="@{/store/deleteStore/{storeSeq}}">삭제</button>
+		            <a id="deletestore" th:href="@{/store/deleteStore/s()toreSeq=${store.storeSeq}, categoryNm=${store.categortyNm})}">삭제삭제</a>
 		           <form action="/store/updateStore" method="post" enctype="multipart/form-data">
 					      <input type="hidden" name="storeSeq" th:value="${store.storeSeq}">
 		            <button type="submit" id="btnUpdate" class="btn btn-warning reg-btn">수정</button>
