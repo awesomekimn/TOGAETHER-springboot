@@ -62,16 +62,6 @@
 		        <div class="title">
 		            <h1 th:text="${store.storeNm }"></h1>
 		            <h5 th:text="${store.storeIntro }" class="title_small"></h5>
-		            <button type="button" id="updateStore">수정</button>
-		            <a class="btn btn-warning reg-btn" id="deletestore" th:href="@{/store/deleteStore/(storeSeq=${store.storeSeq}, categoryNm=${store.categoryNm})}">삭제</a>	
-		                    
-		        
-		           <form action="/store/updateStore" method="post" enctype="multipart/form-data">
-					      <input type="hidden" name="storeSeq" th:value="${store.storeSeq}">
-		            <button type="submit" id="btnUpdate" class="btn btn-warning reg-btn">수정</button>
-		           </form>
-
-
 		            <a sec:authorize="isAuthenticated()"
 		            	th:if="${#authentication.principal.username.equals('admin')}" 
 			            th:href="@{/store/updateStore/{storeSeq}(storeSeq=${store.storeSeq})}"
