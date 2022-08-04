@@ -16,6 +16,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,6 +29,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.spring.boardweb.commons.FileUtils;
 import com.spring.boardweb.entity.Board;
 import com.spring.boardweb.entity.BoardFile;
+import com.spring.boardweb.entity.CustomUserDetails;
 import com.spring.boardweb.service.board.BoardService;
 
 @RestController
@@ -38,9 +40,15 @@ public class BoardController {
 	
 	@GetMapping("/getBoardList")
 	public ModelAndView getBoardListView(@PageableDefault(page = 0, size = 10, sort="boardSeq", direction = Direction.DESC) Pageable pageable,
-			Board board) {
+			Board board, @AuthenticationPrincipal CustomUserDetails loginUser) {
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("board/getBoardList.html");
+		
+		if(loginUser == null) {
+			mv.setViewName("user/login.html");
+		} else {
+			mv.setViewName("board/getBoardList.html");
+		}
+		
 		
 		if(board.getSearchKeyword() != null && !board.getSearchKeyword().equals("")) {
 			mv.addObject("searchKeyword", board.getSearchKeyword());
@@ -71,20 +79,10 @@ public class BoardController {
 			HttpServletRequest request, MultipartHttpServletRequest multipartServletRequest) throws IOException {
 		int boardSeq = boardService.insertBoard(board);
 		
-		System.out.println("boardSeq//////////////////////////" + boardSeq);
-		
 		FileUtils fileUtils = new FileUtils();
 		List<BoardFile> fileList = fileUtils.parseFileInfo(boardSeq, request, multipartServletRequest);
 		
 		boardService.insertBoardFileList(fileList);
-		
-		//커맨드 객체란: 메소드에서 매개변수로 선언된 객체
-		//           Getter, Setter가 필수적으로 존재해야됨
-		//           View에서 보내준 데이터의 키값과 이름이 같은 속성값의 Setter가 자동 호출되어 세팅된다.
-		//           커맨드 객체의 속성값중 int는 0으로 String은 ""으로 초기화됨
-		Board board2 = new Board();
-		System.out.println(board2.getBoardSeq());
-		System.out.println(board.getBoardTitle());
 		
 		//RestController에서는 String으로 리다이렉트 불가능하여
 		//response객체를 사용하여 리다이렉트한다.
