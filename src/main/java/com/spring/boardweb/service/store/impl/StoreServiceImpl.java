@@ -71,7 +71,9 @@ public class StoreServiceImpl implements StoreService {
 
 	@Override
 	public void updateStore(Store store) {
+		storeMapper.updateStoreFileSeq(store.getStoreSeq());
 		storeRepository.save(store);
+		
 	}
 
 	@Override
