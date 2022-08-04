@@ -21,8 +21,6 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.boardweb.commons.PicUtils;
-import com.spring.boardweb.dto.StoreDTO;
-import com.spring.boardweb.dto.StoreFileDTO;
 import com.spring.boardweb.entity.CustomUserDetails;
 import com.spring.boardweb.entity.Review;
 import com.spring.boardweb.entity.Store;
@@ -46,14 +44,12 @@ public class StoreController {
 		// System.out.println(storeList.getNumberOfElements());
 
 		for (Store content : storeList) {
-			// System.out.println(content.getStoreSeq());
 			content.setFileList(storeService.getStoreFileList(content.getStoreSeq()));
-//			System.out.println(content + "////////////////////");
+
+			content.setReviewCnt(storeService.getReviewCnt(content.getStoreSeq()));
 		}
-
+		
 		mv.addObject("storeList", storeList);
-
-		System.out.println(storeList);
 
 		return mv;
 	}

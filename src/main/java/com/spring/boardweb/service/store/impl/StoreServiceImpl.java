@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.spring.boardweb.dto.StoreDTO;
 import com.spring.boardweb.dto.StoreFileDTO;
+import com.spring.boardweb.entity.BoardFile;
 import com.spring.boardweb.entity.Review;
 import com.spring.boardweb.entity.Store;
 import com.spring.boardweb.entity.StoreFile;
@@ -93,7 +94,7 @@ public class StoreServiceImpl implements StoreService {
 //			System.out.println(fileList);
 //			return null;
 //		} else {
-			return fileList;
+		return fileList;
 //		}
 	}
 
@@ -121,7 +122,7 @@ public class StoreServiceImpl implements StoreService {
 
 	@Override
 	public void insertReview(Review review) {
-		review.setReviewSeq(reviewMapper.getNextReviewSeq());
+		review.setReviewSeq(reviewMapper.getNextReviewSeq(review.getStore().getStoreSeq()));
 		reviewRepository.save(review);
 	}
 
@@ -133,6 +134,11 @@ public class StoreServiceImpl implements StoreService {
 	@Override
 	public List<Review> getreviewList(int storeSeq) {
 		return reviewRepository.findByStoreStoreSeqOrderByReviewSeqDesc(storeSeq);
+	}
+
+	@Override
+	public int getReviewCnt(int storeSeq) {
+		return reviewMapper.getReviewCnt(storeSeq);
 	}
 	
 }

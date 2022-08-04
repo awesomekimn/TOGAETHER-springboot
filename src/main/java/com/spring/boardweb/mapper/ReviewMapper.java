@@ -6,8 +6,8 @@ import org.apache.ibatis.annotations.Update;
 
 @Mapper
 public interface ReviewMapper {
-	@Select("SELECT IFNULL(MAX(REVIEW_SEQ), 0) + 1 FROM TO_REVIEW")
-	int getNextReviewSeq();
+	@Select("SELECT IFNULL(MAX(REVIEW_SEQ), 0) + 1 FROM TO_REVIEW WHERE STORE_SEQ = #{storeSeq}")
+	int getNextReviewSeq(int storeSeq);
 
 	@Update("UPDATE TO_REVIEW SET REVIEW_SEQ = REVIEW_SEQ - 1 WHERE REVIEW_SEQ > #{reviewSeq}")
 	void updateReviewSeq(int reviewSeq);
@@ -20,4 +20,6 @@ public interface ReviewMapper {
 			+ "    WHERE STORE_SEQ = #{storeSeq}")
 	String getReviewAvg(int storeSeq);
 	
+	@Select("SELECT COUNT(*) FROM TO_REVIEW WHERE STORE_SEQ = #{storeSeq}")
+	int getReviewCnt(int storeSeq);
 }

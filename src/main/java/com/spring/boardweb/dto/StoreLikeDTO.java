@@ -6,4 +6,5 @@ import lombok.Data;
 public class StoreLikeDTO {
 	private String userId;
 	private int storeSeq;
+	private int fileSeq;
 }
