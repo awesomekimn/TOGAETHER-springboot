@@ -1,7 +1,6 @@
 package com.spring.boardweb.dto;
 
 import java.sql.Date;
-import java.util.List;
 
 import lombok.Data;
 
@@ -32,5 +31,5 @@ public class StoreDTO {
 	private int fileSeq;
 	private String fileName;
 	private String userAni;
-
+	private double reviewAvg;
 }

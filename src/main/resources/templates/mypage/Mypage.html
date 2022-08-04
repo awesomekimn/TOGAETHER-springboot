@@ -65,7 +65,7 @@
 			<button type="button" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#newId">계정
 				설정</button>
 			<br>
-			<p class="intro">안녕하세요, <span th:text="${user.userId}"></span>님!</p>
+			<p class="intro">안녕하세요, <span sec:authentication="principal.username"></span>님!</p>
 		</section>
 		<section>
 			<div class="heartlist">

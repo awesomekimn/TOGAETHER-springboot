@@ -6,6 +6,8 @@
     font-style: normal;
 }
 
+
+
 body, pre {
     font-family: 'GmarketSansLight';
 }
@@ -18,6 +20,7 @@ pre {
 	line-height: 2.5;
 	font-size: medium;
 	margin: 0;
+	white-space: pre-wrap; 
 }
 
 /* COMMON AREA -start */
