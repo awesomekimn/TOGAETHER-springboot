@@ -1,6 +1,7 @@
 package com.spring.boardweb.entity;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -8,6 +9,9 @@ import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import com.spring.boardweb.dto.StoreFileDTO;
 
 import lombok.Data;
 
@@ -56,4 +60,7 @@ public class Review {
 	private int reviewRate;
 	
 	private String userAni;
+	
+	@Transient
+	private List<StoreFileDTO> fileList;
 }

@@ -42,7 +42,7 @@
 			                </div>
 			                <div th:unless="${#authentication.principal.username.equals('admin')}" th:remove="tag">
 				                <li class="nav-item">
-				                    <a href="/mypage/mypage" class="nav-link">MY PAGE</a>
+				                    <a th:href="@{/mypage/{userId} (userId = ${#authentication.principal.username})}" class="nav-link">MY PAGE</a>
 				                </li>
 			                </div>
 			                <li class="nav-item">

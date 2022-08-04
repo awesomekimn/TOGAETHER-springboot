@@ -78,6 +78,8 @@ public class Store {
 	
 	private double reviewAvg;
 	
+	private int reviewCnt;
+	
 	@Transient
 	private String searchCondition;
 	

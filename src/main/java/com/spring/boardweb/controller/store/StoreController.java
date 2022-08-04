@@ -46,14 +46,11 @@ public class StoreController {
 		// System.out.println(storeList.getNumberOfElements());
 
 		for (Store content : storeList) {
-			// System.out.println(content.getStoreSeq());
 			content.setFileList(storeService.getStoreFileList(content.getStoreSeq()));
-		System.out.println(content + "////////////////////");
+			content.setReviewCnt(storeService.getReviewCnt(content.getStoreSeq()));
 		}
-
+		
 		mv.addObject("storeList", storeList);
-
-		System.out.println(storeList);
 
 		return mv;
 	}

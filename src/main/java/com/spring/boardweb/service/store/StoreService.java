@@ -37,4 +37,7 @@ public interface StoreService {
 	String getReviewAvg(int storeSeq);
 	
 	List<Review> getreviewList(int storeSeq);
+	
+	int getReviewCnt(int storeSeq);
+	
 }

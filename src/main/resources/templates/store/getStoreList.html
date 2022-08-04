@@ -48,15 +48,17 @@
 		                	</div>
 		                </figure>
 		                <div class="card_body">
-		                    <h5 class="card_title" th:text="${store.storeNm}"></h5>
-		                    <p class="card_text" th:text="${store.storeIntro }"></p>
+		                	<a th:href="@{/store/storeDetail/{storeSeq} (storeSeq=${store.storeSeq})}">
+			                    <h5 class="card_title" th:text="${store.storeNm}"></h5>
+			                    <p class="card_text" th:text="${store.storeIntro }"></p>
+		                    </a>
 		                    <div class="other">
 		                        <div class="other_icon">
 		                            <img id="icon_location" th:src="@{/images/location01.png}" alt="위치"
 		                                th:title="${store.storeAddress }">
 		                            <span class="comment_heart">
 		                                <img id="icon_comment" th:src="@{/images/comment.png}" alt="댓글">
-		                                <!-- <p id="ip"><b th:text="${review.reviewCnt}"></b></p> -->
+		                                <p id="ip"><b th:text="${store.reviewCnt}"></b></p>
 		                                <img id="icon_heart" th:src="@{/images/heart.png}" alt="좋아요">
 		                            </span>
 		                        </div>
