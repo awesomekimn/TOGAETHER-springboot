@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -60,6 +61,7 @@ public class StoreController {
 	@GetMapping("/storeDetail/{storeSeq}")
 	public ModelAndView getStoreView(@PathVariable int storeSeq) {
 		ModelAndView mv = new ModelAndView();
+		
 		mv.setViewName("store/storeDetail.html");
 
 		Store store = storeService.getStore(storeSeq);
@@ -148,7 +150,7 @@ public class StoreController {
 		Store store = storeService.getStore(storeSeq);
 		
 		store.setFileList(storeService.getStoreFileList(store.getStoreSeq()));
-		store.set
+		store.setReviewAvg(storeSeq);
 		
 		System.out.println(store.toString());
 		System.out.println(store.getParking());
