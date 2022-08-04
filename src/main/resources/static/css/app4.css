@@ -171,18 +171,7 @@ body {
 
 }
 
-#icon_heart1,
-#icon_heart2,
-#icon_heart3,
-#icon_heart4,
-#icon_heart5,
-#icon_heart6,
-#icon_heart7,
-#icon_heart8,
-#icon_heart9,
-#icon_heart10,
-#icon_heart11,
-#icon_heart12 {
+#icon_heart {
     width: 25px;
     line-height: 18px;
 }

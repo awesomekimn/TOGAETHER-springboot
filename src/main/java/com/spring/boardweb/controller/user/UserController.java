@@ -26,7 +26,7 @@ public class UserController {
 	//@RestController에서 화면을 반환하려면 ModelAndView 객체를 사용하여
 	//화면을 반환한다.
 	public ModelAndView joinView() {
-		ModelAndView mv = new ModelAndView();    
+		ModelAndView mv = new ModelAndView();
 		mv.setViewName("user/join.html");
 		
 		return mv;
