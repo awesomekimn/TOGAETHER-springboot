@@ -44,19 +44,14 @@
 	<body>
 		<div layout:fragment="content">
 			<div class="container">
-		    <input type="hidden" name="storeSeq" th:value="${store.storeSeq }">
+					
 		        <!-- 상세 페이지 제목 -->
 		        <div class="title">
 		            <h1 th:text="${store.storeNm }"></h1>
 		            <h5 th:text="${store.storeIntro }" class="title_small"></h5>
-		            <button type="button" id="updateStore">수정</button>
-		            <button type="button" id="deletestore" th:onClick="@{/store/deleteStore/{storeSeq}}">삭제</button>
-		           <form action="/store/updateStore" method="post" enctype="multipart/form-data">
-					      <input type="hidden" name="storeSeq" th:value="${store.storeSeq}">
-		            <button type="submit" id="btnUpdate" class="btn btn-warning reg-btn">수정</button>
-		           </form>
+		            <a th:href="@{/store/updateStore/{storeSeq}(storeSeq=${store.storeSeq})}">수정</a>
 		        </div>
-		
+					</form>
 		        <!-- 상세 페이지 콘텐츠 -->
 		        <!-- 업체 소개글 -->
 		        <article>
@@ -135,7 +130,7 @@
 		                        </table>
 		                    </div>
 		                </div>
-		
+					
 		                <!-- 예약 바로가기 링크 -->
 		                <div class="link">
 		                    <a id="res_link" th:href="${store.storeLink }" target="_blank"><img

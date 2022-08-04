@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ko"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layouts/layout}">
+	<head>
+		<meta charset="UTF-8">
+		<title>index</title>
+		<th:block layout:fragment="css">
+			<link rel="stylesheet" th:href="@{/css/app1.css}">
+		</th:block>
+		<th:block layout:fragment="script">
+			<script>
+		        $(function () {
+					// 파일 첨부시 input field에 파일명 입력
+		            $("input[type='file']").on('change', function () {
+		                var fileName = $(this).val();
+		                $(this).prev().prev().val(fileName);
+		            });
+		            
+		            // 구분 미선택시 선택알림창 팝업
+		            $("#regForm").on("submit", function(e) {
+		            	if($("#storeCategory").is(":selected")) {
+		            		alert("업체 구분을 선택해주세요.");
+		            		$("#storeCategory").focus();
+		            		e.preventDefault();
+		            		return;
+		            	}
+		            	
+		            	alert('등록되었습니다.');
+		            })
+		        })
+			</script>
+		</th:block>
+	</head>
+	
+	<body>
+		<div layout:fragment="content" class="qna-container">
+	        <div class="inner-container">
+	            <!-- Q&A header -->
+	            <div class="qna-header qna-wirte-header">
+	                <h1>업체 수정</h1>
+	            </div>
+	
+	            <!-- 문의글 작성 form -->
+	            <div class="write-container">
+	                <form id="regForm" action="/store/insertStore" method="post" enctype="multipart/form-data">
+		                <input type="text" name="writer" th:value="${#authentication.principal.username}" hidden>
+	                    <!-- 구분 dropdown -->
+	                    <select name="categoryNm" class="form-select" aria-label="multiple select example">
+	                        <option id="storeCategory" selected disabled>구분</option>
+	                        <option value="hotel">여행</option>
+	                        <option value="meal">식당</option>
+	                        <option value="cafe">카페</option>
+	                    </select>
+	                    <!-- title -->
+	                    <input class="qna-write qna-write-title" type="text" name="storeNm" placeholder="업체명을 입력해주세요." required th:value="${store.storeNm}">
+	                    <input class="qna-write qna-write-title" type="text" name="storeIntro" placeholder="업체를 간단하게 설명해주세요." th:value="${store.storeIntro}">
+	                    <!-- body -->
+	                    <input class="qna-write qna-write-title" type="text" name="storeAddress" placeholder="업체 주소를 입력해주세요." required th:value="${store.storeAddress}">
+	                    <input class="qna-write qna-write-title" type="url" name="storeLink" placeholder="업체 SNS 링크주소를 입력해주세요." th:value="${store.storeLink}">
+	                    <input class="qna-write qna-write-title" type="text" name="storeTel" placeholder="업체 연락처를 입력해주세요." required th:value="${store.storeTel}">
+	                    <input class="qna-write qna-write-title" type="text" name="storeTime" placeholder="체크인/체크아웃시간이나 영업시간을 입력해주세요." required th:value="${store.storeTime}">
+	                    <textarea class="qna-write qna-write-text" name="storeContent" placeholder="업체 소개글을 입력하세요." rows="5" th:text="${store.storeContent}"></textarea>
+						
+						<table>
+							<tr>
+								<th>
+									<label style="margin-top: 5px;">시설 안내</label>
+								</th>
+							</tr>
+							<tr>
+								<td>
+									<input type="Checkbox" name="internet">인터넷/WIFI
+								</td>
+								<td>	
+									<input type="Checkbox" name="petpad">배변패드 구비
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<input type="Checkbox" name="parking">주차장(유료)
+								</td>
+								<td>	
+									<input type="Checkbox" name="parkingFree">주차장(무료)
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<input type="Checkbox" name="convenience">편의점
+								</td>
+								<td>	
+									<input type="Checkbox" name="swimming">수영장
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<input type="Checkbox" name="smoking">흡연시설
+								</td>
+							</tr>
+						</table>
+						
+	                    <textarea class="qna-write qna-write-text" name="storePolicy" placeholder="업체 정책을 입력해주세요." rows="3" th:text="${store.storePolicy}"></textarea>
+	                    <textarea class="qna-write qna-write-text" name="storeMenu" placeholder="메뉴에 대해 설명해주세요." rows="3" th:text="${store.storeMenu}"></textarea>
+	                    <textarea class="qna-write qna-write-text" name="storeEtc" placeholder="유의사항을 입력하세요." rows="3" th:text="${store.storeEtc}"></textarea>
+	                    <!-- 대표사진 파일첨부 -->
+	                    <div class="qna-write filebox">
+	                        	<input class="upload-name" th:each="file : ${store.fileList}" th:if="${file.fileSeq == 1}" th:value="${file.originalFileName}" readonly>
+	                        	<label for="file1">파일찾기</label>
+	                        	<input type="file" id="file1" name="uploadMainFile">
+	                    </div>
+	                    <!-- 내용사진 파일첨부 -->
+	                    <div class="qna-write filebox">
+	                        <input class="upload-name"  th:each="file : ${store.fileList}" th:if="${file.fileSeq > 1}" th:value="${file.originalFileName}" readonly>
+	                        <label for="file">파일찾기</label>
+	                        <input type="file" id="file" name="uploadFiles" multiple="multiple">
+	                    </div>
+	                    
+	                    <input type="text" name="reviewAvg" th:value="${store.reviewAvg}" hidden>
+	                    <!-- 등록 버튼 -->
+	                    <button type="submit" class="btn btn-warning reg-btn">수정</button>
+	                    <!-- 취소 버튼  -->
+	                    <button type="button" class="btn btn-outline-warning"
+	                        onclick="confirm('작성내용이 저장되지 않습니다.\n취소하시겠습니까?')">취소</button>
+	                </form>
+	            </div>
+	        </div>
+	    </div>
+	</body>
+</html>

@@ -5,13 +5,11 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,7 +19,8 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.boardweb.commons.PicUtils;
-import com.spring.boardweb.entity.CustomUserDetails;
+import com.spring.boardweb.dto.StoreDTO;
+import com.spring.boardweb.dto.StoreFileDTO;
 import com.spring.boardweb.entity.Store;
 import com.spring.boardweb.entity.StoreFile;
 import com.spring.boardweb.service.store.StoreService;
@@ -50,25 +49,24 @@ public class StoreController {
 
 		mv.addObject("storeList", storeList);
 
-//		System.out.println(storeList);
+		System.out.println(storeList);
 
 		return mv;
 	}
 
 	@GetMapping("/storeDetail/{storeSeq}")
-	public ModelAndView getStoreView(@PathVariable int storeSeq, @AuthenticationPrincipal CustomUserDetails loginUser) {
+	public ModelAndView getStoreView(@PathVariable int storeSeq) {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("store/storeDetail.html");
 
 		Store store = storeService.getStore(storeSeq);
 
 		store.setFileList(storeService.getStoreFileList(store.getStoreSeq()));
-		store.setUserAni(storeService.getUserAni(loginUser.getUsername()));
-//		List<Review> reviewList = storeService.getreviewList(reviewSeq);
-//		System.out.println(store.getParking());
+//      List<StoreFile> fileList = storeService.getStoreFileList(storeSeq);
+		System.out.println(store.getParking());
 		mv.addObject("store", store);
-//		mv.addObject("reviewList", reviewList);
-		
+//      mv.addObject("fileList", fileList);
+
 		return mv;
 	}
 
@@ -92,19 +90,6 @@ public class StoreController {
 
 		response.sendRedirect("/store/storeDetail/" + storeSeq);
 	}
-	
-//	@GetMapping("/insertReview/{username}")
-//	public ModelAndView getUserAni(@PathVariable String username) {
-//		ModelAndView mv = new ModelAndView();
-//		storeService.getUserAni(username);
-//	}
-	
-	
-	@PostMapping("/insertReview/{storeSeq}")
-	public void insertReview(@PathVariable int storeSeq) {
-		
-	}
-	
 
 	@GetMapping("/deleteStore/{storeSeq}")
 	public void deleteStore(@PathVariable int storeSeq, HttpServletResponse response) throws IOException {
@@ -126,9 +111,21 @@ public class StoreController {
 
 		storeService.insertStoreFileList(fileList);
 
-		response.sendRedirect("/store/editStore");
+		response.sendRedirect("/store/storeDetail/" + store.getStoreSeq());
 	}
 	
-	
-
+	@GetMapping("/updateStore/{storeSeq}")
+	public ModelAndView getupdateStoreView(@PathVariable int storeSeq) {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("store/editStore.html");
+		Store store = storeService.getStore(storeSeq);
+		
+		store.setFileList(storeService.getStoreFileList(store.getStoreSeq()));
+		store.set
+		
+		System.out.println(store.toString());
+		System.out.println(store.getParking());
+		mv.addObject("store", store);
+		return mv;	
+	}
 }
