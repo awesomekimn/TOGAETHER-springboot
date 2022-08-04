@@ -13,7 +13,7 @@ import com.spring.boardweb.dto.StoreFileDTO;
 import lombok.Data;
 
 @Entity
-@Table(name="REVIEW")
+@Table(name="TO_REVIEW")
 @Data
 //name: SequenceGenerator의 이름 지정
 //sequenceName: DB에 생성될 시퀀스 이름 지정

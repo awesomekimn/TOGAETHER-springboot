@@ -17,6 +17,6 @@ public interface BoardFileRepository extends JpaRepository<BoardFile, BoardFileI
 	//@Query : 원하는 쿼리를 작성하여 사용할 수 있다. nativeQuery옵션을 true로 설정하면
 	//Repository의 메소드 명도 원하는 대로 지정가능
 	//value옵션이 사용할 쿼리 작성
-	@Query(value="select ifnull(max(f.file_seq), 0) + 1 from board_file f where f.board_seq = :boardSeq", nativeQuery=true)
+	@Query(value="select ifnull(max(f.file_seq), 0) + 1 from TO_board_file f where f.board_seq = :boardSeq", nativeQuery=true)
 	int selectNextFileSeqByBoardBoardSeq(@Param("boardSeq") int boardSeq);
 }

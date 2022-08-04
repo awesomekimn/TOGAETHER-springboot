@@ -10,7 +10,7 @@ import javax.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Table(name="Board_File")
+@Table(name="TO_Board_File")
 @Data
 //다중 pk 설정
 //다중 pk가 모여있는 객체를 만들어서 연결해줌

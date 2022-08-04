@@ -13,7 +13,7 @@ import lombok.Data;
 //이 객체가 엔티티 객체임을 선언, 필수 값
 @Entity
 //테이블 어노테이션은 필수 값은 아님, 객체명과 테이블 명이 다를 때 테이블 명을 지정하기 위해 사용
-@Table(name="USER")
+@Table(name="TO_USER")
 @Data
 @DynamicInsert
 public class User {
