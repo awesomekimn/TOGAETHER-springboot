@@ -162,6 +162,7 @@ public class StoreController {
 		Store store = storeService.getStore(storeSeq);
 		
 		store.setFileList(storeService.getStoreFileList(store.getStoreSeq()));
+		store.setReviewAvg(storeSeq);
 		
 		System.out.println(store.toString());
 		System.out.println(store.getParking());
