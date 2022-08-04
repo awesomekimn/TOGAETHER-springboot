@@ -11,7 +11,7 @@ import javax.persistence.Transient;
 import lombok.Data;
 
 @Entity
-@Table(name="BOARD")
+@Table(name="TO_BOARD")
 @Data
 //name: SequenceGenerator의 이름 지정
 //sequenceName: DB에 생성될 시퀀스 이름 지정

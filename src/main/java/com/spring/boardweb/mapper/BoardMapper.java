@@ -6,9 +6,9 @@ import org.apache.ibatis.annotations.Update;
 
 @Mapper
 public interface BoardMapper {
-	@Select("SELECT IFNULL(MAX(BOARD_SEQ), 0) + 1 FROM BOARD")
+	@Select("SELECT IFNULL(MAX(BOARD_SEQ), 0) + 1 FROM TO_BOARD")
 	int getNextBoardSeq();
 	
-	@Update("UPDATE BOARD SET BOARD_SEQ = BOARD_SEQ - 1 WHERE BOARD_SEQ > #{boardSeq}")
+	@Update("UPDATE TO_BOARD SET BOARD_SEQ = BOARD_SEQ - 1 WHERE BOARD_SEQ > #{boardSeq}")
 	void updateBoardSeq(int boardSeq);
 }
