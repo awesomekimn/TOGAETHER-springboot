@@ -44,14 +44,14 @@
 	
 	            <!-- 문의글 작성 form -->
 	            <div class="write-container">
-	                <form id="regForm" action="/store/insertStore" method="post" enctype="multipart/form-data">
+	                <form id="regForm" action="/store/updateStore" method="post" enctype="multipart/form-data">
 		                <input type="text" name="writer" th:value="${#authentication.principal.username}" hidden>
+		                <input type="text" name="storeSeq" th:value="${store.storeSeq}" hidden>
 	                    <!-- 구분 dropdown -->
 	                    <select name="categoryNm" class="form-select" aria-label="multiple select example">
-	                        <option id="storeCategory" selected disabled>구분</option>
-	                        <option value="hotel">여행</option>
-	                        <option value="meal">식당</option>
-	                        <option value="cafe">카페</option>
+	                        <option value="hotel" th:selected="${store.categoryNm eq 'hotel'}">여행</option>
+	                        <option value="meal" th:selected="${store.categoryNm eq 'meal'}">식당</option>
+	                        <option value="cafe" th:selected="${store.categoryNm eq 'cafe'}">카페</option>
 	                    </select>
 	                    <!-- title -->
 	                    <input class="qna-write qna-write-title" type="text" name="storeNm" placeholder="업체명을 입력해주세요." required th:value="${store.storeNm}">
@@ -71,31 +71,31 @@
 							</tr>
 							<tr>
 								<td>
-									<input type="Checkbox" name="internet">인터넷/WIFI
+									<input type="Checkbox" name="internet" th:checked="${store.internet eq 'on'}">인터넷/WIFI
 								</td>
 								<td>	
-									<input type="Checkbox" name="petpad">배변패드 구비
+									<input type="Checkbox" name="petpad" th:checked="${store.petpad eq 'on'}">배변패드 구비
 								</td>
 							</tr>
 							<tr>
 								<td>
-									<input type="Checkbox" name="parking">주차장(유료)
+									<input type="Checkbox" name="parking" th:checked="${store.parking eq 'on'}">주차장(유료)
 								</td>
 								<td>	
-									<input type="Checkbox" name="parkingFree">주차장(무료)
+									<input type="Checkbox" name="parkingFree" th:checked="${store.parkingFree eq 'on'}">주차장(무료)
 								</td>
 							</tr>
 							<tr>
 								<td>
-									<input type="Checkbox" name="convenience">편의점
+									<input type="Checkbox" name="convenience" th:checked="${store.convenience eq 'on'}">편의점
 								</td>
 								<td>	
-									<input type="Checkbox" name="swimming">수영장
+									<input type="Checkbox" name="swimming" th:checked="${store.swimming eq 'on'}">수영장
 								</td>
 							</tr>
 							<tr>
 								<td>
-									<input type="Checkbox" name="smoking">흡연시설
+									<input type="Checkbox" name="smoking" th:checked="${store.smoking eq 'on'}">흡연시설
 								</td>
 							</tr>
 						</table>
@@ -111,7 +111,7 @@
 	                    </div>
 	                    <!-- 내용사진 파일첨부 -->
 	                    <div class="qna-write filebox">
-	                        <input class="upload-name"  th:each="file : ${store.fileList}" th:if="${file.fileSeq > 1}" th:value="${file.originalFileName}" readonly>
+	                        <input class="upload-name"  th:each="file : ${store.fileList}" th:if="${file.fileSeq == 2}" th:value="${file.originalFileName}" readonly>
 	                        <label for="file">파일찾기</label>
 	                        <input type="file" id="file" name="uploadFiles" multiple="multiple">
 	                    </div>

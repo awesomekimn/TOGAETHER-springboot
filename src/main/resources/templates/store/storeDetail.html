@@ -49,7 +49,10 @@
 		        <div class="title">
 		            <h1 th:text="${store.storeNm }"></h1>
 		            <h5 th:text="${store.storeIntro }" class="title_small"></h5>
-		            <a th:href="@{/store/updateStore/{storeSeq}(storeSeq=${store.storeSeq})}">수정</a>
+		            <a sec:authorize="isAuthenticated()"
+		            	th:if="${#authentication.principal.username.equals('admin')}" 
+			            th:href="@{/store/updateStore/{storeSeq}(storeSeq=${store.storeSeq})}"
+			            class="btn btn-warning">수정</a>
 		        </div>
 					</form>
 		        <!-- 상세 페이지 콘텐츠 -->
@@ -69,7 +72,7 @@
 		
 		                <!-- 중간에 들어가는 업체 추가 이미지 -->
 		                <div th:each="file : ${store.fileList}" th:remove="tag">
-			                <div th:unless="${file.fileSeq == 1}" th:remove="tag">
+			                <div th:if="${file.fileSeq == 2 or file.fileSeq == 3}" th:remove="tag">
 			                	<img id="js02" th:src="@{/upload/} + ${file.fileName}">
 			                </div>
 		                </div>

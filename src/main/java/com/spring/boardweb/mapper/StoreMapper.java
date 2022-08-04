@@ -2,6 +2,7 @@ package com.spring.boardweb.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -16,6 +17,9 @@ public interface StoreMapper {
 
 	@Update("UPDATE TO_STORE SET STORE_SEQ = STORE_SEQ - 1 WHERE STORE_SEQ > #{storeSeq}")
 	void updateStoreSeq(int storeSeq);
+	
+	@Delete("DELETE FROM TO_STORE_FILE WHERE FILE_SEQ > 1 AND STORE_SEQ = #{storeSeq}")
+	void updateStoreFileSeq(int storeSeq);
 
 	@Select("SELECT * FROM TO_STORE_FILE WHERE STORE_SEQ = #{storeSeq}")
 	List<StoreFileDTO> selectStoreFileList(int storeSeq);
