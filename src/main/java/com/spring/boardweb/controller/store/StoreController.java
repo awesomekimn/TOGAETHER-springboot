@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,6 +20,8 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.boardweb.commons.PicUtils;
+import com.spring.boardweb.dto.StoreDTO;
+import com.spring.boardweb.dto.StoreFileDTO;
 import com.spring.boardweb.entity.CustomUserDetails;
 import com.spring.boardweb.entity.Review;
 import com.spring.boardweb.entity.Store;
@@ -51,7 +52,7 @@ public class StoreController {
 
 		mv.addObject("storeList", storeList);
 
-//		System.out.println(storeList);
+		System.out.println(storeList);
 
 		return mv;
 	}
@@ -99,12 +100,6 @@ public class StoreController {
 		response.sendRedirect("/store/storeDetail/" + storeSeq);
 	}
 
-//	@GetMapping("/insertReview/{username}")
-//	public ModelAndView getUserAni(@PathVariable String username) {
-//		ModelAndView mv = new ModelAndView();
-//		storeService.getUserAni(username);
-//	}
-
 	@PostMapping("/insertReview")
 	public void insertReview(HttpServletResponse response, Review review, @RequestParam int storeSeq,
 			@AuthenticationPrincipal CustomUserDetails loginUser) throws IOException {
@@ -143,7 +138,21 @@ public class StoreController {
 
 		storeService.insertStoreFileList(fileList);
 
-		response.sendRedirect("/store/editStore");
+		response.sendRedirect("/store/storeDetail/" + store.getStoreSeq());
 	}
-
+	
+	@GetMapping("/updateStore/{storeSeq}")
+	public ModelAndView getupdateStoreView(@PathVariable int storeSeq) {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("store/editStore.html");
+		Store store = storeService.getStore(storeSeq);
+		
+		store.setFileList(storeService.getStoreFileList(store.getStoreSeq()));
+		store.set
+		
+		System.out.println(store.toString());
+		System.out.println(store.getParking());
+		mv.addObject("store", store);
+		return mv;	
+	}
 }
