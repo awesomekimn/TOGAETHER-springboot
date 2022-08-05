@@ -122,8 +122,15 @@ public class StoreServiceImpl implements StoreService {
 
 	@Override
 	public void insertReview(Review review) {
-		review.setReviewSeq(reviewMapper.getNextReviewSeq(review.getStore().getStoreSeq()));
-		reviewRepository.save(review);
+		review.setReviewSeq(reviewMapper.getNextReviewSeq());
+		
+		int storeSeq = review.getStore().getStoreSeq();
+		String userId = review.getUserId();
+		
+		int reviewCount = reviewMapper.getReviewCount(storeSeq, userId);
+		
+		if(reviewCount == 0)
+			reviewRepository.save(review);
 	}
 
 	@Override

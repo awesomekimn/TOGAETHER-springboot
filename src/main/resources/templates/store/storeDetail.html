@@ -211,7 +211,7 @@
 		            <h3 id="review">방문자 리뷰
 		                <hr>
 		            </h3>
-		            <form id="regForm" sec:authorize="isAuthenticated()" action="/store/insertReview" method="post" enctype="multipart/form-data">
+		            <form id="regForm" sec:authorize="isAuthenticated()" action="/store/insertReview/" method="post" enctype="multipart/form-data">
 			            <input type="text" name="userId" th:value="${#authentication.principal.username}" hidden>
 			            <input type="text" name="storeSeq" th:value="${store.storeSeq}" hidden>
 			            

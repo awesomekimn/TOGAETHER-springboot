@@ -26,7 +26,6 @@ import lombok.Data;
  * @SequenceGenerator( name="T_BOARD_SEQ_GENERATOR", sequenceName="T_BOARD_SEQ",
  * initialValue=1, allocationSize=1 )
  */
-@IdClass(ReviewId.class)
 public class Review {
 	//키 값 생성 전략을 설정한다.
 	//@GeneratedValue를 사용하지 않으면 직접 할당
@@ -41,7 +40,6 @@ public class Review {
 	 * "T_BOARD_SEQ_GENERATOR")
 	 */
 	
-	@Id
 	@ManyToOne
 	@JoinColumn(name="STORE_SEQ")
 	private Store store;
