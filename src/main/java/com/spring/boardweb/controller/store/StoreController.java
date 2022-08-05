@@ -150,9 +150,7 @@ public class StoreController {
 	}
 
 	@GetMapping("/deleteStore")
-	public void deleteStore(@RequestParam int storeSeq, @RequestParam String categoryNm, HttpServletResponse response)
-			throws IOException {
-
+	public void deleteStore(@RequestParam int storeSeq,@RequestParam String categoryNm, HttpServletResponse response) throws IOException {
 		storeService.deleteStore(storeSeq);
 
 		response.sendRedirect("/store/getStoreList/" + categoryNm);

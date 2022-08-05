@@ -73,7 +73,7 @@
 						<div class="modal-body">
 							<form class="changeList">
 								<div class="chkId">
-									<input type="text" id="Id" class="newId-field" placeholder="아이디" th:value="${user.userId}">
+									<input type="text" id="Id" class="newId-field" placeholder="아이디" th:value="${#authentication.principal.username}">
 									<div class="chkId2">
 										<button type="button" id="chkbutton">
 											<img src="https://cdn-icons-png.flaticon.com/128/3917/3917749.png" alt="id확인"
@@ -84,8 +84,8 @@
 								<input type="password" id="PW" class="newId-field" placeholder="현재 비밀번호">
 								<input type="password" class="newId-field" placeholder="새 비밀번호">
 								<input type="password" class="newId-field" placeholder="새 비밀번호 확인">
-								<input type="number" id="Num" class="newId-field" placeholder="휴대폰 번호" th:value="${user.userTel}">
-								<input type="email" id="email" class="newId-field" placeholder="이메일" th:value="${user.userMail}">
+								<input type="number" id="Num" class="newId-field" placeholder="휴대폰 번호" th:value="${#authentication.principal.user.userTel}">
+								<input type="email" id="email" class="newId-field" placeholder="이메일" th:value="${#authentication.principal.user.userMail}">
 								<div class="dropdown">
 									<label for="animal" style="margin: 0; font-size: 1.2rem;">
 										반려동물
@@ -93,9 +93,9 @@
 		
 									<select name="animal" id="animal"
 										style="width: 150px; height:34px; border: none; border-bottom: 1px solid gray; background: #EEEFF1;">
-										<option value="1" th:selected="${user.userAni == 1}">소형견</option>
-										<option value="2" th:selected="${user.userAni == 2}">중형견</option>
-										<option value="3" th:selected="${user.userAni == 3}">대형견</option>
+										<option value="1" th:selected="${#authentication.principal.user.userAni == 1}">소형견</option>
+										<option value="2" th:selected="${#authentication.principal.user.userAni == 2}">중형견</option>
+										<option value="3" th:selected="${#authentication.principal.user.userAni == 3}">대형견</option>
 									</select>
 								</div>
 							</form>
@@ -138,7 +138,7 @@
 		<section>
 			<article class="reviewlist">
 				<h4>내가 등록한 리뷰</h4>
-				<a th:href="@{/mypage/{userId}/showAllReview (userId = ${user.userId})}">더보기+</a>
+				<a th:href="@{/mypage/reviewList/{userId} (userId = ${#authentication.principal.user.userId})}">더보기+</a>
 				<div class="reviews">
 					<div class="card" style="max-width: 100%;">
 						<div class="row" th:if="${stat.count < 3}" th:each="review, stat : ${reviewList}">
@@ -146,59 +146,64 @@
 							<div class="row-img" th:if="${review.fileList ne null}" th:each="file : ${review.fileList}">
 								<a th:href="@{/store/storeDetail/} + ${review.store.storeSeq}">
 									<img th:if="${file.fileSeq == 1}" th:src="@{/upload/} + ${file.fileName}" alt="장소 사진"
-										style="width: 300px; max-width: 100%; height: 150px; border-bottom-right-radius: var(--bs-border-radius); border-top-right-radius: var(--bs-border-radius);">
+										style="width: 300px; max-width: 100%; height: 150px; border-radius: var(--bs-border-radius);">
 								</a>
 							</div>
 							<div class="card-body">
 								<div class="card-text">
 									<h5 class="card-title" th:text="${review.store.storeNm}"></h5>
-									<a class="delbtn">삭제</a>
-									<a class="modifybtn" data-bs-toggle="modal" th:data-bs-target="@{#review-edit} + ${stat.count}">수정</a>
+									<a class="delbtn" th:href="@{/mypage/deleteReview/{reviewSeq} (reviewSeq=${review.reviewSeq})}">삭제</a>
+									<a class="modifybtn" data-bs-toggle="modal" th:data-bs-target="@{#review-edit} + ${stat.count}"
+									th:href="@{/mypage/updateReview/{reviewSeq}(reviewSeq=${review.reviewSeq})}">수정</a>
 									<div class="modal" tabindex="-1" th:id="@{review-edit} + ${stat.count}">
 										<div class="modal-dialog" role="document">
 											<div class="modal-content">
 												<div class="modal-header">
 													<h5 class="modal-title">리뷰 수정</h5>
 												</div>
-												<div class="review-modal-body">
-													<div class="review-info" th:if="${review.fileList ne null}"
-														th:each="file : ${review.fileList}" th:remove="tag">
-														<img style="width: 30%; display: block; margin: 0 auto;" th:if="${file.fileSeq == 1}"
-															th:src="@{/upload/} + ${file.fileName}" alt="장소 사진">
-														<h5 class="card-title mdf-ctitle"
-															th:text="${review.store.storeNm}">
-														</h5>
+												<form action="/mypage/updateReview" method="post">
+													<input type="hidden" name="reviewSeq" th:value="${review.reviewSeq}">
+													<input type="hidden" name="storeSeq" th:value="${review.store.storeSeq}">
+													<input type="hidden" name="userAni" th:value="${review.userAni}">
+													<div class="review-modal-body">
+														<div class="review-info" th:if="${review.fileList ne null}"
+															th:each="file : ${review.fileList}" th:remove="tag">
+															<img style="width: 30%; display: block; margin: 0 auto;" th:if="${file.fileSeq == 1}"
+																th:src="@{/upload/} + ${file.fileName}" alt="장소 사진">
+															<h5 class="card-title mdf-ctitle"
+																th:text="${review.store.storeNm}">
+															</h5>
+														</div>
+														<!--별점-->
+														<img id="icon_star1" th:src="@{/images/star_ful.png}" alt="별점남기기">
+														<select name="reviewRate" class="form-select"
+															aria-label="multiple select example"
+															style="display: inline; width:100px;">
+															<option value="5" th:selected="${review.reviewRate == 5}">5</option>
+															<option value="4" th:selected="${review.reviewRate == 4}">4</option>
+															<option value="3" th:selected="${review.reviewRate == 3}">3</option>
+															<option value="2" th:selected="${review.reviewRate == 2}">2</option>
+															<option value="1" th:selected="${review.reviewRate == 1}">1</option>
+														</select>
+														<div class="text-edit">
+															<textarea class="review-textarea" rows="10" name="reviewText"
+																th:text="${review.reviewText}"></textarea>
+														</div>
 													</div>
-													<!--별점-->
-													<img id="icon_star1" th:src="@{/images/star_ful.png}" alt="별점남기기">
-													<select name="category" class="form-select"
-														aria-label="multiple select example"
-														style="display: inline; width:100px;">
-														<option value="5" th:selected="${review.reviewRate == 5}">5</option>
-														<option value="4" th:selected="${review.reviewRate == 4}">4</option>
-														<option value="3" th:selected="${review.reviewRate == 3}">3</option>
-														<option value="2" th:selected="${review.reviewRate == 2}">2</option>
-														<option value="1" th:selected="${review.reviewRate == 1}">1</option>
-													</select>
-													<div class="text-edit">
-														<textarea class="review-textarea" rows="10"
-															th:text="${review.reviewText}"></textarea>
+													<div class="modal-footer">
+														<div class="modal-footer-btn">
+															<button type="button" class="btn btn-outline-warning"
+																data-bs-dismiss="modal" id="modalbtn">
+																취소
+															</button>
+															<button type="submit"
+																class="btn btn-outline-warning my-modifybtn"
+																data-bs-dismiss="modal" id="modalbtn">
+																변경
+															</button>
+														</div>
 													</div>
-												</div>
-												<div class="modal-footer">
-													<div class="modal-footer-btn">
-														<button type="button" class="btn btn-outline-warning"
-															data-bs-dismiss="modal" id="modalbtn">
-															취소
-														</button>
-														<button type="button"
-															class="btn btn-outline-warning my-modifybtn"
-															data-bs-dismiss="modal" id="modalbtn"
-															onclick="javascript:submit()">
-															변경
-														</button>
-													</div>
-												</div>
+												</form>
 											</div>
 										</div>
 									</div>
