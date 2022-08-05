@@ -30,7 +30,9 @@ import com.spring.boardweb.commons.FileUtils;
 import com.spring.boardweb.entity.Board;
 import com.spring.boardweb.entity.BoardFile;
 import com.spring.boardweb.entity.CustomUserDetails;
+import com.spring.boardweb.entity.User;
 import com.spring.boardweb.service.board.BoardService;
+import com.spring.boardweb.service.user.UserService;
 
 @RestController
 @RequestMapping("/board")
@@ -38,17 +40,22 @@ public class BoardController {
 	@Autowired
 	BoardService boardService;
 	
+	@Autowired
+	UserService userService;
+	
 	@GetMapping("/getBoardList")
 	public ModelAndView getBoardListView(@PageableDefault(page = 0, size = 10, sort="boardSeq", direction = Direction.DESC) Pageable pageable,
 			Board board, @AuthenticationPrincipal CustomUserDetails loginUser) {
 		ModelAndView mv = new ModelAndView();
 		
-		if(loginUser == null) {
-			mv.setViewName("user/login.html");
+		User user = new User();
+		if (loginUser != null) {
+			user = userService.idCheck(loginUser.getUsername());
 		} else {
-			mv.setViewName("board/getBoardList.html");
+			user.setUserId("NotFound");
 		}
 		
+		System.out.println(user.getUserId() + "///////////////////");
 		
 		if(board.getSearchKeyword() != null && !board.getSearchKeyword().equals("")) {
 			mv.addObject("searchKeyword", board.getSearchKeyword());
@@ -62,14 +69,20 @@ public class BoardController {
 		
 		mv.addObject("boardList", boardList);
 		mv.addObject("board", board);
+		mv.addObject(user);
 		
 		return mv;
 	}
 	
 	@GetMapping("/insertBoard")
-	public ModelAndView insertBoardView() {
+	public ModelAndView insertBoardView(@AuthenticationPrincipal CustomUserDetails loginUser) {
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("board/insertBoard.html");
+		
+		if(loginUser == null) {
+			mv.setViewName("user/login.html");
+		} else {
+			mv.setViewName("board/insertBoard.html");
+		}
 		
 		return mv;
 	}

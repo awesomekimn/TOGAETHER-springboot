@@ -1,6 +1,7 @@
 package com.spring.boardweb.entity;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -8,6 +9,9 @@ import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import com.spring.boardweb.dto.StoreFileDTO;
 
 import lombok.Data;
 
@@ -22,7 +26,6 @@ import lombok.Data;
  * @SequenceGenerator( name="T_BOARD_SEQ_GENERATOR", sequenceName="T_BOARD_SEQ",
  * initialValue=1, allocationSize=1 )
  */
-@IdClass(ReviewId.class)
 public class Review {
 	//키 값 생성 전략을 설정한다.
 	//@GeneratedValue를 사용하지 않으면 직접 할당
@@ -37,7 +40,6 @@ public class Review {
 	 * "T_BOARD_SEQ_GENERATOR")
 	 */
 	
-	@Id
 	@ManyToOne
 	@JoinColumn(name="STORE_SEQ")
 	private Store store;
@@ -56,4 +58,7 @@ public class Review {
 	private int reviewRate;
 	
 	private String userAni;
+	
+	@Transient
+	private List<StoreFileDTO> fileList;
 }

@@ -21,7 +21,7 @@ public interface StoreMapper {
 	@Delete("DELETE FROM TO_STORE_FILE WHERE FILE_SEQ > 1 AND STORE_SEQ = #{storeSeq}")
 	void updateStoreFileSeq(int storeSeq);
 
-	@Select("SELECT * FROM TO_STORE_FILE WHERE STORE_SEQ = #{storeSeq}")
+	@Select("SELECT * FROM TO_STORE_FILE WHERE STORE_SEQ = #{storeSeq} AND FILE_SEQ = 1")
 	List<StoreFileDTO> selectStoreFileList(int storeSeq);
 
 	@Select("SELECT A.*,\n" + "       B.FILE_NAME\n" + "	FROM TO_store A,\n" + "         TO_STORE_FILE B\n"

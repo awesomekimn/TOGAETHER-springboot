@@ -1,71 +1,62 @@
 <!DOCTYPE html>
-<html lang="ko"
-	  xmlns:th="http://www.thymeleaf.org"
-	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	  layout:decorate="~{layouts/layout}">
-	<head>
-		<meta charset="UTF-8">
-		<title>index</title>
-		<th:block layout:fragment="css">
-			<link rel="stylesheet" th:href="@{/css/app4.css}">
-		</th:block>
-		<th:block layout:fragment="script">
-			<script th:inline="javascript">
-				$(function() {
-					//업체 이미지 애니메이션 효과
-					/*$("#js02").delay(5000).animate({
-		                marginLeft: "270px"
-		            }, 8000, function () {});
-		
-		            $("#js08").delay(3000).animate({
-		                marginRight: "270px",
-		            }, 5000);
-		
-		            $(".page-title").animate({
-	                    marginRight: "100px",
-	                }, 2000)
-	                .animate({
-	                    marginLeft: "250px"
-	                }, 2000)
-	                .animate({
-	                    marginLeft: "0px"
-	                }, 2000);*/
-		
-		            
-		            $("#regForm").on("submit", function(e) {
-		            	alert('등록되었습니다.');
-		            })
-		            
-		            
-				});
-				
-				       
-		          $(function(){
-					/*<[CDATA[*/
-						const loginUserId = /*[[${#authentication.principal.username}]]*/;
-					/*]]>*/
-					console.log(loginUserId);
-					
-					if(loginUserId !== "admin") {
-						$("#deleteStore").hide();
-					}
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout}">
+
+<head>
+	<meta charset="UTF-8">
+	<title>index</title>
+	<th:block layout:fragment="css">
+		<link rel="stylesheet" th:href="@{/css/app4.css}">
+	</th:block>
+	<th:block layout:fragment="script">
+		<script th:inline="javascript">
+			$(function () {
+				//업체 이미지 애니메이션 효과
+				/*$("#js02").delay(5000).animate({
+					marginLeft: "270px"
+				}, 8000, function () {});
+	
+				$("#js08").delay(3000).animate({
+					marginRight: "270px",
+				}, 5000);
+	
+				$(".page-title").animate({
+					marginRight: "100px",
+				}, 2000)
+				.animate({
+					marginLeft: "250px"
+				}, 2000)
+				.animate({
+					marginLeft: "0px"
+				}, 2000);*/
+
+
+				$("#regForm").on("submit", function (e) {
+					alert('등록되었습니다.');
 				})
-		       
-			</script>
-		</th:block>
-	</head>
-	<body>
-		<div layout:fragment="content">
-			<div class="container">
-					
-		        <!-- 상세 페이지 제목 -->
-		        <div class="title">
-		            <h1 th:text="${store.storeNm }"></h1>
-		            <h5 th:text="${store.storeIntro }" class="title_small"></h5>
-		            <a sec:authorize="isAuthenticated()"
-		            	th:if="${#authentication.principal.username.equals('admin')}" 
-			            th:href="@{/store/updateStore/{storeSeq}(storeSeq=${store.storeSeq})}"
-			            class="btn btn-warning">수정</a>
+
+
+			});
+
+		</script>
+	</th:block>
+</head>
+
+<body>
+	<div layout:fragment="content">
+		<div class="container">
+
+			<!-- 상세 페이지 제목 -->
+			<div class="title">
+				<h1 th:text="${store.storeNm }"></h1>
+				<h5 th:text="${store.storeIntro }" class="title_small"></h5>
+				<a sec:authorize="isAuthenticated()" th:if="${#authentication.principal.username.equals('admin')}"
+					th:href="@{/store/updateStore/{storeSeq}(storeSeq=${store.storeSeq})}"
+					class="btn btn-warning">수정</a>
+
+				<a class="btn btn-warning reg-btn" sec:authorize="isAuthenticated()"
+					th:if="${#authentication.principal.username.equals('admin')}" th:href="@{/store/deleteStore/(storeSeq=${store.storeSeq}, 
+			        	categoryNm=${store.categoryNm})}">삭제</a>
 		        </div>
 					</form>
 		        <!-- 상세 페이지 콘텐츠 -->
@@ -174,7 +165,7 @@
 		                <img th:if="${store.reviewAvg >= 2}" id="star1" th:src="@{/images/star_ful.png}">
 		                <img th:if="${store.reviewAvg >= 3}" id="star1" th:src="@{/images/star_ful.png}">
 		                <img th:if="${store.reviewAvg >= 4}" id="star1" th:src="@{/images/star_ful.png}">
-		                <img th:if="${store.reviewAvg != 0 and store.reviewAvg != 1 and store.reviewAvg != 2 and store.reviewAvg != 3 and store.reviewAvg != 4}" id="star1" th:src="@{/images/star_half.png}">
+		                <img th:if="${store.reviewAvg != 0 and store.reviewAvg != 1 and store.reviewAvg != 2 and store.reviewAvg != 3 and store.reviewAvg != 4 and store.reviewAvg != 5}" id="star1" th:src="@{/images/star_half.png}">
 		                <img th:if="${store.reviewAvg == 0 or store.reviewAvg <= 1}" id="star1" th:src="@{/images/star_gray.png}">
 		                <img th:if="${store.reviewAvg == 0 or store.reviewAvg <= 2}" id="star1" th:src="@{/images/star_gray.png}">
 		                <img th:if="${store.reviewAvg == 0 or store.reviewAvg <= 3}" id="star1" th:src="@{/images/star_gray.png}">
@@ -217,9 +208,8 @@
 		            <h3 id="review">방문자 리뷰
 		                <hr>
 		            </h3>
-		            <form id="regForm" sec:authorize="isAuthenticated()" action="/store/insertReview" method="post" enctype="multipart/form-data">
+		            <form id="regForm" sec:authorize="isAuthenticated()" action="/store/insertReview/" method="post" enctype="multipart/form-data">
 			            <input type="text" name="userId" th:value="${#authentication.principal.username}" hidden>
-			            <!--<input type="text" name="userAni" th:value="${store.userAni}" hidden>-->
 			            <input type="text" name="storeSeq" th:value="${store.storeSeq}" hidden>
 			            
 			            <div class="star_icon">
@@ -251,7 +241,7 @@
 	                                <img th:src="@{/images/star_ful.png}" alt="별점">
 	                                <h6><span th:text="${review.reviewRate}"></span> / 5</h6>
 	                            </div>
-		                        <p th:text="${review.reviewText}" class="card-text card-content"></p>
+		                        <pre th:text="${review.reviewText}" class="card-text card-content"></pre>
 		                        <p class="review-date"><small class="text-muted">게시한 날짜 <span th:text="${#temporals.format(review.reviewRegdate, 'yyyy/MM/dd')}"></span></small></p>
 		                    </div>
 		                </div>

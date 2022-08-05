@@ -78,6 +78,8 @@ public class Store {
 	
 	private double reviewAvg;
 	
+	private int reviewCnt;
+	
 	@Transient
 	private String searchCondition;
 	
@@ -86,7 +88,5 @@ public class Store {
 	
 	@Transient
 	private List<StoreFileDTO> fileList;
-	
-	
 	
 }

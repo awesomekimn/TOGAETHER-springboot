@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout}">
+
+<head>
+	<meta charset="UTF-8">
+	<title>index</title>
+	<th:block layout:fragment="css">
+		<link rel="stylesheet" th:href="@{/css/app3.css}">
+	</th:block>
+	<th:block layout:fragment="script">
+		<script th:inline="javascript">
+
+
+		</script>
+	</th:block>
+</head>
+
+<body>
+	<main layout:fragment="content">
+		<section class="listplus">
+			<span>내가 등록한 리뷰</span>
+			<br>
+			<p class="intro">안녕하세요, <span sec:authentication="principal.username"></span>님!</p>
+		</section>
+		<section>
+			<article class="reviewlist">
+				<div class="row" th:each="review, stat : ${reviewList}">
+					<!--장소 사진-->
+					<div class="row-img" th:if="${review.fileList ne null}" th:each="file : ${review.fileList}">
+						<a th:href="@{/store/storeDetail/} + ${review.store.storeSeq}">
+							<img th:if="${file.fileSeq == 1}" th:src="@{/upload/} + ${file.fileName}" alt="장소 사진"
+								style="width: 300px; max-width: 100%; height: 150px; border-bottom-right-radius: var(--bs-border-radius); border-top-right-radius: var(--bs-border-radius);">
+						</a>
+					</div>
+
+					<div class="card-body">
+						<div class="card-text">
+							<h5 class="card-title" th:text="${review.store.storeNm}"></h5>
+							<a class="delbtn" th:href="@{/mypage/deleteReview/{reviewSeq} (reviewSeq=${review.reviewSeq})}">삭제</a>
+							<a class="modifybtn" data-bs-toggle="modal"
+								th:data-bs-target="@{#review-edit} + ${stat.count}">수정</a>
+							<div class="modal" tabindex="-1" th:id="@{review-edit} + ${stat.count}">
+								<div class="modal-dialog" role="document">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title">리뷰 수정</h5>
+										</div>
+										<div class="review-modal-body">
+											<div class="review-info" th:if="${review.fileList ne null}"
+												th:each="file : ${review.fileList}" th:remove="tag">
+												<img style="width: 30%; display: block; margin: 0 auto;"
+													th:if="${file.fileSeq == 1}" th:src="@{/upload/} + ${file.fileName}"
+													alt="장소 사진">
+												<h5 class="card-title mdf-ctitle" th:text="${review.store.storeNm}">
+												</h5>
+											</div>
+											<!--별점-->
+											<img id="icon_star1" th:src="@{/images/star_ful.png}" alt="별점남기기">
+											<select name="category" class="form-select"
+												aria-label="multiple select example"
+												style="display: inline; width:100px;">
+												<option value="5" th:selected="${review.reviewRate == 5}">5</option>
+												<option value="4" th:selected="${review.reviewRate == 4}">4</option>
+												<option value="3" th:selected="${review.reviewRate == 3}">3</option>
+												<option value="2" th:selected="${review.reviewRate == 2}">2</option>
+												<option value="1" th:selected="${review.reviewRate == 1}">1</option>
+											</select>
+											<div class="text-edit">
+												<textarea class="review-textarea" rows="10"
+													th:text="${review.reviewText}"></textarea>
+											</div>
+										</div>
+										<div class="modal-footer">
+											<div class="modal-footer-btn">
+												<button type="button" class="btn btn-outline-warning"
+													data-bs-dismiss="modal" id="modalbtn">
+													취소
+												</button>
+												<button type="button" class="btn btn-outline-warning my-modifybtn"
+													data-bs-dismiss="modal" id="modalbtn" onclick="javascript:submit()">
+													변경
+												</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="star">
+								<img src="https://cdn-icons-png.flaticon.com/128/1828/1828884.png" alt="별점">
+								<h6><span th:text="${review.reviewRate}"></span> / 5</h6>
+							</div>
+						</div>
+						<pre class="card-text mpg-card-text" th:text="${review.reviewText}"></pre>
+						<p class="review-date"><small class="text-muted" style="font-size: 80%;">게시한 날짜 <span
+									th:text="${#temporals.format(review.reviewRegdate, 'yyyy/MM/dd')}"></span></small>
+						</p>
+					</div>
+				</div>
+			</article>
+		</section>
+	</main>
+</body>
+
+</html>

@@ -1,93 +1,145 @@
 <!DOCTYPE html>
-<html lang="ko"
-	  xmlns:th="http://www.thymeleaf.org"
-	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	  layout:decorate="~{layouts/layout}">
-	<head>
-		<meta charset="UTF-8">
-		<title>index</title>
-		<th:block layout:fragment="css">
-			<link rel="stylesheet" th:href="@{/css/app4.css}">
-		</th:block>
-		<th:block layout:fragment="script">
-			<script th:inline="javascript">
-				$(function() {
-					$("#btnSearch").on("click", function() {
-						$("input[name='page']").val('0');
-						searchForm.submit();
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout}">
+
+<head>
+	<meta charset="UTF-8">
+	<title>index</title>
+	<th:block layout:fragment="css">
+		<link rel="stylesheet" th:href="@{/css/app4.css}">
+	</th:block>
+	<th:block layout:fragment="script">
+		<script th:inline="javascript">
+			// 업체 찜하기
+			/*<[CDATA[*/
+			const userId = /*[[${user.userId}]]*/;
+			/*]]>*/
+			
+			function storeLike(storeSeq) {
+				if (userId == 'NotFound') {
+					alert('로그인해주세요.');
+				} else {
+					$.ajax({
+						url: '/store/addStoreLike',
+						type: 'post',
+						data: {
+								"userId" : userId,
+								"storeSeq" : storeSeq
+							  },
+						success: function (obj) {
+							if (obj === "ok") {
+								alert("찜목록에 추가되었습니다.")
+								checkId = true;
+								$(this).attr("src", "/images/heart_ful.png");
+							} else {
+								checkId = false;
+								alert("찜목록에서 삭제되었습니다.");
+								$(this).attr("src", "/images/heart.png");
+								return;
+							}
+						},
+						error: function (e) {
+							console.log(e);
+						}
 					});
-					
-					// 찜하기
-					$("#icon_heart").on("click", function () {
-		                if ($(this).attr("src") == "/images/heart.png") {
-		                    $(this).attr("src", "/images/heart_ful.png");
-		                } else {
-		                    $(this).attr("src", "/images/heart.png");
-		                }
-		            });
+				}
+			}
+
+			$(function () {
+				$("#btnSearch").on("click", function () {
+					$("input[name='page']").val('0');
+					searchForm.submit();
 				});
-			</script>
-		</th:block>
-	</head>
-	
-	<body>
-		<div layout:fragment="content">
-			<div class="ico">
-		        <img id="hotel_icon" th:src="@{/images/room-service.png}" alt="식당 아이콘">
-		        <h2 id="hotel_ment">반려동물과 함께 즐거운 식사를 즐겨보세요.</h2>
-		    </div>
-		    
-		    <div class="listarea">
-		        <div class="wrapper grid">
-		            <div class="cards_item card" th:each="store : ${storeList}" style="max-width: 243.5px;">
-		                <figure class="card_img-wrapper">
-		                	<div th:if="${store.fileList ne null}" th:each="file : ${store.fileList}" th:remove="tag">
-			                    <a th:href="@{/store/storeDetail/{storeSeq} (storeSeq=${store.storeSeq})}">
-			                        <img class="card_img" alt="사진" th:if="${file.fileSeq == 1}" th:src="@{/upload/} + ${file.fileName}">
-			                    </a>
-		                	</div>
-		                </figure>
-		                <div class="card_body">
-		                    <h5 class="card_title" th:text="${store.storeNm}"></h5>
-		                    <p class="card_text" th:text="${store.storeIntro }"></p>
-		                    <div class="other">
-		                        <div class="other_icon">
-		                            <img id="icon_location" th:src="@{/images/location01.png}" alt="위치"
-		                                th:title="${store.storeAddress }">
-		                            <span class="comment_heart">
-		                                <img id="icon_comment" th:src="@{/images/comment.png}" alt="댓글">
-		                                <!-- <p id="ip"><b th:text="${review.reviewCnt}"></b></p> -->
-		                                <img id="icon_heart" th:src="@{/images/heart.png}" alt="좋아요">
-		                            </span>
-		                        </div>
-		                    </div>
-		                </div>
-		            </div>
-		        </div>
-		    </div>
-		    <!-- pagination -->
-	        <div class="paginations">
-	          	<ul style="padding: 0;" class="pagination" th:with="pageNumber = ${storeList.pageable.pageNumber},
+
+				// 찜하기
+				/* $("#icon_heart").on("click", function () {
+					if ($(this).attr("src") == "/images/heart.png") {
+						$(this).attr("src", "/images/heart_ful.png");
+					} else {
+						$(this).attr("src", "/images/heart.png");
+					}
+				}); */
+			});
+		</script>
+	</th:block>
+</head>
+
+<body>
+	<div layout:fragment="content">
+		<div class="ico" th:if="${category == 'hotel'}">
+			<img id="hotel_icon" th:src="@{/images/hotel.png}">
+			<h2 id="hotel_ment">반려동물과 동반 입실이 가능한 숙소를 찾아보세요</h2>
+		</div>
+		<div class="ico" th:if="${category == 'meal'}">
+			<img id="hotel_icon" th:src="@{/images/room-service.png}">
+			<h2 id="hotel_ment">반려동물과 함께 즐거운 식사를 즐겨보세요.</h2>
+		</div>
+		<div class="ico" th:if="${category == 'cafe'}">
+			<img id="hotel_icon" th:src="@{/images/breakfast.png}">
+			<h2 id="hotel_ment">반려동물과 함께 누리는 여유로운 티타임</h2>
+		</div>
+
+		<input type="text" name="userId" sec:authorize="isAuthenticated()"
+			th:value="${#authentication.principal.username}" hidden>
+
+		<div class="listarea">
+			<div class="wrapper grid">
+				<div class="cards_item card" th:each="store : ${storeList}" style="max-width: 243.5px;">
+					<figure class="card_img-wrapper">
+						<div th:if="${store.fileList ne null}" th:each="file : ${store.fileList}" th:remove="tag">
+							<a th:href="@{/store/storeDetail/{storeSeq} (storeSeq=${store.storeSeq})}">
+								<img class="card_img" alt="사진" th:if="${file.fileSeq == 1}"
+									th:src="@{/upload/} + ${file.fileName}">
+							</a>
+						</div>
+					</figure>
+					<div class="card_body">
+						<a th:href="@{/store/storeDetail/{storeSeq} (storeSeq=${store.storeSeq})}">
+							<h5 class="card_title" th:text="${store.storeNm}"></h5>
+							<p class="card_text" th:text="${store.storeIntro }"></p>
+						</a>
+						<div class="other">
+							<div class="other_icon">
+								<img id="icon_location" th:src="@{/images/location01.png}" alt="위치"
+									th:title="${store.storeAddress }">
+								<span class="comment_heart">
+									<img id="icon_comment" th:src="@{/images/comment.png}" alt="댓글">
+									<p id="ip"><b th:text="${store.reviewCnt}"></b></p>
+									<img id="icon_heart" th:onclick="'storeLike(' + ${store.storeSeq} + ')'" th:src="@{/images/heart.png}" alt="좋아요">
+								</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- pagination -->
+		<div class="paginations">
+			<ul style="padding: 0;" class="pagination" th:with="pageNumber = ${storeList.pageable.pageNumber},
 			                    pageSize = ${storeList.pageable.pageSize},
 			                    totalPages = ${storeList.totalPages},
 			                    startPage = ${T(java.lang.Math).floor(pageNumber / pageSize) * pageSize + 1},
 			                    tempEndPage = ${startPage + pageSize - 1},
 			                    endPage = ${tempEndPage > totalPages ? totalPages : tempEndPage}">
-			
-				    <li class="pagination_button" th:if="${pageNumber > 0}">
-				        <a th:href="@{/store/getStoreList(page=${pageNumber - 1}, searchCondition=${searchCondition}, searchKeyword=${searchKeyword})}">&laquo;</a>
-				    </li>
-				
-				
-		   	        <li class="pagination_button" th:each="page : ${#numbers.sequence(startPage, endPage)}">
-				        <a th:href="@{/store/getStoreList(page=${page - 1}, searchCondition=${searchCondition}, searchKeyword=${searchKeyword})}" th:text="${page}"></a>
-			        </li>
-				
-				    <li class="pagination_button" th:if="${pageNumber < totalPages - 1}">
-				        <a th:href="@{/store/getStoreList(page=${pageNumber + 1}, searchCondition=${searchCondition}, searchKeyword=${searchKeyword})}">&raquo;</a>
-				    </li>
-			    </ul>
-	          </div>
+
+				<li class="pagination_button" th:if="${pageNumber > 0}">
+					<a
+						th:href="@{/store/getStoreList(page=${pageNumber - 1}, searchCondition=${searchCondition}, searchKeyword=${searchKeyword})}">&laquo;</a>
+				</li>
+
+
+				<li class="pagination_button" th:each="page : ${#numbers.sequence(startPage, endPage)}">
+					<a th:href="@{/store/getStoreList(page=${page - 1}, searchCondition=${searchCondition}, searchKeyword=${searchKeyword})}"
+						th:text="${page}"></a>
+				</li>
+
+				<li class="pagination_button" th:if="${pageNumber < totalPages - 1}">
+					<a
+						th:href="@{/store/getStoreList(page=${pageNumber + 1}, searchCondition=${searchCondition}, searchKeyword=${searchKeyword})}">&raquo;</a>
+				</li>
+			</ul>
 		</div>
-	</body>
+	</div>
+</body>
+
 </html>

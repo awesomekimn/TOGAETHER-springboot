@@ -1,6 +1,7 @@
 package com.spring.boardweb.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
@@ -20,4 +21,9 @@ public interface ReviewMapper {
 			+ "    WHERE STORE_SEQ = #{storeSeq}")
 	String getReviewAvg(int storeSeq);
 	
+	@Select("SELECT COUNT(*) FROM TO_REVIEW WHERE STORE_SEQ = #{storeSeq}")
+	int getReviewCnt(int storeSeq);
+	
+	@Select("SELECT COUNT(*) FROM TO_REVIEW WHERE STORE_SEQ=#{storeSeq} AND USER_ID = #{userId}")
+	int getReviewCount(@Param("storeSeq") int storeSeq, @Param("userId") String userId);
 }
