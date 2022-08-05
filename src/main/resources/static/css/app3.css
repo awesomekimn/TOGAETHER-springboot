@@ -6,8 +6,14 @@
   font-style: normal;
 }
 
-body {
+body, pre {
   font-family: "GmarketSansLight";
+}
+
+pre {
+	font-size: medium;
+	margin: 0;
+	white-space: pre-wrap; 
 }
 
 /* COMMON AREA -start */
@@ -234,7 +240,6 @@ main {
 
 .btn-outline-warning {
   font-weight: bold;
-  font-size: 0.2rem;
   color: #f79b38;
 }
 

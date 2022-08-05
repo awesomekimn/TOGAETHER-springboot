@@ -68,7 +68,7 @@
 				<div class="modal-dialog">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h5 class="modal-title">계정 설정</h5>
+							<h5 class="modal-title" style="font-size: 2rem;">계정 설정</h5>
 						</div>
 						<div class="modal-body">
 							<form class="changeList">
@@ -82,8 +82,8 @@
 									</div>
 								</div>
 								<input type="password" id="PW" class="newId-field" placeholder="현재 비밀번호">
-								<input type="password" id="PW" class="newId-field" placeholder="새 비밀번호">
-								<input type="password" id="PW" class="newId-field" placeholder="새 비밀번호 확인">
+								<input type="password" class="newId-field" placeholder="새 비밀번호">
+								<input type="password" class="newId-field" placeholder="새 비밀번호 확인">
 								<input type="number" id="Num" class="newId-field" placeholder="휴대폰 번호" th:value="${user.userTel}">
 								<input type="email" id="email" class="newId-field" placeholder="이메일" th:value="${user.userMail}">
 								<div class="dropdown">
@@ -125,7 +125,7 @@
 			</div>
 			<article class="h-grid">
 				<!--장소 사진-->
-				<div th:if="${fileList ne null}" th:each="file : ${fileList}" th:remove="tag">
+				<div th:if="${stat.count < 5}" th:each="file, stat : ${fileList}" th:remove="tag">
 					<a th:href="@{/store/storeDetail/{storeSeq} (storeSeq=${store.storeSeq})}" id="lastlist">
 						<img th:src="@{/upload/} + ${file.fileName}" alt="item">
 						<img class="heart" id="lastheart" src="https://cdn-icons-png.flaticon.com/128/833/833472.png"
@@ -138,15 +138,15 @@
 		<section>
 			<article class="reviewlist">
 				<h4>내가 등록한 리뷰</h4>
-				<a th:href="@{/mypage/showAllReview}">더보기+</a>
+				<a th:href="@{/mypage/{userId}/showAllReview (userId = ${user.userId})}">더보기+</a>
 				<div class="reviews">
 					<div class="card" style="max-width: 100%;">
-						<div class="row" th:each="review, stat : ${reviewList}">
+						<div class="row" th:if="${stat.count < 3}" th:each="review, stat : ${reviewList}">
 							<!--장소 사진-->
 							<div class="row-img" th:if="${review.fileList ne null}" th:each="file : ${review.fileList}">
 								<a th:href="@{/store/storeDetail/} + ${review.store.storeSeq}">
-									<img th:if="${file.fileSeq == 1}" th:src="@{/upload/} + ${file.fileName}"
-										alt="장소 사진">
+									<img th:if="${file.fileSeq == 1}" th:src="@{/upload/} + ${file.fileName}" alt="장소 사진"
+										style="width: 300px; max-width: 100%; height: 150px; border-bottom-right-radius: var(--bs-border-radius); border-top-right-radius: var(--bs-border-radius);">
 								</a>
 							</div>
 							<div class="card-body">
@@ -207,8 +207,8 @@
 										<h6><span th:text="${review.reviewRate}"></span> / 5</h6>
 									</div>
 								</div>
-								<p class="card-text mpg-card-text" th:text="${review.reviewText}"></p>
-								<p class="review-date"><small class="text-muted">게시한 날짜 <span
+								<pre class="card-text mpg-card-text" th:text="${review.reviewText}"></pre>
+								<p class="review-date"><small class="text-muted" style="font-size: 80%;">게시한 날짜 <span
 											th:text="${#temporals.format(review.reviewRegdate, 'yyyy/MM/dd')}"></span></small>
 								</p>
 							</div>
