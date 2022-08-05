@@ -17,14 +17,6 @@ import lombok.Data;
 @IdClass(StoreFileId.class)
 public class StoreFile {
 	@Id
-	//foreign key 설정
-	//매핑 관계
-	//일대일 매핑일 때
-	//@OneToOne
-	//다대일 매핑일 때
-	//@ManyToOne
-	//일대다 매핑일 때
-	//@OneToMany
 	@ManyToOne
 	@JoinColumn(name="STORE_SEQ")
 	private Store store;

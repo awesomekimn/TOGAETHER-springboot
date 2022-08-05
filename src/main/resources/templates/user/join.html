@@ -1,146 +1,145 @@
 <!DOCTYPE html>
-<html lang="ko"
-	  xmlns:th="http://www.thymeleaf.org"
-	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	  layout:decorate="~{layouts/layout2}">
-	<head>
-		<meta charset="UTF-8">
-		<title>join</title>
-		<th:block layout:fragment="css">
-			<link rel="stylesheet" th:href="@{/css/app2.css}">
-		</th:block>
-		<th:block layout:fragment="script">
-			<script>
-				$(function() {
-					//id 중복체크가 됐는지 확인하는 변수
-					let checkId = false;
-					let pwValidation = false;
-					let pwCheck = false;
-					
-					$("#pwValidation").hide();
-					$("#pwCheckResult").hide();
-					
-					//아이디 중복 체크
-					$("#btnIdCheck").on("click", function() {
-						if($("#userId").val() == null || $("#userId").val() == '') {
-							alert("아이디를 입력하세요.");
-							return;
-						}
-						
-						$.ajax({
-							url: '/user/idCheck',
-							type: 'post',
-							data: $("#joinForm").serialize(),
-							success: function(obj) {
-								if(obj === "idOk") {
-									if(confirm("사용가능한 아이디입니다. " + $("#userId").val() + "를(을) 사용하시겠습니까?")) {
-										checkId = true;
-										$("#btnIdCheck").attr("src", "https://cdn-icons-png.flaticon.com/128/7079/7079987.png");
-									}
-								} else {
-									checkId = false;
-									alert("이미 존재하는 아이디입니다.");
-									$("#userId").focus();
-									return;
-								}
-							},
-							error: function(e) {
-								console.log(e);
-							}
-						});
-					});
-					
-					$("#userId").on("change", function() {
-						checkId = false;
-						$("#btnIdCheck").attr("src", "https://cdn-icons-png.flaticon.com/128/3917/3917749.png");
-					});
-					
-					//비밀번호 유효성 검사
-					function validatePassword(character) {
-						return /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{9,}$/.test(character);
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout2}">
+
+<head>
+	<meta charset="UTF-8">
+	<title>join</title>
+	<th:block layout:fragment="css">
+		<link rel="stylesheet" th:href="@{/css/app2.css}">
+	</th:block>
+	<th:block layout:fragment="script">
+		<script>
+			$(function () {
+				//id 중복체크가 됐는지 확인하는 변수
+				let checkId = false;
+				let pwValidation = false;
+				let pwCheck = false;
+
+				$("#pwValidation").hide();
+				$("#pwCheckResult").hide();
+
+				//아이디 중복 체크
+				$("#btnIdCheck").on("click", function () {
+					if ($("#userId").val() == null || $("#userId").val() == '') {
+						alert("아이디를 입력하세요.");
+						return;
 					}
-					
-					$("#userPw").on("change", function() {
-						if(!validatePassword($("#userPw").val())) {
-							pwValidation = false;
-							$("#pwValidation").show();
-							$("#userPw").focus();
-						} else {
-							pwValidation = true;
-							$("#pwValidation").hide();
-						}
-						
-						if($("#userPw").val() == $("#userPwCheck").val()) {
-							pwCheck = true;
-							$("#pwCheckResult").css("color", "green");
-							$("#pwCheckResult").text("비밀번호가 일치합니다.");
-						} else {
-							pwCheck = false;
-							$("#pwCheckResult").css("color", "red");
-							$("#pwCheckResult").text("비밀번호가 일치하지 않습니다.");
-						}
-					});
-					
-					//비밀번호 확인
-					$("#userPwCheck").on("change", function() {
-						$("#pwCheckResult").show();
-						
-						if($("#userPw").val() == $("#userPwCheck").val()) {
-							pwCheck = true;
-							$("#pwCheckResult").css("color", "green");
-							$("#pwCheckResult").text("비밀번호가 일치합니다.");
-						} else {
-							pwCheck = false;
-							$("#pwCheckResult").css("color", "red");
-							$("#pwCheckResult").text("비밀번호가 일치하지 않습니다.");
-						}
-					});
-					
-					//회원가입할(회원가입 폼 서브밋될) 때 마지막 유효성 검사
-					$("#joinForm").on("submit", function(e) {
-						if(!checkId) {
-							alert("아이디 중복체크를 진행해주세요.");
-							$("#userId").focus();
-							e.preventDefault();
-							return;
-						}
-						
-						if(!pwValidation) {
-							alert("비밀번호는 영문자, 숫자, 특수문자 조합의 9자리 이상으로 설정해주세요.");
-							$("#userPw").focus();
-							e.preventDefault();
-							return;
-						}
-						
-						if(!pwCheck) {
-							alert("비밀번호가 일치하지 않습니다.");
-							$("#userPwCheck").focus();
-							e.preventDefault();
-							return;
-						}
-						
-						if(!$("#termCheckBox").is(":checked")) {
-							alert("약관에 동의해주세요.");
-							$("#termCheckBox").focus();
-							e.preventDefault();
-							return;
+
+					$.ajax({
+						url: '/user/idCheck',
+						type: 'post',
+						data: $("#joinForm").serialize(),
+						success: function (obj) {
+							if (obj === "idOk") {
+								if (confirm("사용가능한 아이디입니다. " + $("#userId").val() + "를(을) 사용하시겠습니까?")) {
+									checkId = true;
+									$("#btnIdCheck").attr("src", "https://cdn-icons-png.flaticon.com/128/7079/7079987.png");
+								}
+							} else {
+								checkId = false;
+								alert("이미 존재하는 아이디입니다.");
+								$("#userId").focus();
+								return;
+							}
+						},
+						error: function (e) {
+							console.log(e);
 						}
 					});
 				});
-			</script>
-		</th:block>
-	</head>
-	
-	<body>
-		<div layout:fragment="content" class="signup-form">
-			<div class="container">
-				<a th:href='@{/}'>
-	            	<img th:src="@{/images/logo.png}" width="100px" height="100px" alt="logo">
-	            </a>
-	        </div>
-	
-	        <h2>회원가입</h2>
-	        <!--<p>
+
+				$("#userId").on("change", function () {
+					checkId = false;
+					$("#btnIdCheck").attr("src", "https://cdn-icons-png.flaticon.com/128/3917/3917749.png");
+				});
+
+				//비밀번호 유효성 검사
+				function validatePassword(character) {
+					return /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{9,}$/.test(character);
+				}
+
+				$("#userPw").on("change", function () {
+					if (!validatePassword($("#userPw").val())) {
+						pwValidation = false;
+						$("#pwValidation").show();
+						$("#userPw").focus();
+					} else {
+						pwValidation = true;
+						$("#pwValidation").hide();
+					}
+
+					if ($("#userPw").val() == $("#userPwCheck").val()) {
+						pwCheck = true;
+						$("#pwCheckResult").css("color", "green");
+						$("#pwCheckResult").text("비밀번호가 일치합니다.");
+					} else {
+						pwCheck = false;
+						$("#pwCheckResult").css("color", "red");
+						$("#pwCheckResult").text("비밀번호가 일치하지 않습니다.");
+					}
+				});
+
+				//비밀번호 확인
+				$("#userPwCheck").on("change", function () {
+					$("#pwCheckResult").show();
+
+					if ($("#userPw").val() == $("#userPwCheck").val()) {
+						pwCheck = true;
+						$("#pwCheckResult").css("color", "green");
+						$("#pwCheckResult").text("비밀번호가 일치합니다.");
+					} else {
+						pwCheck = false;
+						$("#pwCheckResult").css("color", "red");
+						$("#pwCheckResult").text("비밀번호가 일치하지 않습니다.");
+					}
+				});
+
+				//회원가입할(회원가입 폼 서브밋될) 때 마지막 유효성 검사
+				$("#joinForm").on("submit", function (e) {
+					if (!checkId) {
+						alert("아이디 중복체크를 진행해주세요.");
+						$("#userId").focus();
+						e.preventDefault();
+						return;
+					}
+
+					if (!pwValidation) {
+						alert("비밀번호는 영문자, 숫자, 특수문자 조합의 9자리 이상으로 설정해주세요.");
+						$("#userPw").focus();
+						e.preventDefault();
+						return;
+					}
+
+					if (!pwCheck) {
+						alert("비밀번호가 일치하지 않습니다.");
+						$("#userPwCheck").focus();
+						e.preventDefault();
+						return;
+					}
+
+					if (!$("#termCheckBox").is(":checked")) {
+						alert("약관에 동의해주세요.");
+						$("#termCheckBox").focus();
+						e.preventDefault();
+						return;
+					}
+				});
+			});
+		</script>
+	</th:block>
+</head>
+
+<body>
+	<div layout:fragment="content" class="signup-form">
+		<div class="container">
+			<a th:href='@{/}'>
+				<img th:src="@{/images/logo.png}" width="100px" height="100px" alt="logo">
+			</a>
+		</div>
+
+		<h2>회원가입</h2>
+		<!--<p>
 	            <h6>간편가입</h6>
 	        </p>
 	
@@ -152,93 +151,107 @@
 	            <img src="https://cdn6.agoda.net/images/universal-login/google-logo-v2.svg" width="52px" height="52px"
 	                alt="구글">
 	        </div>-->
-	
-	        <form id="joinForm" action="/user/join" method="post">
-	            <div class="id-img">
-	                <input type="text" id="userId" name="userId" class="text-field" placeholder="ID" required>
-	                <button type="button" class="chkId2" id="chkbutton">
-	                    <img src="https://cdn-icons-png.flaticon.com/128/3917/3917749.png" alt="id확인" id="btnIdCheck">
-	                </button>
-	            </div>
-	            <input type="password" id="userPw" name="userPw" class="text-field" placeholder="PW" required>
-				<p id="pwValidation" style="color: red; font-size: 0.8rem;">비밀번호는 영문자, 숫자, 특수문자 조합의 9자리 이상으로 설정해주세요.</p>
-	            
-	            <input type="password" id="userPwCheck" name="userPwCheck" class="text-field" placeholder="비밀번호확인" required>
-	            <p id="pwCheckResult" style="font-size: 0.8rem;"></p>
-	            
-	            <input type="text" id="userTel" name="userTel" class="text-field" placeholder="핸드폰 번호" required>
-	            <input type="email" id="userMail" name="userMail" class="text-field" placeholder="이메일" required>
-	            <div class="dropdown">
-	                <label for="animal" style="margin: 0 20px">
-	                    반려동물
-	                </label>
-	
-	                <select name="userAni" id="userAni" style="width: 290px; height:34px; border: none; border-bottom: 1px solid gray; background: #EEEFF1;">
-	                    <option value="1">소형견</option>
-	                    <option value="2">중형견</option>
-	                    <option value="3">대형견</option>
-	                </select>
-	            </div>
-	
-	            <!--모달 시작-->
-	            <div class="check">
-	                <input type="checkbox" id="termCheckBox" name="termCheckBox"/>
-	
-	                <!-- Button trigger modal -->
-	
-	
-	                <button type="button" class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#exampleModal">
-	                    이용약관 개인정보 수집 및 이용
-	                </button>
-	
-	                <!-- Modal -->
-	                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-	                    aria-hidden="true">
-	                    <div class="modal-dialog">
-	                        <div class="modal-content">
-	                            <div class="modal-header">
-	                                <h5 class="modal-title" id="exampleModalLabel">개인정보 수집 및 이용 안내</h5>
-	                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-	                                    aria-label="Close"></button>
-	                            </div>
-	                            <div class="modal-body">
-	                                <div>
-	                                    <h3>투개더 개인정보 수집 및 이용 안내</h3><br>
-	                                    <h6>1. 개인정보 수집항목 및 이용목적</h6><br>
-	                                    <p> 주식회사 투개더(이하 “회사”)은 사이트 이용을 위해 필요한 최소한의 범위로 개인정보를 수집합니다. 회사는 이용자의 사전 동의 없이는 이용자의 개인 정보를 공개하지 않으며, 다음과 같은 목적을 위하여 개인정보를 수집하고 이용합니다. </p>
-	                                    <ol class="ol-font">
-	                                        <li>서비스 제공<br>견적서·요청서 정보 제공 및 프로필 광고노출, 멤버십 등 기본적인 서비스 제공, 서비스 제공에 관한 계약 체결·유지·이행·관리·개선 및 서비스 제공에 따른 요금 정산 및 컨텐츠 서비스 이용, 구매 및 요금결제, 물품 배송 또는 청구지 등 발송, 이용자 레슨 정보 및 서비스 이용 정보 제공</li>
-	                                        <li>회원관리<br> 회원제 서비스에 따른 본인 확인, 개인 식별, 불량회원의 부정 이용 방지와 비인가 사용 방지, 회원 가입∙유지∙탈퇴 의사 확인, 연령확인, 만 14세 미만 아동 개인정보수집 시 법정 대리인 동의 여부 확인, 법정 대리인 권리행사 시 본인 확인, 법령상 의무 이행, 법령 및 약관 위반 여부에 관한 조사, 고객 센터 운영 불만처리 등 민원 처리, 고지사항 전달, 숨고보증 금액 지급 시 본인 확인 등</li>
-	                                        <li>마케팅 및 광고에 활용<br> 신규 서비스(제품) 개발 및 특화, 뉴스레터, 이벤트 등 광고성 정보 전달, 인구통계학적 특성에 따른 서비스 제공 및 광고 게재, 마케팅 및 광고 등에 활용, 접속 빈도 파악 또는 회원의 서비스 이용에 대한 통계</li>
-	                                    </ol><br>
-	                                    <h6>2. 개인정보 보유 및 이용기간</h6><br>
-	                                    <ol class="ol-font">
-	                                        <li>법령에서 별도로 정하거나 귀하와 별도 합의하는 등의 특별한 사정이 없는 한 이용자가 투게더 회원으로서 회사에 제공하는 서비스를 이용하는 동안 또는 제1조에서 정한 목적을 달성할 때까지 회사는 이용자들의 개인정보를 계속적으로 보유하며 서비스 제공 등을 위해 이용합니다.</li>
-	                                        <li>이용자의 개인정보는 다음과 같이 개인정보의 수집목적 또는 제공받은 목적이 달성되면 파기하는 것을 원칙으로 합니다. 다만, 회사는 서비스 혼선 방지, 수사기관에 대한 협조, 불량 회원의 부정한 이용의 재발 및 재가입을 방지하고 분쟁 해결을 위하여 이용계약 해지일로부터 6개월간 해당 회원의 이름, 아이디, 연락처, 부정이용 내역(서비스 이용기록, 접속로그, 쿠키, 접속IP정보)을 보관합니다.</li>
-	                                        <li>
-	                                        	상법, 전자상거래 등에서의 소비자보호에 관한 법률 등 관계법령의 규정에 의하여 보존할 필요가 있는 경우 회사는 관계법령에서 정한 일정한 기간 동안 회원정보를 보관합니다. 이 경우 회사는 보관하는 정보를 그 보관의 목적으로만 이용하며 보존기간은 아래와 같습니다.
-	                                            <ul>
-	                                                <li>표시. 광고에 관한 기록: 6월 (전자상거래등에서의 소비자보호에 관한 법률)</li>
-	                                                <li>계약 또는 청약철회 등에 관한 기록 : 5년 (전자상거래등에서의 소비자보호에 관한 법률)</li>
-	                                                <li>대금결제 및 재화 등의 공급에 관한 기록 : 5년 (전자상거래등에서의 소비자보호에 관한 법률)</li>
-	                                                <li>소비자의 불만 또는 분쟁처리에 관한 기록 : 3년 (전자상거래등에서의 소비자보호에 관한 법률)</li>
-	                                            </ul>
-	                                        </li>
-	                                    </ol>
-	                                </div>
-	                            </div>
-	                            <div class="modal-footer">
-	                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-	                            </div>
-	                        </div>
-	                    </div>
-	                </div>
-	                <span>동의 (필수)</span>
-	            </div><br>
-	            <!--모달 끝-->
-	
-	            <input type="submit" value="회원가입" class="submit-btn">
-	        </form>
-		</div>
-	</body>
+
+		<form id="joinForm" action="/user/join" method="post">
+			<div class="id-img">
+				<input type="text" id="userId" name="userId" class="text-field" placeholder="ID" required>
+				<button type="button" class="chkId2" id="chkbutton">
+					<img src="https://cdn-icons-png.flaticon.com/128/3917/3917749.png" alt="id확인" id="btnIdCheck">
+				</button>
+			</div>
+			<input type="password" id="userPw" name="userPw" class="text-field" placeholder="PW" required>
+			<p id="pwValidation" style="color: red; font-size: 0.8rem;">비밀번호는 영문자, 숫자, 특수문자 조합의 9자리 이상으로 설정해주세요.</p>
+
+			<input type="password" id="userPwCheck" name="userPwCheck" class="text-field" placeholder="비밀번호확인" required>
+			<p id="pwCheckResult" style="font-size: 0.8rem;"></p>
+
+			<input type="text" id="userTel" name="userTel" class="text-field" placeholder="핸드폰 번호" required>
+			<input type="email" id="userMail" name="userMail" class="text-field" placeholder="이메일" required>
+			<div class="dropdown">
+				<label for="animal" style="margin: 0 20px">
+					반려동물
+				</label>
+
+				<select name="userAni" id="userAni"
+					style="width: 290px; height:34px; border: none; border-bottom: 1px solid gray; background: #EEEFF1;">
+					<option value="1">소형견</option>
+					<option value="2">중형견</option>
+					<option value="3">대형견</option>
+				</select>
+			</div>
+
+			<!--모달 시작-->
+			<div class="check">
+				<input type="checkbox" id="termCheckBox" name="termCheckBox" />
+
+				<!-- Button trigger modal -->
+
+
+				<button type="button" class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#exampleModal">
+					이용약관 개인정보 수집 및 이용
+				</button>
+
+				<!-- Modal -->
+				<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+					aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="exampleModalLabel">개인정보 수집 및 이용 안내</h5>
+								<button type="button" class="btn-close" data-bs-dismiss="modal"
+									aria-label="Close"></button>
+							</div>
+							<div class="modal-body">
+								<div>
+									<h3>투개더 개인정보 수집 및 이용 안내</h3><br>
+									<h6>1. 개인정보 수집항목 및 이용목적</h6><br>
+									<p> 주식회사 투개더(이하 “회사”)은 사이트 이용을 위해 필요한 최소한의 범위로 개인정보를 수집합니다. 회사는 이용자의 사전 동의 없이는 이용자의
+										개인 정보를 공개하지 않으며, 다음과 같은 목적을 위하여 개인정보를 수집하고 이용합니다. </p>
+									<ol class="ol-font">
+										<li>서비스 제공<br>견적서·요청서 정보 제공 및 프로필 광고노출, 멤버십 등 기본적인 서비스 제공, 서비스 제공에 관한 계약
+											체결·유지·이행·관리·개선 및 서비스 제공에 따른 요금 정산 및 컨텐츠 서비스 이용, 구매 및 요금결제, 물품 배송 또는 청구지 등
+											발송, 이용자 레슨 정보 및 서비스 이용 정보 제공</li>
+										<li>회원관리<br> 회원제 서비스에 따른 본인 확인, 개인 식별, 불량회원의 부정 이용 방지와 비인가 사용 방지, 회원 가입∙유지∙탈퇴 의사
+											확인, 연령확인, 만 14세 미만 아동 개인정보수집 시 법정 대리인 동의 여부 확인, 법정 대리인 권리행사 시 본인 확인, 법령상 의무
+											이행, 법령 및 약관 위반 여부에 관한 조사, 고객 센터 운영 불만처리 등 민원 처리, 고지사항 전달, 숨고보증 금액 지급 시 본인 확인
+											등</li>
+										<li>마케팅 및 광고에 활용<br> 신규 서비스(제품) 개발 및 특화, 뉴스레터, 이벤트 등 광고성 정보 전달, 인구통계학적 특성에 따른
+											서비스 제공 및 광고 게재, 마케팅 및 광고 등에 활용, 접속 빈도 파악 또는 회원의 서비스 이용에 대한 통계</li>
+									</ol><br>
+									<h6>2. 개인정보 보유 및 이용기간</h6><br>
+									<ol class="ol-font">
+										<li>법령에서 별도로 정하거나 귀하와 별도 합의하는 등의 특별한 사정이 없는 한 이용자가 투게더 회원으로서 회사에 제공하는 서비스를 이용하는
+											동안 또는 제1조에서 정한 목적을 달성할 때까지 회사는 이용자들의 개인정보를 계속적으로 보유하며 서비스 제공 등을 위해 이용합니다.
+										</li>
+										<li>이용자의 개인정보는 다음과 같이 개인정보의 수집목적 또는 제공받은 목적이 달성되면 파기하는 것을 원칙으로 합니다. 다만, 회사는 서비스
+											혼선 방지, 수사기관에 대한 협조, 불량 회원의 부정한 이용의 재발 및 재가입을 방지하고 분쟁 해결을 위하여 이용계약 해지일로부터
+											6개월간 해당 회원의 이름, 아이디, 연락처, 부정이용 내역(서비스 이용기록, 접속로그, 쿠키, 접속IP정보)을 보관합니다.</li>
+										<li>
+											상법, 전자상거래 등에서의 소비자보호에 관한 법률 등 관계법령의 규정에 의하여 보존할 필요가 있는 경우 회사는 관계법령에서 정한 일정한
+											기간 동안 회원정보를 보관합니다. 이 경우 회사는 보관하는 정보를 그 보관의 목적으로만 이용하며 보존기간은 아래와 같습니다.
+											<ul>
+												<li>표시. 광고에 관한 기록: 6월 (전자상거래등에서의 소비자보호에 관한 법률)</li>
+												<li>계약 또는 청약철회 등에 관한 기록 : 5년 (전자상거래등에서의 소비자보호에 관한 법률)</li>
+												<li>대금결제 및 재화 등의 공급에 관한 기록 : 5년 (전자상거래등에서의 소비자보호에 관한 법률)</li>
+												<li>소비자의 불만 또는 분쟁처리에 관한 기록 : 3년 (전자상거래등에서의 소비자보호에 관한 법률)</li>
+											</ul>
+										</li>
+									</ol>
+								</div>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<span>동의 (필수)</span>
+			</div><br>
+			<!--모달 끝-->
+
+			<input type="submit" value="회원가입" class="submit-btn">
+		</form>
+	</div>
+</body>
+
 </html>

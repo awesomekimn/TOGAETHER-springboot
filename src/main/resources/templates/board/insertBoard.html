@@ -1,90 +1,92 @@
 <!DOCTYPE html>
-<html lang="ko"
-	  xmlns:th="http://www.thymeleaf.org"
-	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	  layout:decorate="~{layouts/layout}">
-	<head>
-		<meta charset="UTF-8">
-		<title>index</title>
-		<th:block layout:fragment="css">
-			<link rel="stylesheet" th:href="@{/css/app1.css}">
-		</th:block>
-		<th:block layout:fragment="script">
-			<script th:inline="javascript">
-		        $(function () {
-					// 파일 첨부시 input field에 파일명 입력
-		            $("#file").on('change', function () {
-		                var fileName = $("#file").val();
-		                $(".upload-name").val(fileName);
-		            });
-		            
-		            // 구분 미선택시 선택알림창 팝업
-		            $("#regForm").on("submit", function(e) {
-		            	if($("#boardCategory").is(":selected")) {
-		            		alert("문의 구분을 선택해주세요.");
-		            		$("#boardCategory").focus();
-		            		e.preventDefault();
-		            		return;
-		            	}
-		            	
-		            	alert('등록되었습니다.');
-		            })
-		            
-		            // 관리자 로그인시 공지 등록
-		            $(".notification").hide();
-		            /*<[CDATA[*/
-					const loginUserId = /*[[${#authentication.principal.username}]]*/;
-					/*]]>*/
-					
-					if(loginUserId === "admin") {
-						$(".notification").show();
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout}">
+
+<head>
+	<meta charset="UTF-8">
+	<title>index</title>
+	<th:block layout:fragment="css">
+		<link rel="stylesheet" th:href="@{/css/app1.css}">
+	</th:block>
+	<th:block layout:fragment="script">
+		<script th:inline="javascript">
+			$(function () {
+				// 파일 첨부시 input field에 파일명 입력
+				$("#file").on('change', function () {
+					var fileName = $("#file").val();
+					$(".upload-name").val(fileName);
+				});
+
+				// 구분 미선택시 선택알림창 팝업
+				$("#regForm").on("submit", function (e) {
+					if ($("#boardCategory").is(":selected")) {
+						alert("문의 구분을 선택해주세요.");
+						$("#boardCategory").focus();
+						e.preventDefault();
+						return;
 					}
-		        })
-			</script>
-		</th:block>
-	</head>
-	
-	<body>
-		<div layout:fragment="content" class="qna-container">
-	        <div class="inner-container">
-	            <!-- Q&A header -->
-	            <div class="qna-header qna-wirte-header">
-	                <h1>문의 등록</h1>
-	            </div>
-	
-	            <!-- 문의글 작성 form -->
-	            <div class="write-container">
-	                <form id="regForm" action="/board/insertBoard" method="post" enctype="multipart/form-data">
-		                <input type="text" name="boardWriter" th:value="${#authentication.principal.username}" hidden>
-	                    <!-- 구분 dropdown -->
-	                    <select name="boardCategory" class="form-select" aria-label="multiple select example">
-	                        <option id="boardCategory" selected disabled>구분</option>
-	                        <option class="notification" value="notification">공지</option>
-	                        <option value="register">업체 등록</option>
-	                        <option value="tipoff">제보</option>
-	                        <option value="question">문의</option>
-	                    </select>
-	                    <!-- 비밀글 설정 -->
-	                    <input type="Checkbox" name="secret" style="margin: 0 10px 0 15px;">비밀글
-	                    <!-- title -->
-	                    <input class="qna-write qna-write-title" type="text" name="boardTitle" placeholder="제목을 입력해주세요." required>
-	                    <!-- body -->
-	                    <textarea class="qna-write qna-write-text" name="boardContent" placeholder="문의 내용은 수정 불가하오니 내용을 최대한 정확하게 입력해주세요." rows="10" required></textarea>
-						
-	                    <!-- 파일첨부 -->
-	                    <div class="qna-write filebox">
-	                        <input class="upload-name" value="첨부파일" readonly>
-	                        <label for="file">파일찾기</label>
-	                        <input type="file" id="file" name="uploadFiles" multiple="multiple">
-	                    </div>
-	                    <!-- 등록 버튼 -->
-	                    <button type="submit" class="btn btn-warning reg-btn">등록</button>
-	                    <!-- 취소 버튼  -->
-	                    <button type="button" class="btn btn-outline-warning"
-	                        onclick="confirm('작성내용이 저장되지 않습니다.\n취소하시겠습니까?')">취소</button>
-	                </form>
-	            </div>
-	        </div>
-	    </div>
-	</body>
+
+					alert('등록되었습니다.');
+				})
+
+				// 관리자 로그인시 공지 등록
+				$(".notification").hide();
+				/*<[CDATA[*/
+				const loginUserId = /*[[${#authentication.principal.username}]]*/;
+				/*]]>*/
+
+				if (loginUserId === "admin") {
+					$(".notification").show();
+				}
+			})
+		</script>
+	</th:block>
+</head>
+
+<body>
+	<div layout:fragment="content" class="qna-container">
+		<div class="inner-container">
+			<!-- Q&A header -->
+			<div class="qna-header qna-wirte-header">
+				<h1>문의 등록</h1>
+			</div>
+
+			<!-- 문의글 작성 form -->
+			<div class="write-container">
+				<form id="regForm" action="/board/insertBoard" method="post" enctype="multipart/form-data">
+					<input type="text" name="boardWriter" th:value="${#authentication.principal.username}" hidden>
+					<!-- 구분 dropdown -->
+					<select name="boardCategory" class="form-select" aria-label="multiple select example">
+						<option id="boardCategory" selected disabled>구분</option>
+						<option class="notification" value="notification">공지</option>
+						<option value="register">업체 등록</option>
+						<option value="tipoff">제보</option>
+						<option value="question">문의</option>
+					</select>
+					<!-- 비밀글 설정 -->
+					<input type="Checkbox" name="secret" style="margin: 0 10px 0 15px;">비밀글
+					<!-- title -->
+					<input class="qna-write qna-write-title" type="text" name="boardTitle" placeholder="제목을 입력해주세요."
+						required>
+					<!-- body -->
+					<textarea class="qna-write qna-write-text" name="boardContent"
+						placeholder="문의 내용은 수정 불가하오니 내용을 최대한 정확하게 입력해주세요." rows="10" required></textarea>
+
+					<!-- 파일첨부 -->
+					<div class="qna-write filebox">
+						<input class="upload-name" value="첨부파일" readonly>
+						<label for="file">파일찾기</label>
+						<input type="file" id="file" name="uploadFiles" multiple="multiple">
+					</div>
+					<!-- 등록 버튼 -->
+					<button type="submit" class="btn btn-warning reg-btn">등록</button>
+					<!-- 취소 버튼  -->
+					<button type="button" class="btn btn-outline-warning"
+						onclick="confirm('작성내용이 저장되지 않습니다.\n취소하시겠습니까?')">취소</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+
 </html>

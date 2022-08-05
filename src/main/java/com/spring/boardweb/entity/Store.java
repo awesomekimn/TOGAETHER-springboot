@@ -89,6 +89,4 @@ public class Store {
 	@Transient
 	private List<StoreFileDTO> fileList;
 	
-	
-	
 }
