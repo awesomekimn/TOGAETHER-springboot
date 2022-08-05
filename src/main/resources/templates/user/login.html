@@ -23,10 +23,13 @@
 	
 	        <form id="loginForm" action="/user/loginProc" method="post">
 	            <input type="text" id="userId" name="userId" class="text-field" placeholder="ID" required>
-	            <input type="password" id="userPw" name="userPw" class="text-field" placeholder="PW" required>
+	            <input type="password" id="userPw" name="userPw" class="text-field" placeholder="PW" required>	
 	            <input type="submit" id="btnLogin" value="로그인" class="submit-btn">
+	            <div th:if="${param.error}" class="form-group">
+    					<span th:text="${exception}" class="alert alert-outline-danger">error message</span>
+				    </div>
 	        </form>
-	
+				
 	        <div class="links">
 	            <div class="idpw">
 	                <a href="/user/forgot_id">아이디/비밀번호 찾기</a>

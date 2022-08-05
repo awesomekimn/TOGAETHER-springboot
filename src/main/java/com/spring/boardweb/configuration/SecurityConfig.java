@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
 import com.spring.boardweb.oauth.Oauth2UserService;
 
@@ -16,6 +17,10 @@ import com.spring.boardweb.oauth.Oauth2UserService;
 // security의 filterchain을 구현하기 위해 선언
 @EnableWebSecurity
 public class SecurityConfig {
+	@Autowired
+	private AuthenticationFailureHandler CustomAuthFailureHandler;
+	
+	
 	@Autowired
 	private Oauth2UserService oauth2UserService;
 	
@@ -51,6 +56,8 @@ public class SecurityConfig {
 			.loginProcessingUrl("/user/loginProc")
 			// 로그인 성공 시 이동할 페이지 지정
 			.defaultSuccessUrl("/")
+			.failureForwardUrl("/user/login")
+			.failureHandler(CustomAuthFailureHandler)
 			// OAuth 기반 로그인 설정
 			.and()
 			.oauth2Login()
