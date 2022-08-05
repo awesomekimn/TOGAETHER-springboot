@@ -29,11 +29,14 @@
 			                </li>
 						</div>
 						<div sec:authorize="isAuthenticated()" th:remove="tag">
-			                <li class="nav-item">
-			                    <a href="/user/mypage" class="nav-link" sec:authentication="principal.username"></a>
+							<li class="nav-item">
+			                    <a th:href="@{/store/getStoreList/{categoryNm} (categoryNm = 'hotel')}" class="nav-link">여 행</a>
 			                </li>
-			                <li class="nav-item">
-			                    <a href="/board/getBoardList" class="nav-link">Q&A</a>
+							<li class="nav-item">
+			                    <a th:href="@{/store/getStoreList/{categoryNm} (categoryNm = 'meal')}" class="nav-link">식 당</a>
+			                </li>
+							<li class="nav-item">
+			                    <a th:href="@{/store/getStoreList/{categoryNm} (categoryNm = 'cafe')}" class="nav-link">카 페</a>
 			                </li>
 			                <div th:if="${#authentication.principal.username.equals('admin')}" th:remove="tag">
 				                <li class="nav-item">
@@ -42,8 +45,11 @@
 			                </div>
 			                <div th:unless="${#authentication.principal.username.equals('admin')}" th:remove="tag">
 				                <li class="nav-item">
-				                    <a th:href="@{/mypage/{userId} (userId = ${#authentication.principal.username})}" class="nav-link">MY PAGE</a>
+				                    <a th:href="@{/mypage/{userId} (userId = ${#authentication.principal.username})}" class="nav-link">MYPAGE</a>
 				                </li>
+			                <li class="nav-item">
+			                    <a href="/board/getBoardList" class="nav-link">Q&A</a>
+			                </li>
 			                </div>
 			                <li class="nav-item">
 			                    <a href="/user/logout" class="nav-link">LOGOUT</a>
